@@ -1,0 +1,15 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+
+.ministry__box {
+    transition: all 0.3s ease-in-out;
+    background-color: #ffff00;
+}
+
+.ministry__box:hover {
+    transformY: scale(-20%);
+}
