@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function MinistryCardStats({
+export default function MinistryCard({
       statTitle,
       statDepartment,
       statUnit,
@@ -34,9 +34,7 @@ export default function MinistryCardStats({
                                 {statUnit}
                             </span>
                             <br />
-                            {/*<span className="text-blueGray-400 uppercase font-normal text-xs">*/}
-                            {/*    {statBudget}*/}
-                            {/*</span>*/}
+
                         </div>
                         <div className="relative w-auto pl-4 flex-initial">
                             <div
@@ -50,7 +48,7 @@ export default function MinistryCardStats({
                         </div>
                     </div>
 
-                    <p className="text-blueGray-400 lowercase font-extralight text-xs  mt-4">
+                    <p className="text-blueGray-400 lowercase font-extralight text-xs mt-4">
                         <span className="whitespace-nowrap">{statDescription}</span>
                     </p>
 
@@ -60,8 +58,8 @@ export default function MinistryCardStats({
     );
 }
 
-MinistryCardStats.defaultProps = {
-    statTitle: "Index of Health",
+MinistryCard.defaultProps = {
+    statTitle: "Ministry of Health",
     statDepartment: "Department: ",
     statUnit: "Unit: ",
     statDescription: "Everything about the ministry",
@@ -69,7 +67,7 @@ MinistryCardStats.defaultProps = {
     statIconColor: "bg-red-500",
 };
 
-MinistryCardStats.propTypes = {
+MinistryCard.propTypes = {
     statTitle: PropTypes.string,
     statDepartment: PropTypes.number,
     statUnit: PropTypes.string,

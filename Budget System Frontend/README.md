@@ -135,7 +135,7 @@ notus-nextjs
 │   │   ├── CardProfile.js
 │   │   ├── CardSettings.js
 │   │   ├── CardSocialTraffic.js
-│   │   ├── CardStats.js
+│   │   ├── Card.js
 │   │   └── CardTable.js
 │   ├── Dropdowns
 │   │   ├── IndexDropdown.js

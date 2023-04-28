@@ -1,5 +1,9 @@
 package com.example.budgetsystemjava.DTO;
 
-public class DepartmentDTO {
+import lombok.Data;
 
+@Data
+public class DepartmentDTO {
+    private String name;
+    private String description;
 }

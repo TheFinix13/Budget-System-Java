@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 // components
 
-import CardStats from "components/Cards/CardStats.js";
+import Card from "components/Cards/Card.js";
 
 export default function DashboardStats() {
 
@@ -24,7 +24,7 @@ export default function DashboardStats() {
             {/* Card stats */}
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
+                <Card
                   statSubtitle="MINISTRY"
                   statTitle=""
                   statDescription="All ministries Added"
@@ -33,7 +33,7 @@ export default function DashboardStats() {
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
+                <Card
                   statSubtitle="DEPARTMENT"
                   statTitle=" "
                   statDescription="All departments in Each ministry"
@@ -42,7 +42,7 @@ export default function DashboardStats() {
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
+                <Card
                   statSubtitle="UNITS"
                   statTitle="924"
                   statDescription="All units in Each department"
@@ -51,7 +51,7 @@ export default function DashboardStats() {
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
+                <Card
                   statSubtitle="BUDGET"
                   statTitle=""
                   statDescription="All budget in Accounted for"

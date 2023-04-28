@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,12 +15,13 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long department_id;
-    @NotNull
+    @Column(unique = true)
     private String name;
     @NotNull
     private String description;
+    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
-    private LocalDateTime created_at;
+    private Date created_at;
 
     @ManyToOne
     @JoinColumn(name = "ministry_id", referencedColumnName = "ministry_id")

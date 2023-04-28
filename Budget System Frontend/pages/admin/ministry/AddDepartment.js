@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-import {MinistryService, sectors} from "../../../data/api";
+import {DepartmentService, sectors} from "../../../data/api";
 import {Alert} from "../../../components/Alerts";
 import DepartmentNavbar from "../../../components/Navbars/DepartmentNavbar";
 

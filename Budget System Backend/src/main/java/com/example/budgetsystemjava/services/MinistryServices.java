@@ -3,30 +3,25 @@ package com.example.budgetsystemjava.services;
 import com.example.budgetsystemjava.DAOmodel.Ministry;
 import com.example.budgetsystemjava.DAOmodel.Users;
 import com.example.budgetsystemjava.DTO.MinistryDTO;
-import com.example.budgetsystemjava.DTO.MinistryData;
 import com.example.budgetsystemjava.repository.MinistryRepo;
 import com.example.budgetsystemjava.repository.UserRepo;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-
 public class MinistryServices {
     private final MinistryRepo ministryRepo;
     private final UserRepo userRepo;
     @Autowired
     private ModelMapper mapper;
     private final BCryptPasswordEncoder passwordEncoder;
-    private int unitCount;
 
     @Autowired
     public MinistryServices(MinistryRepo ministryRepo, UserRepo userRepo, BCryptPasswordEncoder passwordEncoder) {
@@ -74,33 +69,6 @@ public class MinistryServices {
             return ResponseEntity.badRequest().body("Ministry details are required");
         }
     }
-//    public ResponseEntity<?> showMinistry() {
-//        try {
-//            List<Ministry> details = ministryRepo.findAll();
-//
-//            if(details.isEmpty()) {
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                        .body("No Ministry Found");
-//            }
-//
-//            List<MinistryData> ministryData = details.stream().map(ministry -> {
-//                int departmentCount = ministry.getDepartments().size();
-//                int unitCount = ministry.getDepartments()
-//                        .stream()
-//                        .mapToInt(department -> department.getUnits().size())
-//                        .sum();
-//                return new MinistryData(ministry, departmentCount, unitCount);
-//            }).collect(Collectors.toList());
-//
-//            return ResponseEntity.ok()
-//                    .body(ministryData);
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(e.getMessage());
-//        }
-//    }
 
     public List<Ministry> getMinistries(){
         List<Ministry> ministry = ministryRepo.getMinistryData();
@@ -160,9 +128,8 @@ public class MinistryServices {
 //            throw new IllegalStateException("No Ministry Found");
 //        }
 //        return details;
-//    }0
+//    }
 
-  //
 //    public List<Ministry> ministryDepartmentCount() {
 //        List<Ministry> details = ministryRepo.findAll();
 //        if(details.isEmpty()) {

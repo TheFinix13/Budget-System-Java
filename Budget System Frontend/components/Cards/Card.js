@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function CardStats({
+export default function Card({
   statSubtitle,
   statTitle,
   statDescription,
@@ -17,7 +17,7 @@ export default function CardStats({
               <h5 className="text-blueGray-400 uppercase font-bold text-xs">
                 {statSubtitle}
               </h5>
-              <span className="font-semibold text-xl text-blueGray-700">
+              <span className="font-bold text-xs text-blueGray-700">
                 {statTitle}
               </span>
             </div>
@@ -33,7 +33,7 @@ export default function CardStats({
             </div>
           </div>
 
-          <p className="text-sm text-blueGray-400 mt-4">
+          <p className="text-blueGray-400 lowercase font-extralight text-xs mt-4">
             <span className="whitespace-nowrap">{statDescription}</span>
           </p>
 
@@ -43,15 +43,15 @@ export default function CardStats({
   );
 }
 
-CardStats.defaultProps = {
-  statSubtitle: "Index",
-  statTitle: "30",
-  statDescription: "sections of budgetSystem",
-  statIconName: "fas fa-house",
-  statIconColor: "bg-red-500",
-};
+// Card.defaultProps = {
+//   statSubtitle: "Ministry",
+//   statTitle: "30",
+//   statDescription: "sections of budgetSystem",
+//   statIconName: "fas fa-house",
+//   statIconColor: "bg-red-500",
+// };
 
-CardStats.propTypes = {
+Card.propTypes = {
   statSubtitle: PropTypes.string,
   statTitle: PropTypes.string,
   // can be any of the text color utilities

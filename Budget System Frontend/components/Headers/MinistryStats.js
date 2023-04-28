@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 // components
-import MinistryCardStats from "../Cards/MinistryCardStats";
+import MinistryCard from "../Cards/MinistryCard";
 import MinistryDataStats from "./MinistryDataStats";
 import MinistryDataNavbar from "../Navbars/MinistryDataNavbar";
 
@@ -12,7 +12,7 @@ import {MinistryService} from "../../data/api";
 export default function MinistryStats() {
 
     const [ministry, setMinistry] = useState([]);
-    const [currentMinistry, setCurrentMinistry] = useState({});
+    const [currentMinistry, setCurrentMinistry] = useState({name: "Education"});
     const [ministryMode, setMinistryMode] = useState("all");
 
     async function fetchMinistries() {
@@ -33,7 +33,14 @@ export default function MinistryStats() {
 
     useEffect(() => {
         fetchMinistries();
+        // console.log(currentMinistry);
     }, []);
+
+    const handleClick = (row) => {
+        setCurrentMinistry(row);
+        setMinistryMode("current");
+    }
+
 
 
     return (
@@ -51,17 +58,14 @@ export default function MinistryStats() {
                                         <div className="w-full lg:w-6/12 xl:w-3/12 px-2 pb-4">
                                             {/*<Link href={`/admin/ministry/${row.id}`}>*/}
                                             {/*    <a>*/}
-                                                    <MinistryCardStats onClick={() => {
-                                                        setCurrentMinistry(row);
-                                                        setMinistryMode("current")}
-                                                    }
-                                                        key={index}
-                                                        statTitle = {row.name}
-                                                        statDepartment={"Department: " + row.departmentCount}
-                                                        statUnit={"Unit: " + row.unitCount}
-                                                        statDescription={row.description}
-                                                        statIconName="fas fa-house"
-                                                        statIconColor="bg-red-500"
+                                                    <MinistryCard onClick={() => handleClick(row)}
+                                                                  key={index}
+                                                                  statTitle = {row.name}
+                                                                  statDepartment={"Department: " + row.departmentCount}
+                                                                  statUnit={"Unit: " + row.unitCount}
+                                                                  statDescription={row.description}
+                                                                  statIconName="fas fa-house"
+                                                                  statIconColor="bg-red-500"
                                                     />
                                                 {/*</a>*/}
                                             {/*</Link>*/}

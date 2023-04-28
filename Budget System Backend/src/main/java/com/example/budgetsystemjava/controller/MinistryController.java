@@ -21,10 +21,7 @@ public class MinistryController {
     public MinistryController(MinistryServices ministryServices) {
         this.ministryServices = ministryServices;
     }
-//    @GetMapping(path = "show_ministry")
-//    public ResponseEntity<?> showMinistry() {
-//        return ministryServices.showMinistry();
-//    }
+
     @GetMapping(path = "get_ministry")
     public List<Ministry> getMinistry() {
         return ministryServices.getMinistries();
@@ -35,7 +32,8 @@ public class MinistryController {
          return ministryServices.addMinistry(ministry);
     }
     @PatchMapping(path = "update_ministry/{id}")
-    public Ministry updateMinistry(@PathVariable("id") Long id, @RequestBody MinistryDTO ministry) throws NotFoundException {
+    public Ministry updateMinistry(@PathVariable("id") Long id,
+                                   @RequestBody MinistryDTO ministry) throws NotFoundException {
         return ministryServices.updateMinistry(id, ministry);
     }
 

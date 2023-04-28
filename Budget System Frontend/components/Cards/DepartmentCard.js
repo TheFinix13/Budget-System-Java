@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function DepartmentCardStats({
+export default function DepartmentCard({
   statTitle,
   statUnit,
   // statBudget,
@@ -54,7 +54,7 @@ export default function DepartmentCardStats({
     );
 }
 
-DepartmentCardStats.defaultProps = {
+DepartmentCard.defaultProps = {
     statTitle: "Department of Private Health",
     statUnit: "Units: ",
     statMinistry: "Ministry of Health",
@@ -62,7 +62,7 @@ DepartmentCardStats.defaultProps = {
     statIconColor: "bg-orange-500"
 };
 
-DepartmentCardStats.propTypes = {
+DepartmentCard.propTypes = {
     statTitle: PropTypes.string,
     statUnit: PropTypes.string,
     // can be any of the text color utilities

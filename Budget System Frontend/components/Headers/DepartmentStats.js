@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 // components
-import DepartmentCardStats from "../Cards/DepartmentCardStats";
+import DepartmentCard from "../Cards/DepartmentCard";
 
 export default function DepartmentStats() {
 
@@ -40,7 +40,7 @@ export default function DepartmentStats() {
 
                                             {/*Card stats*/}
                                             <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                                                    <DepartmentCardStats
+                                                    <DepartmentCard
                                                            statTitle = {"Department of "}
                                                            statUnit={"Units: " }
                                                            statMinistry={"Ministry of "}

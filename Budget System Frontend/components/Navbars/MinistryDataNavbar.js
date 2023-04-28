@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export default function MinistryDataNavbar({currentMinistry, setMinistryMode}) {
 
+    console.log(currentMinistry)
 
     return (
         <>
@@ -20,7 +21,7 @@ export default function MinistryDataNavbar({currentMinistry, setMinistryMode}) {
                             setMinistryMode("all")
                         }}
                     >
-                        Ministry of {currentMinistry.name}
+                        {/*Ministry of {currentMinistry.name}*/}
                     </a>
 
                      {/* Search */}

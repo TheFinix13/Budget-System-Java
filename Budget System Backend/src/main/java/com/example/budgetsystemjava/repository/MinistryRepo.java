@@ -5,10 +5,12 @@ import com.example.budgetsystemjava.DAOmodel.Users;
 import com.example.budgetsystemjava.DTO.MinistryDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface MinistryRepo extends JpaRepository<Ministry, Long> {
     Optional<Object> findByName(String ministryName);
 

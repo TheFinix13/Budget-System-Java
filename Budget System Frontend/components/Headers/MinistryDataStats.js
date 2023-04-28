@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 
 // components
+import Card from "../Cards/Card";
 
-import MinistryCardStats from "../Cards/MinistryCardStats";
+//services
 import {MinistryService} from "../../data/api";
-import Link from "next/link";
-import MinistryData from "../../pages/admin/ministry/MinistryData";
+import BudgetCard from "../Cards/BudgetCard";
 
 export default function MinistryDataStats({currentMinistry, setCurrentMinistry, setMinistryMode}) {
 
@@ -39,54 +39,62 @@ export default function MinistryDataStats({currentMinistry, setCurrentMinistry, 
         }
     }
 
-    // return (
-    //     <>
-    //         {/*Header */}
-    //         {ministryMode === "all" ? (
-    //             <div className="relative bg-blueGray-800 md:pt-32 pb-32 pt-12">
-    //                 <div className="px-4 md:px-10 mx-auto w-full">
-    //                     <div>
-    //                         {/*Card stats*/}
-    //                         {ministry.length > 0 ? (
-    //                             <div className="flex flex-wrap">
-    //                                 {ministry.map((row, index) => (
-    //                                     // <div className="transform hover:scale-110 transition duration-200 ease-in-out">
-    //                                     <div className="w-full lg:w-6/12 xl:w-3/12 px-2 pb-4 ">
-    //                                         {/*<Link href={`/admin/ministry/${row.id}`}>*/}
-    //                                         {/*    <a>*/}
-    //                                         <MinistryCardStats onClick={() => {
-    //                                             setMinistryMode("current");
-    //                                             setCurrentMinistry(row)}
-    //                                         }
-    //                                                            key={index}
-    //                                                            statTitle = {row.name}
-    //                                                            statDepartment={"Department: " + row.departmentCount}
-    //                                                            statUnit={"Unit: " + row.unitCount}
-    //                                                            statDescription={row.description}
-    //                                                            statIconName="fas fa-house"
-    //                                                            statIconColor="bg-red-500"
-    //                                         />
-    //                                         {/*</a>*/}
-    //                                         {/*</Link>*/}
-    //                                         {/*</div>*/}
-    //                                     </div>
-    //                                 ))}
-    //                             </div>
-    //                         ) : (
-    //                             "No Ministries Found"
-    //                         )}
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         ) : null }
-    //
-    //         {ministryMode === "current"? (
-    //             <MinistryData
-    //                 currentMinistry={currentMinistry}
-    //                 setCurrentMinistry={setCurrentMinistry}
-    //                 setMinistryMode={setMinistryMode}
-    //             />
-    //         ) : null}
-    //     </>
-    // );
+    return (
+        <>
+            {/* Header */}
+            <div className="relative bg-blueGray-800 md:pt-32 pb-32 pt-12">
+                <div className="px-4 md:px-10 mx-auto w-full">
+                    <div>
+                        {/* Card stats */}
+                        <div className="flex flex-wrap">
+
+                            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                            <BudgetCard
+                                statSubtitle="BUDGET REQUESTS"
+                                statTitle="TOTAL REQUESTS: "
+                                statApprovedRequests="APPROVED REQUESTS:"
+                                statPendingRequests="PENDING REQUESTS:"
+                                statDisapprovedRequests="DISAPPROVED REQUESTS: "
+                                statDescription="All budgets Accounted for in this ministry"
+                                statIconName="fas fa-percent"
+                                statIconColor="bg-lightBlue-500"
+                            />
+                            </div>
+                            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                                <BudgetCard
+                                    statSubtitle="BUDGET"
+                                    statTitle="TOTAL AMOUNT: "
+                                    statApprovedRequests="AMOUNT APPROVED: "
+                                    statPendingRequests="AMOUNT SPENT: "
+                                    statDisapprovedRequests="AMOUNT LEFT: "
+                                    statDescription={<i className="fas fa-arrow-up text-emerald-500 mr-4"></i>}
+                                    statIconName="fas fa-dollar-sign"
+                                    statIconColor="bg-emerald-500"
+                                />
+                            </div>
+
+                            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                                <Card
+                                    statSubtitle="DEPARTMENTS"
+                                    statTitle=" "
+                                    statDescription="All departments in this ministry"
+                                    statIconName="fas fa-building"
+                                    statIconColor="bg-orange-500"
+                                />
+                            </div>
+                            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                                <Card
+                                    statSubtitle="UNITS"
+                                    statTitle=" "
+                                    statDescription="All Units in this ministry"
+                                    statIconName="fas fa-boxes"
+                                    statIconColor="bg-pink-500"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 }
