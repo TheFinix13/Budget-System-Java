@@ -16,8 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/department")
 public class DepartmentController {
-    private DepartmentServices departmentService;
-    private ModelMapper modelMapper;
+    private final DepartmentServices departmentService;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public DepartmentController(DepartmentServices departmentService, ModelMapper modelMapper) {
@@ -34,28 +34,23 @@ public class DepartmentController {
             DepartmentDTO savedDepartment = modelMapper.map(newDepartment, DepartmentDTO.class);
 
             return ResponseEntity.ok(savedDepartment);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to add department");
         }
     }
 
+    @GetMapping(path = "/get_department_in_ministry/{ministry_id}")
+    public ResponseEntity<List<DepartmentDTO>> getDepartmentInMinistry(@PathVariable Long ministry_id) {
+        List<DepartmentDTO> departments = departmentService.getDepartmentsInAMinistry(ministry_id);
+        return new ResponseEntity<>(departments, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/get_all_departments")
-    public ResponseEntity<?> getAllDepartments() {
-        try {
-            List<Department> departments = departmentService.getAllDepartments();
-            if(departments.isEmpty()){
-                return ResponseEntity.badRequest()
-                        .body("No department Found");
-            }
-            return ResponseEntity.ok()
-                    .body(departments);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to fetch departments");
-        }
+    public ResponseEntity<List<DepartmentDTO>> getAllDepartments() {
+        List<DepartmentDTO> departments = departmentService.getAllDepartments();
+        return new ResponseEntity<>(departments, HttpStatus.OK);
     }
 
 }

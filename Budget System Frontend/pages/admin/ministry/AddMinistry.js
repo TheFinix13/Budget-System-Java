@@ -28,7 +28,7 @@ export default function AddMinistry() {
     async function addMinistry(e) {
         e.preventDefault();
 
-        await axios.post(MinistryService.addMinistry(ministryData))
+        await (MinistryService.addMinistry(ministryData))
             .then((res) => {
                 // console.log(res)
                 const createdMinistry = res.data;

@@ -4,10 +4,6 @@ import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
 export default function MinistryNavbar({setViewMode}) {
 
-    const handleViewMode = () => {
-        setViewMode(!"hide")
-    }
-
     return (
         <>
             {/* Navbar */}
@@ -42,7 +38,7 @@ export default function MinistryNavbar({setViewMode}) {
                         <UserDropdown />
                     </ul>
 
-                    {/* Add Index */}
+                    {/* Add Ministry */}
                     <div className="rounded-t px-6">
 
                         <button

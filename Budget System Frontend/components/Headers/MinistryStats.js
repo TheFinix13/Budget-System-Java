@@ -19,7 +19,7 @@ export default function MinistryStats() {
         await MinistryService.getMinistry()
             .then((res) => {
                 const {data} = res;
-                console.log(data)
+                // console.log(data)
                 if (data){
                     setMinistry(data);
                 }else {
@@ -59,13 +59,13 @@ export default function MinistryStats() {
                                             {/*<Link href={`/admin/ministry/${row.id}`}>*/}
                                             {/*    <a>*/}
                                                     <MinistryCard onClick={() => handleClick(row)}
-                                                                  key={index}
-                                                                  statTitle = {row.name}
-                                                                  statDepartment={"Department: " + row.departmentCount}
-                                                                  statUnit={"Unit: " + row.unitCount}
-                                                                  statDescription={row.description}
-                                                                  statIconName="fas fa-house"
-                                                                  statIconColor="bg-red-500"
+                                                          key={index}
+                                                          statTitle = {row.name}
+                                                          statDepartment={"Department: " + row.departmentCount}
+                                                          statUnit={"Unit: " + row.unitCount}
+                                                          statDescription={row.description}
+                                                          statIconName="fas fa-house"
+                                                          statIconColor="bg-red-500"
                                                     />
                                                 {/*</a>*/}
                                             {/*</Link>*/}

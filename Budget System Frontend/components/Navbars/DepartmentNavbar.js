@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
-export default function DepartmentNavbar({setViewMode}) {
+export default function DepartmentNavbar() {
 
 
     return (

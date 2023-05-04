@@ -27,7 +27,7 @@ export class MinistryService {
     // }
 
     static async updateMinistry(id, param2) {
-        return axios.patch(`${Backend}/api/ministry/update_ministry`);
+        return axios.put(`${Backend}/api/ministry/update_ministry`);
 
     }
     static async deleteMinistry(id) {
@@ -36,16 +36,16 @@ export class MinistryService {
 }
 
 export class DepartmentService {
-    static addDepartment(department) {
-        return axios.post(`${Backend}/api/department/add_department`, department);
+    static addDepartment(ministry_id, department) {
+        return axios.post(`${Backend}/api/department/add_department/${ministry_id}`, department);
     }
 
     static getDepartmentInMinistry() {
-        return axios.get(`${Backend}/api/department/get_department_in_ministry`);
+        return (`${Backend}/api/department/get_department_in_ministry`);
     }
 
     static getAllDepartments() {
-        return axios.get(`${Backend}/api/department/get_all_departments`);
+        return (`${Backend}/api/department/get_all_departments`);
     }
 
     // static async updateDepartment(id, param2) {
@@ -56,7 +56,7 @@ export class DepartmentService {
     //     return axios.delete(`${Backend}/api/department/update_department/${id}`);
     //
     // }
-    
+
 }
 
 export const sectors= [

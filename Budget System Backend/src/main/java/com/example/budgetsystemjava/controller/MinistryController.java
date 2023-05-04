@@ -29,12 +29,14 @@ public class MinistryController {
 
     @PostMapping(path = "add_ministry")
     public ResponseEntity<?> addMinistry(@RequestBody MinistryDTO ministry) {
-         return ministryServices.addMinistry(ministry);
+        return ministryServices.addMinistry(ministry);
     }
-    @PatchMapping(path = "update_ministry/{id}")
-    public Ministry updateMinistry(@PathVariable("id") Long id,
-                                   @RequestBody MinistryDTO ministry) throws NotFoundException {
-        return ministryServices.updateMinistry(id, ministry);
+
+    @PutMapping(path = "update_ministry/{id}")
+    public ResponseEntity<Ministry> updateMinistry(@PathVariable("id") Long id,
+                                                   @RequestBody MinistryDTO ministryDTO) throws NotFoundException {
+        Ministry ministry = ministryServices.updateMinistry(id, ministryDTO);
+        return ResponseEntity.ok(ministry);
     }
 
     @DeleteMapping(path = "delete_ministry/{id}")

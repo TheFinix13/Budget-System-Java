@@ -1,11 +1,10 @@
 package com.example.budgetsystemjava.DAOmodel;
 
-import javax.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,16 +18,15 @@ public class Department {
     private String name;
     @NotNull
     private String description;
-    @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    private Date created_at;
+    @Column(updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime created_at;
 
     @ManyToOne
     @JoinColumn(name = "ministry_id", referencedColumnName = "ministry_id")
     private Ministry ministry;
 
     @OneToMany
-    private List<Unit> units;
+    private List<Division> divisions;
 
     @OneToMany(mappedBy = "department")
     private List<Budget> budgets;

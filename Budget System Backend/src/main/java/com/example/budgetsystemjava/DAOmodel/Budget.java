@@ -1,8 +1,8 @@
 package com.example.budgetsystemjava.DAOmodel;
 
-import javax.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,8 +23,8 @@ public class Budget {
     private Department department;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "unit_id")
-    private Unit unit;
+    @JoinColumn(name = "division_id")
+    private Division division;
 
     @ManyToOne
     @JoinColumn(name = "term_id")

@@ -1,12 +1,6 @@
 package com.example.budgetsystemjava.DTO;
 
-import com.example.budgetsystemjava.DAOmodel.BudgetRequest;
-import com.example.budgetsystemjava.DAOmodel.Department;
-import com.example.budgetsystemjava.DAOmodel.Users;
 import lombok.*;
-
-import javax.persistence.Transient;
-import java.util.List;
 
 @Data
 @AllArgsConstructor

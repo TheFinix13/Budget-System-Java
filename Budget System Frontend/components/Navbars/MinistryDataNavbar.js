@@ -3,9 +3,9 @@ import React, {useState} from "react";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import Link from "next/link";
 
-export default function MinistryDataNavbar({currentMinistry, setMinistryMode}) {
+export default function MinistryDataNavbar({setViewMode, setMinistryMode}) {
 
-    console.log(currentMinistry)
+    // console.log(currentMinistry)
 
     return (
         <>
@@ -49,6 +49,7 @@ export default function MinistryDataNavbar({currentMinistry, setMinistryMode}) {
                          <button
                              className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                              type="button"
+                                onClick={() => setViewMode("show")}
                          >
                              <i className="fas fa-user-plus">
 

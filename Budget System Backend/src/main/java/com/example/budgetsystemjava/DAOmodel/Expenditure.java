@@ -1,8 +1,8 @@
 package com.example.budgetsystemjava.DAOmodel;
 
-import javax.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -27,8 +27,8 @@ public class Expenditure {
     private Department department;
 
     @ManyToOne
-    @JoinColumn(name = "unit_id", referencedColumnName = "unit_id")
-    private Unit unit;
+    @JoinColumn(name = "division_id", referencedColumnName = "division_id")
+    private Division division;
 
     @ManyToOne
     @JoinColumn(name = "term_id", referencedColumnName = "term_id")

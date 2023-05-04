@@ -19,14 +19,14 @@ import java.util.Optional;
 public class MinistryServices {
     private final MinistryRepo ministryRepo;
     private final UserRepo userRepo;
-    @Autowired
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public MinistryServices(MinistryRepo ministryRepo, UserRepo userRepo, BCryptPasswordEncoder passwordEncoder) {
+    public MinistryServices(MinistryRepo ministryRepo, UserRepo userRepo, ModelMapper mapper, BCryptPasswordEncoder passwordEncoder) {
         this.ministryRepo = ministryRepo;
         this.userRepo = userRepo;
+        this.mapper = mapper;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -86,21 +86,16 @@ public class MinistryServices {
     }
 
     public Ministry updateMinistry(long ministry_id, MinistryDTO ministryDTO) throws NotFoundException {
-        Optional<Ministry> existingMinistry = ministryRepo.findById(ministry_id);
-        if (!existingMinistry.isPresent()) {
-            throw new NotFoundException("Ministry with id " + ministry_id + " does not exist");
-        }
+        Ministry existingMinistry = ministryRepo.findById(ministry_id)
+                .orElseThrow(() -> new NotFoundException("Ministry with id " + ministry_id + " does not exist"));
 
         //update the ministry
-        Ministry updatedMinistry = existingMinistry.get()
-                        .builder()
-                        .name(ministryDTO.getName())
-                        .description(ministryDTO.getDescription())
-                        .location(ministryDTO.getLocation())
-                        .sector(ministryDTO.getSector())
-                        .build();
+        existingMinistry.setName(ministryDTO.getName());
+        existingMinistry.setDescription(ministryDTO.getDescription());
+        existingMinistry.setLocation(ministryDTO.getLocation());
+        existingMinistry.setSector(ministryDTO.getSector());
 
-        return ministryRepo.save(updatedMinistry);
+        return ministryRepo.save(existingMinistry);
     }
 
     public boolean deleteMinistry(Long id) {
