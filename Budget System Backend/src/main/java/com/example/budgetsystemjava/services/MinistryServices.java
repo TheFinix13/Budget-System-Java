@@ -3,6 +3,7 @@ package com.example.budgetsystemjava.services;
 import com.example.budgetsystemjava.DAOmodel.Ministry;
 import com.example.budgetsystemjava.DAOmodel.Users;
 import com.example.budgetsystemjava.DTO.MinistryDTO;
+import com.example.budgetsystemjava.exceptions.MinistryNotFoundException;
 import com.example.budgetsystemjava.repository.MinistryRepo;
 import com.example.budgetsystemjava.repository.UserRepo;
 import javassist.NotFoundException;
@@ -107,13 +108,17 @@ public class MinistryServices {
         return true;
     }
 
-//    public ResponseEntity<List<Ministry>> showAllMinistry () {
-//        List<Ministry> details = ministryRepo.findAll();
-//        if (details.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body(details);
-//    }
+    public Ministry showAMinistry(Long id) {
+        Optional<Ministry> optionalMinistry = ministryRepo.findById(id);
+
+        if (optionalMinistry.isPresent()) {
+            return optionalMinistry.get();
+        }else {
+            throw new MinistryNotFoundException("Ministry not found");
+        }
+    }
+
+
 //
 //
 //

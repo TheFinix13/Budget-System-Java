@@ -48,11 +48,11 @@ public class MinistryController {
         return ResponseEntity.ok(response);
     }
 
-
-//    @GetMapping(path = "show_all_ministry")
-//    public List<Ministry> showAllMinistry() {
-//        return ministryServices.showAllMinistry().getBody();
-//    }
+    @GetMapping(path = "get_one_ministry/{id}")
+    public ResponseEntity<Ministry> showAMinistry(@PathVariable Long id) {
+        Ministry ministry = ministryServices.showAMinistry(id);
+        return ResponseEntity.ok(ministry);
+    }
 
 //
 //    @GetMapping(path = "show_department_count")

@@ -14,7 +14,6 @@ public class Budget {
     private long budget_id;
     private float amount;
     private String status;
-
     private String data;
     private LocalDateTime created_at;
 

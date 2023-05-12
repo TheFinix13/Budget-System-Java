@@ -25,7 +25,7 @@ public class Department {
     @JoinColumn(name = "ministry_id", referencedColumnName = "ministry_id")
     private Ministry ministry;
 
-    @OneToMany
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Division> divisions;
 
     @OneToMany(mappedBy = "department")

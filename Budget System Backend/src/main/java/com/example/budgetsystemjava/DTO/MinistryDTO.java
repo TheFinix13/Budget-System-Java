@@ -1,6 +1,9 @@
 package com.example.budgetsystemjava.DTO;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -8,6 +11,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MinistryDTO {
     private String name;
     private String description;
@@ -19,6 +23,9 @@ public class MinistryDTO {
     private String password;
     private String role;
     private String status;
+//    private List<DepartmentDTO> departments;
+//    private int departCount;
+//    private int divisionCount;
 
 
 //    private UserDTO user;
