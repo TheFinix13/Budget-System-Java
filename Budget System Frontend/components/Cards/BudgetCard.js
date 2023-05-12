@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 export default function BudgetCard({
     statSubtitle,
@@ -20,19 +19,19 @@ export default function BudgetCard({
                             <h4 className="text-blueGray-700 uppercase font-bold text-xs">
                                 {statSubtitle}
                             </h4>
-                            <span className="font-semibold text-xs text-blueGray-400">
+                            <span className="font-semibold capitalize text-xs text-blueGray-400">
                                 {statTitle}
                             </span>
                             <br/>
-                            <span className="text-blueGray-400 uppercase font-normal text-xs">
+                            <span className="text-blueGray-400 capitalize font-normal text-xs">
                                 {statApprovedRequests}
                             </span>
                             <br/>
-                            <span className="text-blueGray-400 uppercase font-normal text-xs">
+                            <span className="text-blueGray-400 capitalize font-normal text-xs">
                                 {statPendingRequests}
                             </span>
                             <br/>
-                            <span className="text-blueGray-400 uppercase font-normal text-xs">
+                            <span className="text-blueGray-400 capitalize font-normal text-xs">
                                 {statDisapprovedRequests}
                             </span>
                         </div>
@@ -48,7 +47,7 @@ export default function BudgetCard({
                         </div>
                     </div>
 
-                    <p className="text-blueGray-400 lowercase font-extralight text-xs mt-4">
+                    <p className="text-blueGray-400 capitalize font-extralight text-xs mt-4">
                         <span className="whitespace-nowrap">{statDescription}</span>
                     </p>
 

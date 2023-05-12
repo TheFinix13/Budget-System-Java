@@ -2,7 +2,7 @@ import React from "react";
 
 // components
 // layout for page
-import AdminDepartment from "../../../layouts/AdminDepartment";
+import AdminDivision from "../../../layouts/AdminDivision";
 
 export default function Index() {
 
@@ -15,4 +15,4 @@ export default function Index() {
     );
 }
 
-Index.layout = AdminDepartment;
+Index.layout = AdminDivision;

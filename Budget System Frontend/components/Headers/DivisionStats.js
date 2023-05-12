@@ -1,23 +1,23 @@
 import React, {useEffect, useState} from "react";
 
 // components
-import DepartmentCard from "../Cards/DepartmentCard";
-import AllDepartmentTable from "../Cards/AllDepartmentTable";
+import AllDivisionsTable from "../Cards/AllDivisionsTable";
+import DivisionCard from "../Cards/DivisionCard";
 
 //services
-import {DepartmentService} from "../../data/api";
+import {DivisionService} from "../../data/api";
 
-export default function DepartmentStats() {
+export default function DivisionStats() {
 
-    const [showAllDepartments, setShowAllDepartments] = useState([]);
+    const [showAllDivisions, setShowAllDivisions] = useState([]);
     const [orientation, setOrientation] = useState("grid");
 
-    async function fetchDepartments() {
-        await DepartmentService.getAllDepartments()
+    async function fetchDivisions() {
+        await DivisionService.getAllDivisions()
             .then((response) => {
                 const {data} = response;
                 if (data){
-                    setShowAllDepartments(data);
+                    setShowAllDivisions(data);
                 }else{
                     console.error(data.message);
                 }
@@ -28,7 +28,7 @@ export default function DepartmentStats() {
     }
 
     useEffect(() => {
-        fetchDepartments();
+        fetchDivisions();
     }, []);
 
 
@@ -55,9 +55,9 @@ export default function DepartmentStats() {
                         type="button"
                     >
                         <i className="fas fa-list-ul cursor-pointer mr-12"
-                            onClick={() => {
-                                setOrientation("list");
-                            }}
+                           onClick={() => {
+                               setOrientation("list");
+                           }}
                         ></i>
                     </button>
                 </div>
@@ -65,26 +65,27 @@ export default function DepartmentStats() {
                 <div className="px-4 md:px-10 mx-auto w-full">
                     <div>
                         {/*Card stats*/}
-                        {showAllDepartments.length > 0 ? (
+                        {showAllDivisions.length > 0 ? (
                             <>
                                 {orientation === "grid" ? (
                                     <div className="flex flex-wrap">
-                                        {showAllDepartments.map((row, index) => (
-                                            <div className="w-full lg:w-6/12 xl:w-4/12 p-4">
-                                                <DepartmentCard key={index}
-                                                   statTitle = {row.name}
-                                                   statUnit={"Divisions: " + row.divisions}
-                                                    statDescription={row.description}
-                                                   statMinistry={row.ministryName || "No ministry"}
-                                                   statIconName="fas fa-building"
-                                                   statIconColor="bg-orange-500"
+                                        {showAllDivisions.map((row, index) => (
+                                            <div className="w-full lg:w-6/12 xl:w-3/12 p-4">
+                                                <DivisionCard key={index}
+                                                    statTitle = {row.name}
+                                                    statCode={row.code}
+                                                    statBudgetRequest={"Budget Request: " + row.budgetRequest}
+                                                    statBudgetDescription={row.description}
+                                                    statDepartment={row.departmentName || "No department"}
+                                                    statIconName="fas fa-boxes"
+                                                    statIconColor="bg-pink-500"
                                                 />
                                             </div>
                                         ))}
                                     </div>
                                 ) : (
-                                    <AllDepartmentTable
-                                        showAllDepartments = {showAllDepartments}
+                                    <AllDivisionsTable
+                                        showAllDivisions = {showAllDivisions}
                                     />
                                 )}
                             </>

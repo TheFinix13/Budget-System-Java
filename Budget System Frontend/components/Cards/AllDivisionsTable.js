@@ -6,11 +6,11 @@ import PropTypes from "prop-types";
 
 //services
 
-export default function AllDepartmentTable({color, showAllDepartments}) {
+export default function AllDivisionsTable({color, showAllDivisions}) {
 
     return (
         <>
-            {showAllDepartments.length > 0 ? (
+            {showAllDivisions.length > 0 ? (
                 <div className= {
                     "relative flex flex-col min-w-0 break-words bg-white w-full mt-6 shadow-lg rounded " +
                     (color === "light" ? "bg-white" : "bg-blueGray-700 text-white")
@@ -28,7 +28,27 @@ export default function AllDepartmentTable({color, showAllDepartments}) {
                                         : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                                 }
                                 >
-                                    Department Name
+                                    Division Name
+                                </th>
+
+                                <th className={
+                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                    (color === "light"
+                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                        : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
+                                }
+                                >
+                                    Division Code
+                                </th>
+
+                                <th className={
+                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                    (color === "light"
+                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                        : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
+                                }
+                                >
+                                    Department Its Under
                                 </th>
 
                                 <th className={
@@ -63,11 +83,17 @@ export default function AllDepartmentTable({color, showAllDepartments}) {
                             </thead>
 
                             <tbody>
-                            {showAllDepartments.map((row, index) => (
+                            {showAllDivisions.map((row, index) => (
                                 <tr key={index}>
                                     <th key={index} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
                                         {row.name}
                                     </th>
+                                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                        {row.code}
+                                    </td>
+                                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                        {row.departmentName}
+                                    </td>
                                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {row.ministryName}
                                     </td>
@@ -92,10 +118,10 @@ export default function AllDepartmentTable({color, showAllDepartments}) {
     );
 }
 
-AllDepartmentTable.defaultProps = {
+AllDivisionsTable.defaultProps = {
     color: "light",
 };
 
-AllDepartmentTable.propTypes = {
+AllDivisionsTable.propTypes = {
     color: PropTypes.oneOf(["light", "dark"]),
 };

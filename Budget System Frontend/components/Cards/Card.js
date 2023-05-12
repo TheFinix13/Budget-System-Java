@@ -33,7 +33,7 @@ export default function Card({
             </div>
           </div>
 
-          <p className="text-blueGray-400 lowercase font-extralight text-xs mt-4">
+          <p className="text-blueGray-400 capitalize font-extralight text-xs mt-4">
             <span className="whitespace-nowrap">{statDescription}</span>
           </p>
 

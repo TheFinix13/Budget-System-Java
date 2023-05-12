@@ -1,42 +1,48 @@
 import React, {useEffect, useState} from "react";
 
 // components
-
-//services
-import {DepartmentService} from "../../data/api";
 import {Alert} from "../Alerts";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import PropTypes from "prop-types";
-import axios from "axios";
-export default function DepartmentTable({color, ministry_id}) {
+
+//services
+import {DepartmentService} from "../../data/api";
+import {useRouter} from "next/router";
+
+export default function DepartmentTable({color}) {
 
     const[department, setDepartment] = useState([]);
-    const[loading, setLoading] = useState(true);
+    const[loading, setLoading] = useState(false);
 
     const[notificationDetails, setNotificationDetails] = useState({
         message: '',
         type: '',
     })
 
+    const router = useRouter();
+    const {id} = router.query;
 
     async function getDepartment() {
-        await axios.get(`${DepartmentService.getDepartmentInMinistry()}/${ministry_id}`)
+        await DepartmentService.getDepartmentInMinistry(id)
             .then(response => {
                 setDepartment(response.data);
-                setLoading(false);
+                setLoading(true);
             })
             .catch(error => {
                 setNotificationDetails({
                     message: 'Error loading department' + error,
                     type: 'error'
                 })
-                setLoading(false);
+                setLoading(true);
             });
     }
 
     useEffect(() => {
-        getDepartment();
-    }, []);
+        if (id){
+            getDepartment();
+        }
+    }, [id]);
+
 
     return (
         <>
@@ -60,7 +66,7 @@ export default function DepartmentTable({color, ministry_id}) {
                     </div>
                 </div>
 
-                {loading === false ? (
+                {loading === true ? (
                     <div className="block w-full overflow-x-auto">
                         {/* Projects table */}
                         <table className="items-center w-full bg-transparent border-collapse">
@@ -83,7 +89,7 @@ export default function DepartmentTable({color, ministry_id}) {
                                         : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                                     }
                                 >
-                                    Total Units
+                                    Total Divisions
                                 </th>
 
                                 <th className={
@@ -93,7 +99,7 @@ export default function DepartmentTable({color, ministry_id}) {
                                         : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                                     }
                                 >
-                                    Units Approved
+                                    Divisions Approved
                                 </th>
 
                                 <th className={

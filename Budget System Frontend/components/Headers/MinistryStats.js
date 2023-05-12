@@ -7,19 +7,19 @@ import MinistryDataNavbar from "../Navbars/MinistryDataNavbar";
 
 //service
 import {MinistryService} from "../../data/api";
+import Link from "next/link";
 
 
 export default function MinistryStats() {
 
     const [ministry, setMinistry] = useState([]);
-    const [currentMinistry, setCurrentMinistry] = useState({name: "Education"});
     const [ministryMode, setMinistryMode] = useState("all");
 
     async function fetchMinistries() {
         await MinistryService.getMinistry()
             .then((res) => {
                 const {data} = res;
-                // console.log(data)
+                console.log(data)
                 if (data){
                     setMinistry(data);
                 }else {
@@ -33,15 +33,11 @@ export default function MinistryStats() {
 
     useEffect(() => {
         fetchMinistries();
-        // console.log(currentMinistry);
     }, []);
 
-    const handleClick = (row) => {
-        setCurrentMinistry(row);
+    const handleClick = () => {
         setMinistryMode("current");
     }
-
-
 
     return (
         <>
@@ -54,22 +50,22 @@ export default function MinistryStats() {
                             {ministry.length > 0 ? (
                                 <div className="flex flex-wrap">
                                     {ministry.map((row, index) => (
-                                        // <div className="transform hover:scale-110 transition duration-200 ease-in-out">
                                         <div className="w-full lg:w-6/12 xl:w-3/12 px-2 pb-4">
-                                            {/*<Link href={`/admin/ministry/${row.id}`}>*/}
-                                            {/*    <a>*/}
-                                                    <MinistryCard onClick={() => handleClick(row)}
-                                                          key={index}
-                                                          statTitle = {row.name}
-                                                          statDepartment={"Department: " + row.departmentCount}
-                                                          statUnit={"Unit: " + row.unitCount}
-                                                          statDescription={row.description}
-                                                          statIconName="fas fa-house"
-                                                          statIconColor="bg-red-500"
-                                                    />
-                                                {/*</a>*/}
-                                            {/*</Link>*/}
-                                        {/*</div>*/}
+                                            <div className="duration-200; ease-in-out transform:transition hover:scale-110">
+                                                <Link href={`/admin/ministry/${row.ministry_id}`}>
+                                                    <a>
+                                                        <MinistryCard onClick={() => handleClick()}
+                                                              key={index}
+                                                              statTitle = {row.name}
+                                                              statDepartment={"Departments: " + row.departments.length}
+                                                              statUnit={"Divisions: " + row.unitCount}
+                                                              statDescription={row.description}
+                                                              statIconName="fas fa-house"
+                                                              statIconColor="bg-red-500"
+                                                        />
+                                                    </a>
+                                                </Link>
+                                             </div>
                                         </div>
                                     ))}
                                 </div>
@@ -84,13 +80,10 @@ export default function MinistryStats() {
             {ministryMode === "current"? (
                 <>
                     <MinistryDataNavbar
-                        currentMinistry={currentMinistry}
                         setMinistryMode={setMinistryMode}
                     />
                     <MinistryDataStats
-                        currentMinistry={currentMinistry}
-                        setCurrentMinistry={setCurrentMinistry}
-                        setMinistryMode={setMinistryMode}
+                        ministry={ministry}
                     />
                 </>
             ) : null}

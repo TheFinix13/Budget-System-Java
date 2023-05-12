@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 
+//services
 import {MinistryService, sectors} from "../../../data/api";
-import {Alert} from "../../../components/Alerts";
+
+// components
 import MinistryNavbar from "../../../components/Navbars/MinistryNavbar";
-import axios from "axios";
+import {alertService} from "../../../services/alert.services";
 
 export default function AddMinistry() {
 
@@ -19,47 +21,22 @@ export default function AddMinistry() {
     });
 
     const [viewMode, setViewMode] = useState("hide");
-    const [notificationsStatus, setNotificationsStatus] = useState(false)
-    const [notificationsMessage, setNotificationsMessage] = useState({
-        message: "",
-        type: "",
-    });
+
 
     async function addMinistry(e) {
         e.preventDefault();
 
         await (MinistryService.addMinistry(ministryData))
             .then((res) => {
-                // console.log(res)
                 const createdMinistry = res.data;
-                // console.log(createdMinistry)
-                if (createdMinistry){
-                    setNotificationsMessage({
-                        message: "Ministry added successfully",
-                        type: "success",
-                    });
-                }else {
-                    setNotificationsMessage({
-                        message: "Error creating Ministry. Mot added",
-                        type: "success",
-                    });
-                };
-                setNotificationsStatus(true);
+                if (createdMinistry) {
+                    alertService.success('Ministry added successfully', {keepAfterRouteChange: true});
+                }
             })
             .catch((error) => {
                 if (error.response) {
-                    setNotificationsMessage({
-                        message: error.response.data.message,
-                        type: "error",
-                    });
-                    setNotificationsStatus(true);
-                } else if (error.request) {
-                    setNotificationsMessage({
-                        message: "Error creating Ministry. Mot added",
-                        type: "error",
-                    });
-                    setNotificationsStatus(true);
-                };
+                    alertService.error(error.response.data.message, {keepAfterRouteChange: true});
+                }
             })
     }
 
@@ -85,12 +62,8 @@ export default function AddMinistry() {
 
                 <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
 
-                    {notificationsStatus ? (
-                        <Alert alert={notificationsMessage} setAlert={setNotificationsStatus} />
-                        // <p>Success</p>
-                    ) : null}
 
-                    <form onSubmit={addMinistry}>
+                    <form name="add-ministry" onSubmit={addMinistry}>
                         <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                             Ministry Information
                         </h6>
@@ -99,7 +72,7 @@ export default function AddMinistry() {
                                 <div className="relative w-full mb-3">
                                     <label
                                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        htmlFor="grid-password"
+                                        htmlFor="add-ministry"
                                     >
                                         Name of Ministry
                                     </label>
@@ -121,12 +94,11 @@ export default function AddMinistry() {
                                 <div className="relative w-full mb-3">
                                     <label
                                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        htmlFor="grid-password"
+                                        htmlFor="add-ministry"
                                     >
                                         Sector
                                     </label>
                                     <select
-                                        type="select"
                                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                         placeholder="Select Sector"
                                         name={"sector"}
@@ -155,7 +127,7 @@ export default function AddMinistry() {
                                 <div className="relative w-full mb-3">
                                     <label
                                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        htmlFor="grid-password"
+                                        htmlFor="add-ministry"
                                     >
                                         Address
                                     </label>
@@ -180,12 +152,11 @@ export default function AddMinistry() {
                                     <div className="relative w-full">
                                         <label
                                             className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                            htmlFor="grid-password"
+                                            htmlFor="add-ministry"
                                         >
                                             Description
                                         </label>
                                         <textarea
-                                            type="text"
                                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             placeholder="About the ministry"
                                             name={"description"}
@@ -209,7 +180,7 @@ export default function AddMinistry() {
                                 <div className="relative w-full mb-3">
                                     <label
                                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        htmlFor="grid-password"
+                                        htmlFor="add-ministry"
                                     >
                                         First Name
                                     </label>
@@ -231,7 +202,7 @@ export default function AddMinistry() {
                                 <div className="relative w-full mb-3">
                                     <label
                                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        htmlFor="grid-password"
+                                        htmlFor="add-ministry"
                                     >
                                         Last Name
                                     </label>
@@ -254,7 +225,7 @@ export default function AddMinistry() {
                                 <div className="relative w-full mb-3">
                                     <label
                                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        htmlFor="grid-password"
+                                        htmlFor="add-ministry"
                                     >
                                         Email
                                     </label>
@@ -277,7 +248,7 @@ export default function AddMinistry() {
                                 <div className="relative w-full mb-3">
                                     <label
                                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        htmlFor="grid-password"
+                                        htmlFor="add-ministry"
                                     >
                                         Password
                                     </label>

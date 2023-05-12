@@ -26,11 +26,11 @@ export default function MinistryCard({
                             <h5 className="text-blueGray-400 uppercase font-bold text-xs">
                                 {statTitle}
                             </h5>
-                            <span className="text-blueGray-400 uppercase font-normal text-xs">
+                            <span className="text-blueGray-400  font-medium text-xs">
                                 {statDepartment}
                             </span>
                             <br />
-                            <span className="text-blueGray-400 uppercase font-normal text-xs">
+                            <span className="text-blueGray-400  font-medium text-xs">
                                 {statUnit}
                             </span>
                             <br />
@@ -48,7 +48,7 @@ export default function MinistryCard({
                         </div>
                     </div>
 
-                    <p className="text-blueGray-400 lowercase font-extralight text-xs mt-4">
+                    <p className="text-blueGray-400 capitalize font-extralight text-xs mt-4">
                         <span className="whitespace-nowrap">{statDescription}</span>
                     </p>
 
@@ -69,7 +69,7 @@ MinistryCard.defaultProps = {
 
 MinistryCard.propTypes = {
     statTitle: PropTypes.string,
-    statDepartment: PropTypes.number,
+    statDepartment: PropTypes.string,
     statUnit: PropTypes.string,
     // can be any of the text color utilities
     // from tailwindcss

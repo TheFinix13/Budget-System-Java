@@ -22,15 +22,15 @@ export class MinistryService {
         return axios.get(`${Backend}/api/ministry/get_ministry`);
     }
 
-    // showAllMinistry() {
-    //     return axios.get(`${Backend}/api/ministry/show_all_ministry`);
-    // }
+    static getAMinistry(id) {
+        return axios.get(`${Backend}/api/ministry/get_one_ministry/${id}`);
+    }
 
-    static async updateMinistry(id, param2) {
+    static updateMinistry(id, param2) {
         return axios.put(`${Backend}/api/ministry/update_ministry`);
 
     }
-    static async deleteMinistry(id) {
+    static deleteMinistry(id) {
         return axios.delete(`${Backend}/api/ministry/update_ministry/${id}`);
     }
 }
@@ -40,24 +40,39 @@ export class DepartmentService {
         return axios.post(`${Backend}/api/department/add_department/${ministry_id}`, department);
     }
 
-    static getDepartmentInMinistry() {
-        return (`${Backend}/api/department/get_department_in_ministry`);
+    static getDepartmentInMinistry(ministry_id) {
+        return axios.get(`${Backend}/api/department/get_department_in_ministry/${ministry_id}`);
     }
 
     static getAllDepartments() {
-        return (`${Backend}/api/department/get_all_departments`);
+        return axios.get(`${Backend}/api/department/get_all_departments`);
     }
 
-    // static async updateDepartment(id, param2) {
+    // static updateDepartment(id, param2) {
     //     return axios.patch(`${Backend}/api/department/update_department`);
     //
     // }
-    // static async deleteDepartment(id) {
+    // static deleteDepartment(id) {
     //     return axios.delete(`${Backend}/api/department/update_department/${id}`);
     //
     // }
+}
+
+export class DivisionService {
+    static addDivision(department_id, division){
+        return axios.post(`${Backend}/api/division/add_division/${department_id}`, division);
+    }
+
+    static getDivisionInDepartment(department_id) {
+        return axios.get(`${Backend}/api/division/get_division_in_department/${department_id}`);
+    }
+
+    static getAllDivisions() {
+        return axios.get(`${Backend}/api/division/get_all_divisions`);
+    }
 
 }
+
 
 export const sectors= [
     {id: 1, name: 'Agriculture and Rural Development'},

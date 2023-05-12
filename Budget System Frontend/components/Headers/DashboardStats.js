@@ -1,19 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 
 // components
-
 import Card from "components/Cards/Card.js";
 
 export default function DashboardStats() {
-
-  const [count, setCount] = useState(0);
-
-  async function getMinistryCount() {
-    const response = await fetch('http://localhost:3000/api/ministry');
-    const data = await response.json();
-    setCount(data.length);
-  }
-
 
   return (
     <>
@@ -43,9 +33,9 @@ export default function DashboardStats() {
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <Card
-                  statSubtitle="UNITS"
+                  statSubtitle="DIVISIONS"
                   statTitle="924"
-                  statDescription="All units in Each department"
+                  statDescription="All divisions in Every department"
                   statIconName="fas fa-boxes"
                   statIconColor="bg-pink-500"
                 />

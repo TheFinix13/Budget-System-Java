@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
@@ -159,6 +159,30 @@ export default function Sidebar() {
                         }
                     ></i>{" "}
                     Department
+                  </a>
+                </Link>
+              </li>
+
+              <li className="items-center">
+                <Link href="/admin/division">
+                  <a
+                      href="#pablo"
+                      className={
+                          "text-xs uppercase py-3 font-bold block " +
+                          (router.pathname.indexOf("/admin/division") !== -1
+                              ? "text-lightBlue-500 hover:text-lightBlue-600"
+                              : "text-blueGray-700 hover:text-blueGray-500")
+                      }
+                  >
+                    <i
+                        className={
+                            "fas fa-table mr-2 text-sm " +
+                            (router.pathname.indexOf("/admin/division") !== -1
+                                ? "opacity-75"
+                                : "text-blueGray-300")
+                        }
+                    ></i>{" "}
+                    Division
                   </a>
                 </Link>
               </li>
