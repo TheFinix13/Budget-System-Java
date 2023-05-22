@@ -17,6 +17,7 @@
     "chart.js": "2.9.4",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
+    "jwt-decode": "^3.1.2",
     "next": "10.0.9",
     "prop-types": "^15.8.1",
     "react": "17.0.1",

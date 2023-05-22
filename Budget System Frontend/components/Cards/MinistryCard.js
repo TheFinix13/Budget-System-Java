@@ -5,17 +5,10 @@ export default function MinistryCard({
       statTitle,
       statDepartment,
       statUnit,
-      // statBudget,
       statDescription,
       statIconName,
       statIconColor,
-      // ministry
   }) {
-
-    // const{name, departmentCount, unitCount} = ministry
-    // statTitle = name
-    // statDepartment = departmentCount
-    // statUnit = unitCount
 
     return (
         <>

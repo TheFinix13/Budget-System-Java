@@ -36,6 +36,7 @@ export default function DashboardNavbar() {
           </ul>
         </div>
       </nav>
+
       {/* End Navbar */}
     </>
   );

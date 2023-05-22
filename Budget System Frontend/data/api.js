@@ -12,9 +12,20 @@ export class UserService {
         return axios.post(`${Backend}/api/user/add_approve`, user);
     }
 
+}
+
+export class AuthService {
     static login(user) {
-        return axios.post(`${Backend}/api/user/login`, user);
+        return axios.post(`${Backend}/api/auth/login`, user);
     }
+
+    // static logout() {
+    //     return axios.get(`${Backend}/api/auth/logout`);
+    // }
+    //
+    // static getCurrentUser() {
+    //     return JSON.parse(localStorage.getItem('user'));;
+    // }
 }
 
 export class MinistryService {
@@ -89,9 +100,17 @@ export class BudgetRequestServices {
         return axios.get(`${Backend}/api/division_budget/get_budget_requests/${division_id}`);
     }
 
-    // static getAllDivisions() {
-    //     return axios.get(`${Backend}/api/division/get_all_divisions`);
-    // }
+    static getPendingRequests() {
+        return axios.get(`${Backend}/api/division_budget/get_pending_requests`);
+    }
+
+    static async approveRequest(requestId) {
+        return axios.put(`${Backend}/api/division_budget/approve_requests/${requestId}`);
+    }
+
+    static async denyRequest(requestId) {
+        return axios.put(`${Backend}/api/division_budget/reject_requests/${requestId}`);
+    }
 }
 
 

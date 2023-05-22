@@ -1,34 +1,51 @@
 import React, {useState} from "react";
-import Link from "next/link";
 
 // layout for page
 import Auth from "layouts/Auth.js";
 
-import {UserService} from "../../data/api";
+//services
+import Link from "next/link";
+import {AuthService} from "../../data/api";
 import {useRouter} from "next/router";
+import jwtDecode from 'jwt-decode';
 
-export default function Login(getLoggedIn) {
+export default function Login() {
+  const router = useRouter();
 
   const [loginData, setLoginData] = useState({
     email: "",
     password: ""
   });
 
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-
   async function loginUser(e) {
     e.preventDefault();
 
     loginData.email = loginData.email.toLowerCase().replace(/ /g, "");
 
-    UserService.login(loginData)
+    AuthService.login(loginData)
         .then(response => {
+          const token = response.data;
+
+          //save token to local storage
           window.localStorage
-              .setItem("token", response.data.token);
-          getLoggedIn();
-          useRouter().push("/admin/dashboard");
-          console.log(response);
+              .setItem("token", token);
+
+          //decode token to get user data
+          const decodedToken = jwtDecode(token);
+          const userRole = decodedToken.role;
+
+            //redirect to dashboard
+            if (userRole === "admin"){
+              router.push("/admin/dashboard");
+            }
+            else if (userRole === "ministry"){
+              router.push("/ministry/dashboard");
+            }else if (userRole === "approve"){
+              router.push("/approver/dashboard");
+            } else {
+              console.log("User role not found")
+                // router.push("/auth/login");
+            }
         })
         .catch(error => {
             console.log(error);

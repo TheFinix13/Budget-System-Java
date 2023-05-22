@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 // components
 import Card from "components/Cards/Card.js";
 import {DepartmentService, DivisionService, MinistryService} from "../../data/api";
+import Link from "next/link";
 
 export default function DashboardStats() {
 
@@ -72,32 +73,47 @@ export default function DashboardStats() {
             {/* Card stats */}
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <Card
-                  statSubtitle="MINISTRY"
-                  statTitle={ministry?.length}
-                  statDescription="All ministries Added"
-                  statIconName="fas fa-house"
-                  statIconColor="bg-red-500"
-                />
+                  <Link href="/admin/ministry">
+                      <a>
+                          <Card
+                              statSubtitle="MINISTRY"
+                              statTitle={ministry?.length}
+                              statDescription="All ministries Added"
+                              statIconName="fas fa-house"
+                              statIconColor="bg-red-500"
+                          />
+                      </a>
+                  </Link>
               </div>
+
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <Card
-                  statSubtitle="DEPARTMENT"
-                  statTitle={departments?.length}
-                  statDescription="All departments in Each ministry"
-                  statIconName="fas fa-building"
-                  statIconColor="bg-orange-500"
-                />
+                  <Link href="/admin/department">
+                      <a>
+                          <Card
+                              statSubtitle="DEPARTMENT"
+                              statTitle={departments?.length}
+                              statDescription="All departments in Each ministry"
+                              statIconName="fas fa-building"
+                              statIconColor="bg-orange-500"
+                          />
+                      </a>
+                  </Link>
               </div>
+
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <Card
-                  statSubtitle="DIVISIONS"
-                  statTitle={divisions?.length}
-                  statDescription="All divisions in Every department"
-                  statIconName="fas fa-boxes"
-                  statIconColor="bg-pink-500"
-                />
+                  <Link href="/admin/division">
+                        <a>
+                            <Card
+                              statSubtitle="DIVISIONS"
+                              statTitle={divisions?.length}
+                              statDescription="All divisions in Every department"
+                              statIconName="fas fa-boxes"
+                              statIconColor="bg-pink-500"
+                            />
+                        </a>
+                  </Link>
               </div>
+
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <Card
                   statSubtitle="BUDGET"

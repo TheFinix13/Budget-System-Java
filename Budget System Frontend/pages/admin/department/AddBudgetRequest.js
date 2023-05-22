@@ -43,6 +43,7 @@ export default function AddBudgetRequest() {
         const requestData = {
             narration: BudgetRequestData.narration,
             amount: parseFloat(amount),
+            status: BudgetRequestData.status
         };
 
         await BudgetRequestServices.addBudgetRequest(divisionId, requestData)

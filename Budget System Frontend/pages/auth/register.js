@@ -6,7 +6,6 @@ import Auth from "layouts/Auth.js";
 //Services
 import {UserService} from "../../data/api";
 import {useRouter} from "next/router";
-import bcrypt from 'bcryptjs';
 
 
 export default function Register() {
@@ -32,13 +31,8 @@ export default function Register() {
       console.log("Please fill all the fields");
     }
 
-    // const bcrypt = require('bcryptjs');
-
-    const encodedPassword = await bcrypt.hash(userData.password, 10)
-
     const userPayload = {
       ...userData,
-      password: encodedPassword,
       role: userData.role,
     };
 
@@ -56,7 +50,7 @@ export default function Register() {
       UserService.addApprovers(userPayload)
           .then((res) => {
             console.log(res.data);
-            route.push('/auth/login'); // Redirect to the approve dashboard
+            route.push('/auth/login'); // Redirect to the approval dashboard
           })
           .catch((err) => {
             console.log(err);
