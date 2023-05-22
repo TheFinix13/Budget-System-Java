@@ -1,11 +1,8 @@
 package com.example.budgetsystemjava.services;
 
 import com.example.budgetsystemjava.DAOmodel.Department;
-import com.example.budgetsystemjava.DAOmodel.Division;
 import com.example.budgetsystemjava.DAOmodel.Ministry;
 import com.example.budgetsystemjava.DAOmodel.Users;
-import com.example.budgetsystemjava.DTO.DepartmentDTO;
-import com.example.budgetsystemjava.DTO.DivisionDTO;
 import com.example.budgetsystemjava.DTO.MinistryDTO;
 import com.example.budgetsystemjava.exceptions.MinistryNotFoundException;
 import com.example.budgetsystemjava.repository.DepartmentRepo;
@@ -22,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MinistryServices {
@@ -64,19 +60,15 @@ public class MinistryServices {
             Ministry saveMinistry = ministryRepo.save(newMinistry);
 
             //Map the user to the ministry
-            if (ministryDTO != null) {
-                Users userMinistry = mapper.map(ministryDTO, Users.class);
+            Users userMinistry = mapper.map(ministryDTO, Users.class);
 
-                //create a new user with the ministry role
-                userMinistry.setPassword(passwordEncoder.encode(ministryDTO.getPassword()));
-                userMinistry.setRole("ministry");
-                userMinistry.setStatus("active");
-                userMinistry.setMinistryID(saveMinistry.getMinistry_id());
+            //create a new user with the ministry role
+            userMinistry.setPassword(passwordEncoder.encode(ministryDTO.getPassword()));
+            userMinistry.setRole("ministry");
+            userMinistry.setStatus("active");
+            userMinistry.setMinistryID(saveMinistry.getMinistry_id());
 
-                userRepo.save(userMinistry);
-            } else {
-                return ResponseEntity.badRequest().body("User details are required");
-            }
+            userRepo.save(userMinistry);
             return ResponseEntity.ok("Ministry created successfully");
 
         } else {
@@ -84,12 +76,12 @@ public class MinistryServices {
         }
     }
 
-    public List<MinistryDTO> getMinistries(){
+    public List<MinistryDTO> getMinistries() {
         List<Ministry> ministry = ministryRepo.getMinistryData();
 
         List<MinistryDTO> ministryDTOs = new ArrayList<>();
         for (Ministry min : ministry) {
-            Users user = userRepo.findByMinistryID(min.getMinistry_id());
+//            Users user = userRepo.findByMinistryID(min.getMinistry_id());
             int departmentCount = departmentRepo.countDepartmentsByMinistryId(min.getMinistry_id());
             int divisionCount = divisionRepo.countDivisionsByMinistryId(min.getMinistry_id());
 
@@ -157,7 +149,7 @@ public class MinistryServices {
                     .totalDivisions(totalDivisions)
                     .build();
 
-        }else {
+        } else {
             throw new MinistryNotFoundException("Ministry not found");
         }
     }

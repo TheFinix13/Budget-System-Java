@@ -2,16 +2,11 @@ package com.example.budgetsystemjava.controller;
 
 import com.example.budgetsystemjava.DAOmodel.Users;
 import com.example.budgetsystemjava.DTO.UserDTO;
-import com.example.budgetsystemjava.config.JwtLoginRequest;
-import com.example.budgetsystemjava.config.JwtLoginResponse;
 import com.example.budgetsystemjava.services.UserServices;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

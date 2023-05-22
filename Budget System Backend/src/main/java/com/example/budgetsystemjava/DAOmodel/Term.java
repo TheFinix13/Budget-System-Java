@@ -1,7 +1,8 @@
 package com.example.budgetsystemjava.DAOmodel;
 
-import javax.persistence.*;
 import lombok.Data;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -27,7 +28,6 @@ public class Term {
 
     @OneToMany
     private List<Expenditure> expenditures;
-
 
 
 }

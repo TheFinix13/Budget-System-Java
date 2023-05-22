@@ -3,8 +3,6 @@ package com.example.budgetsystemjava.DTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

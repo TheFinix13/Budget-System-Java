@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,10 +61,10 @@ public class DepartmentServices {
 
                     return DepartmentDTO.builder()
                             .id(String.valueOf(department.getDepartment_id()))
-                        .name(department.getName())
-                        .description(department.getDescription())
+                            .name(department.getName())
+                            .description(department.getDescription())
                             .divisions(divisionDTOS)
-                        .build();
+                            .build();
                 }).collect(Collectors.toList());
     }
 
@@ -82,7 +81,7 @@ public class DepartmentServices {
             departmentDTO.setDescription(map.get("description"));
             departmentDTO.setMinistryName(map.get("ministryName"));
 
-            Long departmentId = Long.parseLong(map.get("departmentId"));
+            long departmentId = Long.parseLong(map.get("departmentId"));
             int divisionCount = divisionRepo.countDivisionsByDepartmentId(departmentId);
             departmentDTO.setDivisionCount(divisionCount);
 
@@ -96,6 +95,7 @@ public class DepartmentServices {
         Department department = departmentRepo.findById(departmentId)
                 .orElse(null);
 
+        assert department != null;
         Ministry ministry = department.getMinistry();
 
         List<Division> division = department.getDivisions();
