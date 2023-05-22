@@ -17,6 +17,8 @@ public class Department {
     @Column(unique = true)
     private String name;
     @NotNull
+    private String code;
+    @NotNull
     private String description;
     @Column(updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime created_at;

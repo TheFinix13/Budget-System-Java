@@ -1,6 +1,10 @@
 package com.example.budgetsystemjava.DAOmodel;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,13 +12,16 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "budget")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long budget_id;
-    private float amount;
+    private String narration;
+    private double amount;
     private String status;
-    private String data;
     private LocalDateTime created_at;
 
     @ManyToOne

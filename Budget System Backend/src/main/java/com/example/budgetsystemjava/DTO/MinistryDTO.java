@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MinistryDTO {
+    private Long ministry_id;
     private String name;
     private String description;
     private String location;
@@ -23,10 +24,8 @@ public class MinistryDTO {
     private String password;
     private String role;
     private String status;
-//    private List<DepartmentDTO> departments;
-//    private int departCount;
-//    private int divisionCount;
-
+    private int totalDepartments;
+    private int totalDivisions;
 
 //    private UserDTO user;
 

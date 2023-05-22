@@ -23,7 +23,7 @@ public class MinistryController {
     }
 
     @GetMapping(path = "get_ministry")
-    public List<Ministry> getMinistry() {
+    public List<MinistryDTO> getMinistry() {
         return ministryServices.getMinistries();
     }
 
@@ -49,19 +49,8 @@ public class MinistryController {
     }
 
     @GetMapping(path = "get_one_ministry/{id}")
-    public ResponseEntity<Ministry> showAMinistry(@PathVariable Long id) {
-        Ministry ministry = ministryServices.showAMinistry(id);
+    public ResponseEntity<MinistryDTO> showAMinistry(@PathVariable Long id) {
+        MinistryDTO ministry = ministryServices.showAMinistry(id);
         return ResponseEntity.ok(ministry);
     }
-
-//
-//    @GetMapping(path = "show_department_count")
-//    public List<Ministry> showDepartmentCount() {
-//        return ministryServices.showDepartmentCount();
-//    }
-//
-//    @GetMapping(path = "ministry_department_count")
-//    public List<Ministry> ministryDepartmentCount() {
-//        return ministryServices.ministryDepartmentCount();
-//    }
 }

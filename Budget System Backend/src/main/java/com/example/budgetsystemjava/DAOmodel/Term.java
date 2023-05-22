@@ -22,8 +22,8 @@ public class Term {
     @OneToMany(mappedBy = "term")
     private List<Budget> budgets;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "term")
-    private List<BudgetRequest> budget_requests;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "term")
+//    private List<BudgetRequest> budget_requests;
 
     @OneToMany
     private List<Expenditure> expenditures;

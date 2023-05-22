@@ -1,6 +1,7 @@
 package com.example.budgetsystemjava.controller;
 
 import com.example.budgetsystemjava.DAOmodel.Users;
+import com.example.budgetsystemjava.DTO.UserDTO;
 import com.example.budgetsystemjava.config.JwtLoginRequest;
 import com.example.budgetsystemjava.config.JwtLoginResponse;
 import com.example.budgetsystemjava.services.UserServices;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping(path = "/")
+@RequestMapping(path = "/api/user")
 public class UserController {
 
     //UserServices
@@ -26,50 +27,42 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "hello")
-    public String hello() {
-        return "Hello World";
+    @PostMapping(path = "add_admin")
+    public ResponseEntity<String> addAdminUser(@RequestBody Users user) {
+
+        userService.addAdminUser(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Admin User added successfully");
     }
 
-    @PostMapping(path = "/api/user/add_user")
-    public ResponseEntity<String> addUser(@RequestBody Users user) {
+    @PostMapping(path = "add_approve")
+    public ResponseEntity<String> createApprove(@RequestBody UserDTO user) {
 
-        userService.addUser(user);
+        userService.createApproveUser(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("User added successfully");
+        return new ResponseEntity<>("Approve User Created Successfully", HttpStatus.CREATED);
     }
 
-    @PostMapping(path = "/api/user/login")
-    public ResponseEntity<?> login(@RequestBody JwtLoginRequest loginUser) {
-     try {
-         String token = userService.authenticateUser(loginUser.getEmail(), loginUser.getPassword());
-         return ResponseEntity.ok(new JwtLoginResponse(token));
-     }
-     catch (Exception e){
-        return ResponseEntity.badRequest().body(e.getMessage());
-     }
-    }
-
-    @GetMapping(path = "/api/user/loggedInUser")
-    public ResponseEntity<?> getLoggedInUser(@RequestHeader("Authorization") String token) {
-        try {
-            Users user = userService.getLoggedInUser(token);
-            return ResponseEntity.ok(user);
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    @GetMapping(path = "/api/user/allUsers")
-    public ResponseEntity<?> getAllUsers(@RequestHeader("Authorization") String token) {
-        try {
-            List<Users> users = userService.getAllUsers(token);
-            return ResponseEntity.ok(users);
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+//    @GetMapping(path = "/api/user/loggedInUser")
+//    public ResponseEntity<?> getLoggedInUser(@RequestHeader("Authorization") String token) {
+//        try {
+//            Users user = userService.getLoggedInUser(token);
+//            return ResponseEntity.ok(user);
+//        }
+//        catch (Exception e){
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
+//
+//    @GetMapping(path = "/api/user/allUsers")
+//    public ResponseEntity<?> getAllUsers(@RequestHeader("Authorization") String token) {
+//        try {
+//            List<Users> users = userService.getAllUsers(token);
+//            return ResponseEntity.ok(users);
+//        }
+//        catch (Exception e){
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
 
 }

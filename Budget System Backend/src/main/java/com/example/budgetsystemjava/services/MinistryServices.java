@@ -1,9 +1,15 @@
 package com.example.budgetsystemjava.services;
 
+import com.example.budgetsystemjava.DAOmodel.Department;
+import com.example.budgetsystemjava.DAOmodel.Division;
 import com.example.budgetsystemjava.DAOmodel.Ministry;
 import com.example.budgetsystemjava.DAOmodel.Users;
+import com.example.budgetsystemjava.DTO.DepartmentDTO;
+import com.example.budgetsystemjava.DTO.DivisionDTO;
 import com.example.budgetsystemjava.DTO.MinistryDTO;
 import com.example.budgetsystemjava.exceptions.MinistryNotFoundException;
+import com.example.budgetsystemjava.repository.DepartmentRepo;
+import com.example.budgetsystemjava.repository.DivisionRepo;
 import com.example.budgetsystemjava.repository.MinistryRepo;
 import com.example.budgetsystemjava.repository.UserRepo;
 import javassist.NotFoundException;
@@ -13,22 +19,29 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MinistryServices {
     private final MinistryRepo ministryRepo;
+    private final DepartmentRepo departmentRepo;
     private final UserRepo userRepo;
     private final ModelMapper mapper;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final DivisionRepo divisionRepo;
 
     @Autowired
-    public MinistryServices(MinistryRepo ministryRepo, UserRepo userRepo, ModelMapper mapper, BCryptPasswordEncoder passwordEncoder) {
+    public MinistryServices(MinistryRepo ministryRepo, DepartmentRepo departmentRepo, UserRepo userRepo, ModelMapper mapper, BCryptPasswordEncoder passwordEncoder,
+                            DivisionRepo divisionRepo) {
         this.ministryRepo = ministryRepo;
+        this.departmentRepo = departmentRepo;
         this.userRepo = userRepo;
         this.mapper = mapper;
         this.passwordEncoder = passwordEncoder;
+        this.divisionRepo = divisionRepo;
     }
 
     public ResponseEntity<?> addMinistry(MinistryDTO ministryDTO) {
@@ -71,19 +84,29 @@ public class MinistryServices {
         }
     }
 
-    public List<Ministry> getMinistries(){
+    public List<MinistryDTO> getMinistries(){
         List<Ministry> ministry = ministryRepo.getMinistryData();
 
+        List<MinistryDTO> ministryDTOs = new ArrayList<>();
         for (Ministry min : ministry) {
             Users user = userRepo.findByMinistryID(min.getMinistry_id());
-           if (user != null) {
-            min.setFirstname(user.getFirstname());
-            min.setLastname(user.getLastname());
-            min.setEmail(user.getEmail());
-            }
+            int departmentCount = departmentRepo.countDepartmentsByMinistryId(min.getMinistry_id());
+            int divisionCount = divisionRepo.countDivisionsByMinistryId(min.getMinistry_id());
+
+            MinistryDTO ministryDTO = new MinistryDTO().builder()
+                    .ministry_id(min.getMinistry_id())
+                    .name(min.getName())
+                    .description(min.getDescription())
+                    .location(min.getLocation())
+                    .sector(min.getSector())
+                    .totalDepartments(departmentCount)
+                    .totalDivisions(divisionCount)
+                    .build();
+
+            ministryDTOs.add(ministryDTO);
         }
 
-        return ministry;
+        return ministryDTOs;
     }
 
     public Ministry updateMinistry(long ministry_id, MinistryDTO ministryDTO) throws NotFoundException {
@@ -108,33 +131,35 @@ public class MinistryServices {
         return true;
     }
 
-    public Ministry showAMinistry(Long id) {
+    public MinistryDTO showAMinistry(Long id) {
         Optional<Ministry> optionalMinistry = ministryRepo.findById(id);
 
         if (optionalMinistry.isPresent()) {
-            return optionalMinistry.get();
+            Ministry ministry = optionalMinistry.get();
+
+            List<Department> departments = departmentRepo.getDepartmentDataByMinistryId(ministry.getMinistry_id());
+
+            int totalDepartments = departmentRepo.countDepartmentsByMinistryId(ministry.getMinistry_id());
+
+            int totalDivisions = 0;
+
+            for (Department depart : departments) {
+                int departDivisions = divisionRepo.countDivisionsByDepartmentId(depart.getDepartment_id());
+                totalDivisions += departDivisions;
+            }
+
+            return MinistryDTO.builder()
+                    .name(ministry.getName())
+                    .description(ministry.getDescription())
+                    .location(ministry.getLocation())
+                    .sector(ministry.getSector())
+                    .totalDepartments(totalDepartments)
+                    .totalDivisions(totalDivisions)
+                    .build();
+
         }else {
             throw new MinistryNotFoundException("Ministry not found");
         }
     }
 
-
-//
-//
-//
-//    public List<Ministry> showDepartmentCount() {
-//        List<Ministry> details = ministryRepo.findAll();
-//        if(details.isEmpty()) {
-//            throw new IllegalStateException("No Ministry Found");
-//        }
-//        return details;
-//    }
-
-//    public List<Ministry> ministryDepartmentCount() {
-//        List<Ministry> details = ministryRepo.findAll();
-//        if(details.isEmpty()) {
-//            throw new IllegalStateException("No Ministry Found");
-//        }
-//        return details;
-//    }
 }

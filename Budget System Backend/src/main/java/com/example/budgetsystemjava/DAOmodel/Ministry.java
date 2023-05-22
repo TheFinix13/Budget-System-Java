@@ -42,7 +42,7 @@ public class Ministry {
     private String status;
     @OneToMany
     private List<Department> departments;
-    @OneToMany
-    private List<BudgetRequest> budget_requests;
+//    @OneToMany
+//    private List<BudgetRequest> budget_requests;
 
 }

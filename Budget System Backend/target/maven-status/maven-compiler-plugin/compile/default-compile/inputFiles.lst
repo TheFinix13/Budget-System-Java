@@ -6,10 +6,13 @@ C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\mai
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\BudgetSystemJavaApplication.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\repository\DivisionRepo.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\DAOmodel\Budget.java
+C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\DTO\BudgetDTO.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\services\MinistryServices.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\repository\UserRepo.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\controller\UserController.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\DAOmodel\Expenditure.java
+C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\controller\BudgetController.java
+C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\services\BudgetServices.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\controller\MinistryController.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\DAOmodel\Users.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\DAOmodel\BudgetRequest.java
@@ -27,5 +30,7 @@ C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\mai
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\repository\MinistryRepo.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\config\WebSecurityConfig.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\config\ModelConfig.java
+C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\controller\AuthController.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\DAOmodel\Department.java
 C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\DTO\UserDTO.java
+C:\Users\finix\Documents\GitHub\Budget-System-Java\Budget System Backend\src\main\java\com\example\budgetsystemjava\repository\BudgetRepo.java

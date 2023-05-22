@@ -34,7 +34,7 @@ public class Expenditure {
     @JoinColumn(name = "term_id", referencedColumnName = "term_id")
     private Term term;
 
-    @ManyToOne
-    @JoinColumn(name = "budget_request_id")
-    private BudgetRequest budgetRequest;
+//    @ManyToOne
+//    @JoinColumn(name = "budget_request_id")
+//    private BudgetRequest budgetRequest;
 }

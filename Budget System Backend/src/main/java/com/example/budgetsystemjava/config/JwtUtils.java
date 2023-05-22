@@ -3,10 +3,16 @@ package com.example.budgetsystemjava.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtUtils {
@@ -16,24 +22,40 @@ public class JwtUtils {
 
     @Value("${jwt.expirationMs}")
     private int jwtExpirationMs;
+    private SecretKeySpec secretKey;
 
-    public String generateToken(Long userId) {
-        Date expirationDate = new Date(System.currentTimeMillis() + jwtExpirationMs);
+    @PostConstruct
+    public void init() {
+        // Generate a secure key using SecureRandom
+        byte[] keyBytes = new byte[32]; // 256 bits
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.nextBytes(keyBytes);
+
+        // Create a secret key specification using the generated key bytes
+        secretKey = new SecretKeySpec(keyBytes, SignatureAlgorithm.HS256.getJcaName());
+    }
+
+    public String generateToken(long userId, String email, String role) {
+        //time before authentication expires
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpirationMs * 1000L);
 
         return Jwts.builder()
-                .setSubject(Long.toString(userId))
-                .setIssuedAt(new Date())
-                .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .setSubject(String.valueOf(userId))
+                .claim("email", email)
+                .claim("role", role)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public Long getUserIdFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(jwtSecret)
+    public Claims parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(jwtSecret.getBytes())
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
-
-        return Long.parseLong(claims.getSubject());
     }
+
 }

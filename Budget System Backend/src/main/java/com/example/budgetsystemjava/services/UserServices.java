@@ -2,119 +2,112 @@ package com.example.budgetsystemjava.services;
 
 import com.example.budgetsystemjava.DAOmodel.Users;
 import com.example.budgetsystemjava.DTO.UserDTO;
-import com.example.budgetsystemjava.config.JwtUtils;
 import com.example.budgetsystemjava.repository.UserRepo;
-import org.springframework.beans.BeanUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class UserServices implements UserDetailsService {
     private final UserRepo userRepo;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final JwtUtils jwtUtils;
+    private final ModelMapper modelMapper;
 
     //Constructor
     @Autowired
-    public UserServices(UserRepo userRepo, BCryptPasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+    public UserServices(UserRepo userRepo, BCryptPasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
-        this.jwtUtils = jwtUtils;
+        this.modelMapper = modelMapper;
     }
 
     //Add User to Database
-    public Users addUser(Users user) {
-        Users newUser = new Users();
-        newUser.setFirstname(user.getFirstname());
-        newUser.setLastname(user.getLastname());
-        newUser.setEmail(user.getEmail());
+    public void addAdminUser(Users user) {
+        Users newUser = modelMapper.map(user, Users.class);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setRole("admin");
         newUser.setStatus("active");
-        BeanUtils.copyProperties(user, newUser);
 
-        return userRepo.save(newUser);
+        Users savedUser = userRepo.save(newUser);
+
+        modelMapper.map(savedUser, UserDTO.class);
     }
 
-//    Authenticate User
-    public String authenticateUser(String email, String password) {
-        Optional<Users> user = userRepo.findByEmail(email);
+    public void createApproveUser(UserDTO userDTO) {
+        Users user = Users.builder()
+                .firstname(userDTO.getFirstname())
+                .lastname(userDTO.getLastname())
+                .email(userDTO.getEmail())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
+                .role("approve")
+                .status("active")
+                .build();
 
-        if (!user.isPresent()) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
-        }
-
-        Users existingUser = user.get();
-
-        if (!passwordEncoder.matches(password, existingUser.getPassword())) {
-            throw new UsernameNotFoundException("Password is incorrect");
-        }
-        return jwtUtils.generateToken(existingUser.getUser_id());
-
+        userRepo.save(user);
     }
-
 
     @Override
-    public UserDetails loadUserByUsername(String role) throws UsernameNotFoundException {
-        List<SimpleGrantedAuthority> roles = null;
-        if (role.equals("admin")) {
-            roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            return new User("admin", "admin", roles);
-        } else if (role.equals("user")) {
-            roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-            return new User("user", "user", roles);
-        } else {
-            throw new UsernameNotFoundException("User not found with role: " + role);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<Users> userOptional = userRepo.findByEmail(email);
+
+        if (!userOptional.isPresent()) {
+            throw new UsernameNotFoundException("User not found");
         }
+
+        Users user = userOptional.get();
+
+        // Create and return an instance of UserDetails
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .roles(user.getRole())
+                .build();
     }
 
 
-    public Users getLoggedInUser(String token) {
-        Long userId = jwtUtils.getUserIdFromToken(token);
-        Optional<Users> user = userRepo.findById(userId);
-        if (!user.isPresent()) {
-            throw new UsernameNotFoundException("User not found with id: " + userId);
-        }
-        return user.get();
-    }
+//    public Users getLoggedInUser(String token) {
+//        Long userId = jwtUtils.getUserIdFromToken(token);
+//        Optional<Users> user = userRepo.findById(userId);
+//        if (!user.isPresent()) {
+//            throw new UsernameNotFoundException("User not found with id: " + userId);
+//        }
+//        return user.get();
+//    }
+//
+//    public List<Users> getAllUsers(String token) {
+//        Long userId = jwtUtils.getUserIdFromToken(token);
+//        Optional<Users> user = userRepo.findById(userId);
+//        if (!user.isPresent()) {
+//            throw new UsernameNotFoundException("User not found with id: " + userId);
+//        }
+//        return userRepo.findAll();
+//    }
+//
+//    public List<Users> getAllUsers() {
+//        List<Users> user = userRepo.findAll();
+//
+//        List<Users> loggedUser = user
+//                .stream()
+//                .map(u -> {
+//                    Users newU = new Users();
+//                    newU.setFirstname(u.getFirstname());
+//                    newU.setLastname(u.getLastname());
+//                    newU.setEmail(u.getEmail());
+//                    newU.setRole(u.getRole());
+//                    newU.setStatus(u.getStatus());
+//                    return newU;
+//                }).collect(Collectors.toList());
+//
+//        return loggedUser;
+//
+//    }
 
-    public List<Users> getAllUsers(String token) {
-        Long userId = jwtUtils.getUserIdFromToken(token);
-        Optional<Users> user = userRepo.findById(userId);
-        if (!user.isPresent()) {
-            throw new UsernameNotFoundException("User not found with id: " + userId);
-        }
-        return userRepo.findAll();
-    }
-
-    public List<Users> getAllUsers() {
-        List<Users> user = userRepo.findAll();
-
-        List<Users> loggedUser = user
-                .stream()
-                .map(u -> {
-                    Users newU = new Users();
-                    newU.setFirstname(u.getFirstname());
-                    newU.setLastname(u.getLastname());
-                    newU.setEmail(u.getEmail());
-                    newU.setRole(u.getRole());
-                    newU.setStatus(u.getStatus());
-                    return newU;
-                }).collect(Collectors.toList());
-
-        return loggedUser;
-
-    }
 
 }

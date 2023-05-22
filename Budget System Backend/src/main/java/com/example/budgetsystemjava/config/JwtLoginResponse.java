@@ -1,13 +1,13 @@
 package com.example.budgetsystemjava.config;
 
+import lombok.*;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class JwtLoginResponse {
-    private final String jwt;
+    private String token;
 
-    public JwtLoginResponse(String jwt) {
-        this.jwt = jwt;
-    }
-
-    public String getToken() {
-        return this.jwt;
-    }
 }
