@@ -53,7 +53,7 @@ export default function Card({
 
 Card.propTypes = {
   statSubtitle: PropTypes.string,
-  statTitle: PropTypes.string,
+  // statTitle: PropTypes.string,
   // can be any of the text color utilities
   // from tailwindcss
   statDescription: PropTypes.string,

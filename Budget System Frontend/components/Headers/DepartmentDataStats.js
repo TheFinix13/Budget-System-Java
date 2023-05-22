@@ -5,28 +5,28 @@ import Card from "../Cards/Card";
 import BudgetCard from "../Cards/BudgetCard";
 
 //services
-import {MinistryService} from "../../data/api";
+import {DepartmentService} from "../../data/api";
 import {useRouter} from "next/router";
 
 
-export default function MinistryDataStats() {
-    const [ministry, setMinistry] = useState({});
+export default function DepartmentDataStats() {
+    const [department, setDepartment] = useState({});
 
     const router = useRouter();
     const {id} = router.query;
-    async function fetchAMinistry() {
-        await MinistryService.getAMinistry(id)
+    async function fetchADepartment() {
+        await DepartmentService.getADepartment(id)
             .then((res) => {
                 const {data} = res;
-                setMinistry(data)
+                setDepartment(data)
             }).catch((error) => {
-                console.error("Failed to fetch ministries", error);
+                console.error("Failed to fetch department", error);
             })
     }
 
     useEffect(() => {
         if (id) {
-            fetchAMinistry();
+            fetchADepartment();
         }
     }, [id]);
 
@@ -60,7 +60,7 @@ export default function MinistryDataStats() {
     //     })
     // }
 
-    // console.log(ministry)
+    // console.log(department)
     return (
         <>
             {/* Header */}
@@ -70,19 +70,19 @@ export default function MinistryDataStats() {
                         {/* Card stats */}
                         <div className="flex flex-wrap">
 
-                            <div className="w-full lg:w-6/12 xl:w-3/12 p-4">
-                            <BudgetCard
-                                statSubtitle="BUDGET REQUESTS"
-                                statTitle="TOTAL REQUESTS: "
-                                statApprovedRequests="Approved Requests:"
-                                statPendingRequests="Pending Requests:"
-                                statDisapprovedRequests="Disapproved Requests: "
-                                statDescription="All budgets Accounted for in this ministry"
-                                statIconName="fas fa-percent"
-                                statIconColor="bg-lightBlue-500"
-                            />
+                            <div className="w-full lg:w-6/12 xl:w-4/12 px-4">
+                                <BudgetCard
+                                    statSubtitle="BUDGET REQUESTS"
+                                    statTitle="TOTAL REQUESTS: "
+                                    statApprovedRequests="Approved Requests:"
+                                    statPendingRequests="Pending Requests:"
+                                    statDisapprovedRequests="Disapproved Requests: "
+                                    statDescription="All budgets Accounted for in this department"
+                                    statIconName="fas fa-percent"
+                                    statIconColor="bg-lightBlue-500"
+                                />
                             </div>
-                            <div className="w-full lg:w-6/12 xl:w-3/12 p-4">
+                            <div className="w-full lg:w-6/12 xl:w-4/12 px-4">
                                 <BudgetCard
                                     statSubtitle="BUDGET"
                                     statTitle="TOTAL AMOUNT: "
@@ -97,21 +97,11 @@ export default function MinistryDataStats() {
 
                             {/*<div className="w-full lg:w-6/12 xl:w-4/12 p-4"></div>*/}
 
-                            <div className="w-full lg:w-6/12 xl:w-3/12 p-4">
-                                <Card
-                                    statSubtitle="DEPARTMENTS"
-                                    statTitle={ministry.totalDepartments}
-                                    statDescription="All departments in this ministry"
-                                    statIconName="fas fa-building"
-                                    statIconColor="bg-orange-500"
-                                />
-                            </div>
-
-                            <div className="w-full lg:w-6/12 xl:w-3/12 p-4">
+                            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                                 <Card
                                     statSubtitle="Divisions"
-                                    statTitle={ministry.totalDivisions}
-                                    statDescription="All Divisions in this ministry"
+                                    statTitle={department.divisions?.length}
+                                    statDescription="All Divisions in this department"
                                     statIconName="fas fa-boxes"
                                     statIconColor="bg-pink-500"
                                 />

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 export default function DepartmentCard({
   statTitle,
+    statCode,
   statUnit,
    statDescription,
   statMinistry,
@@ -19,7 +20,10 @@ export default function DepartmentCard({
                             <h5 className="text-blueGray-400 uppercase font-bold text-xs">
                                 {statTitle}
                             </h5>
-
+                            <span className="text-blueGray-400 uppercase font-bold text-xs">
+                                {statCode}
+                            </span>
+                            <br/>
                             <span className="text-blueGray-400 font-medium text-xs">
                                 {statUnit}
                             </span>

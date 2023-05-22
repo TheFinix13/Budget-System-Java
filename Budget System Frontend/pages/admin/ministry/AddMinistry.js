@@ -14,13 +14,13 @@ export default function AddMinistry() {
         sector: "",
         description: "",
         location: "",
-            firstname: "",
-            lastname: "",
-            email: "",
-            password: "",
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
     });
 
-    const [viewMode, setViewMode] = useState("hide");
+    const [viewMode, setViewMode] = useState("show");
 
 
     async function addMinistry(e) {
@@ -38,6 +38,17 @@ export default function AddMinistry() {
                     alertService.error(error.response.data.message, {keepAfterRouteChange: true});
                 }
             })
+
+        setMinistryData({
+            name: "",
+            sector: "",
+            description: "",
+            location: "",
+            firstname: "",
+            lastname: "",
+            email: "",
+            password: "",
+        });
     }
 
     return (

@@ -4,8 +4,12 @@ const Backend = process.env.NEXT_PUBLIC_BackEndLocalHost;
 
 // console.log(Backend);
 export class UserService {
-     static addUser(user) {
-        return axios.post(`${Backend}/api/user/add_user`, user);
+     static addAdmin(user) {
+        return axios.post(`${Backend}/api/user/add_admin`, user);
+    }
+
+    static addApprovers(user) {
+        return axios.post(`${Backend}/api/user/add_approve`, user);
     }
 
     static login(user) {
@@ -26,13 +30,13 @@ export class MinistryService {
         return axios.get(`${Backend}/api/ministry/get_one_ministry/${id}`);
     }
 
-    static updateMinistry(id, param2) {
-        return axios.put(`${Backend}/api/ministry/update_ministry`);
-
-    }
-    static deleteMinistry(id) {
-        return axios.delete(`${Backend}/api/ministry/update_ministry/${id}`);
-    }
+    // static updateMinistry(id, param2) {
+    //     return axios.put(`${Backend}/api/ministry/update_ministry`);
+    //
+    // }
+    // static deleteMinistry(id) {
+    //     return axios.delete(`${Backend}/api/ministry/update_ministry/${id}`);
+    // }
 }
 
 export class DepartmentService {
@@ -46,6 +50,10 @@ export class DepartmentService {
 
     static getAllDepartments() {
         return axios.get(`${Backend}/api/department/get_all_departments`);
+    }
+
+    static getADepartment(department_id) {
+        return axios.get(`${Backend}/api/department/get_a_department/${department_id}`);
     }
 
     // static updateDepartment(id, param2) {
@@ -70,7 +78,20 @@ export class DivisionService {
     static getAllDivisions() {
         return axios.get(`${Backend}/api/division/get_all_divisions`);
     }
+}
 
+export class BudgetRequestServices {
+    static addBudgetRequest(division_id, budgetRequest){
+        return axios.post(`${Backend}/api/division_budget/create_budget/${division_id}`, budgetRequest);
+    }
+
+    static getBudgetRequestInDivision(division_id) {
+        return axios.get(`${Backend}/api/division_budget/get_budget_requests/${division_id}`);
+    }
+
+    // static getAllDivisions() {
+    //     return axios.get(`${Backend}/api/division/get_all_divisions`);
+    // }
 }
 
 
@@ -98,4 +119,3 @@ export const sectors= [
     {id: 21, name: 'Youth and Sports'},
 ];
 
-// export {UserService, MinistryService, DepartmentService}

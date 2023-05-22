@@ -6,6 +6,7 @@ import AllDepartmentTable from "../Cards/AllDepartmentTable";
 
 //services
 import {DepartmentService} from "../../data/api";
+import Link from "next/link";
 
 export default function DepartmentStats() {
 
@@ -71,14 +72,19 @@ export default function DepartmentStats() {
                                     <div className="flex flex-wrap">
                                         {showAllDepartments.map((row, index) => (
                                             <div className="w-full lg:w-6/12 xl:w-4/12 p-4">
-                                                <DepartmentCard key={index}
-                                                   statTitle = {row.name}
-                                                   statUnit={"Divisions: " + row.divisions}
-                                                    statDescription={row.description}
-                                                   statMinistry={row.ministryName || "No ministry"}
-                                                   statIconName="fas fa-building"
-                                                   statIconColor="bg-orange-500"
-                                                />
+                                                <Link href={`/admin/department/${row.id}`}>
+                                                    <a>
+                                                        <DepartmentCard key={index}
+                                                           statTitle = {row.name}
+                                                            statCode={row.code}
+                                                           statUnit={"Divisions: " + row.divisionCount}
+                                                            statDescription={row.description}
+                                                           statMinistry={row.ministryName || "No ministry"}
+                                                           statIconName="fas fa-building"
+                                                           statIconColor="bg-orange-500"
+                                                        />
+                                                    </a>
+                                                </Link>
                                             </div>
                                         ))}
                                     </div>

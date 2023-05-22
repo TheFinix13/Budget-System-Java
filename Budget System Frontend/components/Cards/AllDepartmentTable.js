@@ -3,6 +3,7 @@ import React from "react";
 // components
 import TableDropdown from "../Dropdowns/TableDropdown";
 import PropTypes from "prop-types";
+import Link from "next/link";
 
 //services
 
@@ -29,6 +30,16 @@ export default function AllDepartmentTable({color, showAllDepartments}) {
                                 }
                                 >
                                     Department Name
+                                </th>
+
+                                <th className={
+                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                    (color === "light"
+                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                        : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
+                                }
+                                >
+                                    Department Code
                                 </th>
 
                                 <th className={
@@ -65,9 +76,16 @@ export default function AllDepartmentTable({color, showAllDepartments}) {
                             <tbody>
                             {showAllDepartments.map((row, index) => (
                                 <tr key={index}>
+                                    <Link href={`/admin/department/${row.id}`}>
+                                        <a>
                                     <th key={index} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
                                         {row.name}
                                     </th>
+                                        </a>
+                                    </Link>
+                                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                        {row.code}
+                                    </td>
                                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         {row.ministryName}
                                     </td>

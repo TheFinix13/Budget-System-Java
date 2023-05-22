@@ -1,23 +1,18 @@
 import React, {useEffect, useState} from "react";
 
 // components
-import {Alert} from "../Alerts";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import PropTypes from "prop-types";
 
 //services
 import {DepartmentService} from "../../data/api";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 export default function DepartmentTable({color}) {
 
     const[department, setDepartment] = useState([]);
     const[loading, setLoading] = useState(false);
-
-    const[notificationDetails, setNotificationDetails] = useState({
-        message: '',
-        type: '',
-    })
 
     const router = useRouter();
     const {id} = router.query;
@@ -29,10 +24,7 @@ export default function DepartmentTable({color}) {
                 setLoading(true);
             })
             .catch(error => {
-                setNotificationDetails({
-                    message: 'Error loading department' + error,
-                    type: 'error'
-                })
+                console.error(error);
                 setLoading(true);
             });
     }
@@ -46,7 +38,6 @@ export default function DepartmentTable({color}) {
 
     return (
         <>
-            {Alert(notificationDetails)}
             <div className= {
                 "relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded " +
                 (color === "light" ? "bg-white" : "bg-blueGray-700 text-white")
@@ -136,11 +127,15 @@ export default function DepartmentTable({color}) {
                             <tbody>
                                 {department.map((row, index) => (
                                     <tr key={index}>
-                                        <th key={index} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                            {row.name}
-                                        </th>
+                                        <Link href={`/admin/department/${row.id}`}>
+                                            <a>
+                                                <th key={index} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                                    {row.name}
+                                                </th>
+                                            </a>
+                                        </Link>
                                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            {row.UnitCount}
+                                            {row.divisions?.length}
                                         </td>
                                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <i className="fas fa-circle text-teal-500 mr-2"></i>

@@ -1,9 +1,67 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 // components
 import Card from "components/Cards/Card.js";
+import {DepartmentService, DivisionService, MinistryService} from "../../data/api";
 
 export default function DashboardStats() {
+
+  const [ministry, setMinistry] = useState([])
+  const [departments, setDepartments] = useState([])
+  const [divisions, setDivisions] = useState([])
+
+  async function fetchMinistries() {
+    await MinistryService.getMinistry()
+        .then((res) => {
+          const {data} = res;
+          console.log(data)
+          if (data){
+            setMinistry(data);
+          }else {
+            console.error(data.message);
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to fetch ministries", error);
+        })
+  }
+
+  async function fetchDepartments() {
+    await DepartmentService.getAllDepartments()
+        .then((response) => {
+          const {data} = response;
+          if (data){
+            setDepartments(data);
+          }else{
+            console.error(data.message);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+  }
+
+  async function fetchDivisions() {
+    await DivisionService.getAllDivisions()
+        .then((response) => {
+          const {data} = response;
+          if (data){
+            setDivisions(data);
+          }else{
+            console.error(data.message);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+  }
+
+  useEffect(() => {
+    fetchMinistries();
+    fetchDepartments();
+    fetchDivisions()
+
+  }, []);
 
   return (
     <>
@@ -16,7 +74,7 @@ export default function DashboardStats() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <Card
                   statSubtitle="MINISTRY"
-                  statTitle=""
+                  statTitle={ministry?.length}
                   statDescription="All ministries Added"
                   statIconName="fas fa-house"
                   statIconColor="bg-red-500"
@@ -25,7 +83,7 @@ export default function DashboardStats() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <Card
                   statSubtitle="DEPARTMENT"
-                  statTitle=" "
+                  statTitle={departments?.length}
                   statDescription="All departments in Each ministry"
                   statIconName="fas fa-building"
                   statIconColor="bg-orange-500"
@@ -34,7 +92,7 @@ export default function DashboardStats() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <Card
                   statSubtitle="DIVISIONS"
-                  statTitle="924"
+                  statTitle={divisions?.length}
                   statDescription="All divisions in Every department"
                   statIconName="fas fa-boxes"
                   statIconColor="bg-pink-500"

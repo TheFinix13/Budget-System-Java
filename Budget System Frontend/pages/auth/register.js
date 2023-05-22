@@ -3,8 +3,10 @@ import React, {useState} from "react";
 // layout for page
 import Auth from "layouts/Auth.js";
 
+//Services
 import {UserService} from "../../data/api";
 import {useRouter} from "next/router";
+import bcrypt from 'bcryptjs';
 
 
 export default function Register() {
@@ -14,30 +16,52 @@ export default function Register() {
     lastname: '',
     email: '',
     password: '',
-    role: 'admin',
-    status: 'active',
-    // message: '',
+    role: '',
+
   });
 
   const route = useRouter();
+
   async function addUser(e) {
     e.preventDefault();
 
-    userData.email = userData.email.toLowerCase().replace(/ /g, '');
+    userData.email = userData.email.toLowerCase()
+                      .replace(/ /g, '');
 
     if (!userData.firstname || !userData.lastname || !userData.email || !userData.password) {
       console.log("Please fill all the fields");
     }
 
-    UserService.addUser(userData)
-        .then((res) => {
-          console.log(res.data);
-            route.push('/auth/login');
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    // const bcrypt = require('bcryptjs');
 
+    const encodedPassword = await bcrypt.hash(userData.password, 10)
+
+    const userPayload = {
+      ...userData,
+      password: encodedPassword,
+      role: userData.role,
+    };
+
+    if (userData.role === 'admin') {
+      UserService.addAdmin(userPayload)
+          .then((res) => {
+            console.log(res.data);
+            route.push('/auth/login');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
+    else if (userData.role === 'approve') {
+      UserService.addApprovers(userPayload)
+          .then((res) => {
+            console.log(res.data);
+            route.push('/auth/login'); // Redirect to the approve dashboard
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
 }
 
   return (
@@ -74,18 +98,18 @@ export default function Register() {
                 <div className="text-blueGray-400 text-center mb-3 font-bold">
                   <small>Or sign up with credentials</small>
                 </div>
-                <form>
-                  <div className="relative grid gap-16 grid-cols-2 mb-3">
+                <form name="register">
+                  <div className="relative w-full grid gap-16 grid-cols-2 mb-3">
                     <div>
                       <label
                           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
+                          htmlFor="register"
                       >
                         FirstName
                       </label>
                       <input
                           type="text"
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full ease-linear transition-all duration-150"
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-6/12 ease-linear transition-all duration-150"
                           placeholder="Firstname"
                           name={'firstName'}
                           value={userData.firstname}
@@ -99,13 +123,13 @@ export default function Register() {
                     <div>
                       <label
                           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
+                          htmlFor="register"
                       >
                         LastName
                       </label>
                       <input
                           type="text"
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full ease-linear transition-all duration-150"
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-6/12 ease-linear transition-all duration-150"
                           placeholder="Lastname"
                           name={'lastName'}
                           value={userData.lastname}
@@ -121,7 +145,7 @@ export default function Register() {
                   <div className="relative w-full mb-3">
                     <label
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlFor="grid-password"
+                        htmlFor="register"
                     >
                       Email
                     </label>
@@ -142,7 +166,7 @@ export default function Register() {
                   <div className="relative w-full mb-3">
                     <label
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlFor="grid-password"
+                        htmlFor="register"
                     >
                       Password
                     </label>
@@ -157,6 +181,31 @@ export default function Register() {
                             password: e.target.value})
                         }
                     />
+                  </div>
+
+                  <div className="relative w-full mb-3">
+                    <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="register"
+                    >
+                      Role
+                    </label>
+                    <select
+                        className="border-0 px-3 py-3 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        name="role"
+                        defaultValue=""
+                        // value={userData.role}
+                        onChange={(e) => setUserData({
+                          ...userData,
+                          role: e.target.value })
+                    }
+                    >
+                      <option value="" disabled selected >
+                        Select Role
+                      </option>
+                      <option value="admin">Admin</option>
+                      <option value="approve">Approve</option>
+                    </select>
                   </div>
 
                   <div>

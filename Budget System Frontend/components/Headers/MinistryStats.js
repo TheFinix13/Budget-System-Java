@@ -57,8 +57,8 @@ export default function MinistryStats() {
                                                         <MinistryCard onClick={() => handleClick()}
                                                               key={index}
                                                               statTitle = {row.name}
-                                                              statDepartment={"Departments: " + row.departments.length}
-                                                              statUnit={"Divisions: " + row.unitCount}
+                                                              statDepartment={"Departments: " + row.totalDepartments}
+                                                              statUnit={"Divisions: " + row.totalDivisions}
                                                               statDescription={row.description}
                                                               statIconName="fas fa-house"
                                                               statIconColor="bg-red-500"
@@ -79,9 +79,8 @@ export default function MinistryStats() {
 
             {ministryMode === "current"? (
                 <>
-                    <MinistryDataNavbar
-                        setMinistryMode={setMinistryMode}
-                    />
+                    <MinistryDataNavbar/>
+
                     <MinistryDataStats
                         ministry={ministry}
                     />

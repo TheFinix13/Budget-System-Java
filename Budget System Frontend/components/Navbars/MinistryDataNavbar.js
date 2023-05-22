@@ -4,11 +4,12 @@ import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import {useRouter} from "next/router";
 import {MinistryService} from "../../data/api";
 
-export default function MinistryDataNavbar({handleShowMode, setMinistryMode}) {
+export default function MinistryDataNavbar({handleShowMode}) {
     const [ministry, setMinistry] = useState({});
 
     const router = useRouter();
     const {id} = router.query;
+
     async function fetchAMinistry() {
         await MinistryService.getAMinistry(id)
             .then((res) => {
@@ -36,16 +37,16 @@ export default function MinistryDataNavbar({handleShowMode, setMinistryMode}) {
                 <div className="w-full mx-auto items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
 
                     {/* Brand */}
-
-                    <a
-                        className="text-white text-sm uppercase hidden lg:inline-block font-semibold"
-                        href="admin/ministry"
-                        onClick={() => {
-                            setMinistryMode("all")
-                        }}
-                    >
-                        {ministry.name}
-                    </a>
+                        <a
+                            className="text-white text-sm uppercase hidden lg:inline-block font-semibold"
+                            href="#"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                router.back();
+                            }}
+                        >
+                            {ministry.name}
+                        </a>
 
                      {/* Search */}
                      <form name="search" className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
