@@ -2,8 +2,6 @@ import React from "react";
 import Link from "next/link";
 // components
 
-import IndexDropdown from "components/Dropdowns/IndexDropdown.js";
-
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
@@ -44,6 +42,18 @@ export default function Navbar(props) {
                   Docs
                 </a>
               </li>
+
+              <li className="flex items-center">
+                <Link href="/auth/login">
+                  <a
+                      className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                  >
+                    <i className="text-blueGray-400 fas fa-sign-in-alt text-lg leading-lg mr-2" />{" "}
+                    Login
+                  </a>
+                </Link>
+              </li>
+
             </ul>
 
           </div>

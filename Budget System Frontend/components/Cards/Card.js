@@ -43,14 +43,6 @@ export default function Card({
   );
 }
 
-// Card.defaultProps = {
-//   statSubtitle: "Ministry",
-//   statTitle: "30",
-//   statDescription: "sections of budgetSystem",
-//   statIconName: "fas fa-house",
-//   statIconColor: "bg-red-500",
-// };
-
 Card.propTypes = {
   statSubtitle: PropTypes.string,
   // statTitle: PropTypes.string,

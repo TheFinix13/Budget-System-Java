@@ -13,17 +13,16 @@ export default function DivisionTable({color, handleShowMode}) {
     const[loading, setLoading] = useState(false);
 
     const router = useRouter();
-    const {id} = router.query;
+    const {id, ministryId, departmentId} = router.query;
+    const departmentID = departmentId || id // Use departmentId for ministry view and id for admin view
 
     const [budgetRequest, setBudgetRequest] = useState([]);
 
     async function getDivisions() {
         setLoading(true);
         try {
-            const divisionResponse = await DivisionService.getDivisionInDepartment(id);
+            const divisionResponse = await DivisionService.getDivisionInDepartment(departmentID);
             setDivision(divisionResponse.data);
-
-            // console.log(divisionResponse.data);
 
             // Fetch budget requests for each division
             const requestPromises = divisionResponse.data.map((division) =>
@@ -35,8 +34,6 @@ export default function DivisionTable({color, handleShowMode}) {
             const budgetRequestData = requestResponse
                 .map((response) => response.data);
             setBudgetRequest(budgetRequestData);
-
-            // console.log(budgetRequestData);
 
         } catch (error) {
             console.log(error)
@@ -130,7 +127,17 @@ export default function DivisionTable({color, handleShowMode}) {
                                         : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                                 }
                                 >
-                                    Total Amount Approved
+                                    Amount Approved
+                                </th>
+
+                                <th className={
+                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                    (color === "light"
+                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                        : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
+                                }
+                                >
+                                    Progress Bar
                                 </th>
 
                                 <th
@@ -149,16 +156,30 @@ export default function DivisionTable({color, handleShowMode}) {
                                     const divisionId = row.id;
                                     const budgetReq = budgetRequest[index] || []
 
+                                    const totalAmount = budgetReq
+                                        .reduce((sum, req) => sum + req.amount, 0);
+
+                                    const totalApproved = budgetReq
+                                        .filter((req) => req.status === "Approved")
+                                        .reduce((sum, req) => sum + req.amount, 0);
+
+                                    const percentage = totalAmount > 0 ? totalApproved / totalAmount : 0;
+
+                                    let progressBarColorClass = '';
+                                    if (percentage <= 0.4) {
+                                        progressBarColorClass = 'bg-red-500';
+                                    } else if (percentage <= 0.79) {
+                                        progressBarColorClass = 'bg-orange-500';
+                                    } else {
+                                        progressBarColorClass = 'bg-teal-500';
+                                    }
+
                                     return (
                                         <tr key={divisionId}>
-                                            {/*<Link href={`/admin/division/${row.id}`}>*/}
-                                            {/*    <a>*/}
                                             <td key={index}
                                                 className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
                                                 {row.name}
                                             </td>
-                                            {/*    </a>*/}
-                                            {/*</Link>*/}
 
                                             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                 {budgetReq.map((req) => (
@@ -177,34 +198,31 @@ export default function DivisionTable({color, handleShowMode}) {
                                             </td>
 
                                             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                                {/*<i className="fas fa-circle text-orange-500 mr-2"></i>*/}
                                                 {budgetReq.map((req) => (
                                                     <div key={req.id} className="mb-2">
+                                                        <i
+                                                            className={`fas fa-circle ${
+                                                                req.status === 'Approved' ? 'text-emerald-500' : req.status === 'Denied' ? 'text-red-500' : 'text-lightBlue-500'
+                                                            } mr-1`}
+                                                        ></i>{" "}
                                                         {req.status}
                                                     </div>
                                                 ))}
                                             </td>
 
-                                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                                <div className="flex items-center">
-                                                        <span className="mr-2">
-                                                            {budgetReq.map((req) => (
-                                                                <div key={req.id} className="mb-2">
-                                                                    {/*{req.amountApproved}*/}
-                                                                </div>
-                                                            ))}
-                                                        </span>
+                                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-center">
+                                                &#8358;
+                                                {totalApproved.toLocaleString()}
+                                            </td>
 
-                                                    {budgetReq.every((req) => req.status === "Approved") && (
-                                                        <div className="relative w-full">
-                                                            <div className="overflow-hidden h-2 text-xs flex rounded bg-teal-200">
-                                                                <div
-                                                                    // style={{ width: `${totalAmountApproved / totalAmount * 100}%`, }}
-                                                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-teal-500"
-                                                                ></div>
-                                                            </div>
-                                                        </div>
-                                                    )}
+                                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                <div className="relative w-full h-2">
+                                                    <div className="overflow-hidden h-full text-xs flex rounded-full bg-gray-200">
+                                                        <div
+                                                            style={{ width: `${percentage * 100}%` }}
+                                                            className={`shadow-none flex flex-col text-center whitespace-nowrap justify-center ${progressBarColorClass}`}
+                                                        ></div>
+                                                    </div>
                                                 </div>
                                             </td>
 

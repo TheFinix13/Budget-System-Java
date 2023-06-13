@@ -1,11 +1,10 @@
 import React, {useState} from "react";
 
 //components
-import {Dialog, DialogContent} from "@mui/material";
+import {Alert, AlertTitle, Dialog, DialogContent} from "@mui/material";
 
 // services
 import {BudgetRequestServices} from "../../../data/api";
-import {alertService} from "../../../services/alert.services";
 import DivisionTable from "../../../components/Cards/DivisionTable";
 
 export default function AddBudgetRequest() {
@@ -34,6 +33,14 @@ export default function AddBudgetRequest() {
         setViewMode(true);
     }
 
+    const [alert, setAlert] = useState({
+        type: '',
+        message: ''
+    });
+
+    const [incompleteForm, setIncompleteForm] = useState(false);
+
+
     async function createBudgetRequest(e, divisionId) {
         e.preventDefault();
 
@@ -46,22 +53,38 @@ export default function AddBudgetRequest() {
             status: BudgetRequestData.status
         };
 
+        const requiredFields = ['narration', 'amount'];
+        const hasEmptyField = requiredFields.some((field) => !BudgetRequestData[field]);
+
+        if (hasEmptyField) {
+            setIncompleteForm(true);
+            return;
+        }
+
         await BudgetRequestServices.addBudgetRequest(divisionId, requestData)
             .then((response) => {
                 if (response.data){
-                    alertService.success(response.data.message, {keepAfterRouteChange: true});
+                    setAlert({ type: 'success',
+                        message: 'Budget Request created successfully!' });
                 }
+
+                setBudgetRequestData({
+                    narration: "",
+                    amount: "",
+                });
             })
             .catch((error) => {
                 if (error.response) {
-                    alertService.error(error.response.data.message, {keepAfterRouteChange: true});
+                    setAlert({ type: 'error',
+                        message: 'An error occurred while creating the request.' });
                 }
             });
 
-        setBudgetRequestData({
-            narration: "",
-            amount: "",
-        });
+        setTimeout(() => {
+            setAlert({ type: '',
+                message: '' });
+        }, 3000);
+
     }
 
     return (
@@ -186,6 +209,34 @@ export default function AddBudgetRequest() {
                                         </div>
                                     </div>
                                 </form>
+
+                                {alert.type === 'success' && (
+                                    <div className="absolute top-4 right-4">
+                                        <Alert severity="success">
+                                            <AlertTitle>Success</AlertTitle>
+                                            {alert.message}
+                                        </Alert>
+                                    </div>
+                                )}
+
+                                {alert.type === 'error' && (
+                                    <div className="absolute top-4 right-4">
+                                        <Alert severity="error">
+                                            <AlertTitle>Error</AlertTitle>
+                                            {alert.message}
+                                        </Alert>
+                                    </div>
+                                )}
+
+                                {incompleteForm && (
+                                    <div className="absolute top-4 right-4">
+                                        <Alert severity="warning">
+                                            <AlertTitle>Warning</AlertTitle>
+                                            Please fill in all the required fields.
+                                        </Alert>
+                                    </div>
+                                )}
+
                             </div>
                         </div>
                     </DialogContent>

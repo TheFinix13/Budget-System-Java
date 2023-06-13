@@ -2,7 +2,7 @@ import React from "react";
 
 // components
 // layout for page
-import AdminDepartment from "../../../layouts/AdminDepartment";
+import AdminDepartment from "../../../layouts/AdminLayouts/AdminDepartment";
 
 export default function Index() {
 

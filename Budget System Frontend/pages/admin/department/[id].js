@@ -4,7 +4,7 @@ import React from "react";
 import AddDivision from "./AddDivision";
 
 // layout for page
-import AdminDepartmentData from "../../../layouts/AdminDepartmentData";
+import AdminDepartmentData from "../../../layouts/AdminLayouts/AdminDepartmentData";
 import AddBudgetRequest from "./AddBudgetRequest";
 
 
@@ -17,7 +17,6 @@ export default function DepartmentData() {
                     <AddDivision/>
                 </div>
                 <div className="w-full mb-12 px-4">
-                    {/*<DivisionTable />*/}
                     <AddBudgetRequest/>
                 </div>
             </div>

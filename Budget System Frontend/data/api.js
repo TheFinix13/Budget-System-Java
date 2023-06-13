@@ -41,6 +41,10 @@ export class MinistryService {
         return axios.get(`${Backend}/api/ministry/get_one_ministry/${id}`);
     }
 
+    static getDivisionsinMinistry(id){
+        return axios.get(`${Backend}/api/ministry/get_divisions_in_ministry/${id}`);
+    }
+
     // static updateMinistry(id, param2) {
     //     return axios.put(`${Backend}/api/ministry/update_ministry`);
     //
@@ -100,6 +104,13 @@ export class BudgetRequestServices {
         return axios.get(`${Backend}/api/division_budget/get_budget_requests/${division_id}`);
     }
 
+    static getBudgetRequestInDepartment(department_id) {
+        return axios.get(`${Backend}/api/division_budget/get_budget_requests_in_department/${department_id}`);
+    }
+    static getBudgetRequestInMinistry(ministry_id) {
+        return axios.get(`${Backend}/api/division_budget/get_budget_requests_in_ministry/${ministry_id}`);
+    }
+
     static getPendingRequests() {
         return axios.get(`${Backend}/api/division_budget/get_pending_requests`);
     }
@@ -111,6 +122,7 @@ export class BudgetRequestServices {
     static async denyRequest(requestId) {
         return axios.put(`${Backend}/api/division_budget/reject_requests/${requestId}`);
     }
+
 }
 
 

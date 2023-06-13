@@ -4,7 +4,7 @@ import React from "react";
 import MapExample from "components/Maps/MapExample.js";
 
 // layout for page
-import AdminDashboard from "layouts/AdminDashboard.js";
+import AdminDashboard from "layouts/AdminLayouts/AdminDashboard.js";
 
 export default function Maps() {
   return (

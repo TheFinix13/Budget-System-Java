@@ -7,7 +7,7 @@ import CardPageVisits from "components/Cards/CardPageVisits.js";
 import CardSocialTraffic from "components/Cards/CardSocialTraffic.js";
 
 // layout for page
-import ApproverDashboard from "../../layouts/ApproverDashboard";
+import ApproverDashboard from "../../layouts/ApproverLayouts/ApproverDashboard";
 
 export default function Dashboard() {
   return (

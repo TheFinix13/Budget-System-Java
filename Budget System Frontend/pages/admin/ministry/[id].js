@@ -4,7 +4,7 @@ import React from "react";
 import AddDepartment from "./AddDepartment";
 
 // layout for page
-import AdminMinistryData from "../../../layouts/AdminMinistryData";
+import AdminMinistryData from "../../../layouts/AdminLayouts/AdminMinistryData";
 import DepartmentTable from "../../../components/Cards/DepartmentTable";
 
 export default function MinistryData() {

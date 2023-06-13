@@ -12,14 +12,14 @@ export default function BudgetCard({
 }) {
     return (
         <>
-            <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
-                <div className="flex-auto p-4">
-                    <div className="flex flex-wrap">
-                        <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
+            <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg h-40">
+                <div className="flex-auto p-4 flex flex-col justify-center">
+                    <div className="text-center">
+                        {/*<div className="relative w-full h-full pr-4 max-w-full max-h-full flex-grow flex-1">*/}
                             <h4 className="text-blueGray-700 uppercase font-bold text-xs">
                                 {statSubtitle}
                             </h4>
-                            <span className="font-semibold capitalize text-xs text-blueGray-400">
+                            <span className="font-bold capitalize text-xs text-blueGray-700">
                                 {statTitle}
                             </span>
                             <br/>
@@ -28,14 +28,14 @@ export default function BudgetCard({
                             </span>
                             <br/>
                             <span className="text-blueGray-400 capitalize font-normal text-xs">
-                                {statPendingRequests}
+                                {statDisapprovedRequests}
                             </span>
                             <br/>
                             <span className="text-blueGray-400 capitalize font-normal text-xs">
-                                {statDisapprovedRequests}
+                                {statPendingRequests}
                             </span>
                         </div>
-                        <div className="relative w-auto pl-4 flex-initial">
+                        <div className="absolute top-0 right-0 mr-4 mt-4">
                             <div
                                 className={
                                     "text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full " +
@@ -47,23 +47,15 @@ export default function BudgetCard({
                         </div>
                     </div>
 
-                    <p className="text-blueGray-400 capitalize font-extralight text-xs mt-4">
-                        <span className="whitespace-nowrap">{statDescription}</span>
+                    <p className="text-blueGray-400 capitalize font-extralight text-xs mb-4 pl-4">
+                        {statDescription}
                     </p>
 
-                </div>
+                {/*</div>*/}
             </div>
         </>
     );
 }
-
-// BudgetCard.defaultProps = {
-//   statSubtitle: "Ministry",
-//   statTitle: "30",
-//   statDescription: "sections of budgetSystem",
-//   statIconName: "fas fa-house",
-//   statIconColor: "bg-red-500",
-// };
 
 // BudgetCard.propTypes = {
 //     statSubtitle: PropTypes.string,

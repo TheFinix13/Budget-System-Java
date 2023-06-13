@@ -2,10 +2,10 @@ import React, {useState} from "react";
 
 //services
 import {MinistryService, sectors} from "../../../data/api";
+import {Alert, AlertTitle} from '@mui/material';
 
 // components
-import MinistryNavbar from "../../../components/Navbars/MinistryNavbar";
-import {alertService} from "../../../services/alert.services";
+import MinistryNavbar from "../../../components/Navbars/AdminNavbars/MinistryNavbar";
 
 export default function AddMinistry() {
 
@@ -22,37 +22,62 @@ export default function AddMinistry() {
 
     const [viewMode, setViewMode] = useState("show");
 
+    const [alert, setAlert] = useState({
+        type: '',
+        message: ''
+    });
+
+    const [incompleteForm, setIncompleteForm] = useState(false);
+
 
     async function addMinistry(e) {
         e.preventDefault();
+
+        const requiredFields = ['name', 'sector', 'description', 'location', 'firstname', 'lastname', 'email', 'password'];
+        const hasEmptyField = requiredFields.some((field) => !ministryData[field]);
+
+        if (hasEmptyField) {
+            setIncompleteForm(true);
+            return;
+        }
 
         await (MinistryService.addMinistry(ministryData))
             .then((res) => {
                 const createdMinistry = res.data;
                 if (createdMinistry) {
-                    alertService.success('Ministry added successfully', {keepAfterRouteChange: true});
+                    setAlert({ type: 'success',
+                        message: 'Ministry added successfully!' });
                 }
+
+                setMinistryData({
+                    name: "",
+                    sector: "",
+                    description: "",
+                    location: "",
+                    firstname: "",
+                    lastname: "",
+                    email: "",
+                    password: "",
+                });
+
             })
             .catch((error) => {
                 if (error.response) {
-                    alertService.error(error.response.data.message, {keepAfterRouteChange: true});
+                    setAlert({ type: 'error',
+                        message: 'An error occurred while adding the ministry.' });
                 }
             })
 
-        setMinistryData({
-            name: "",
-            sector: "",
-            description: "",
-            location: "",
-            firstname: "",
-            lastname: "",
-            email: "",
-            password: "",
-        });
+        setTimeout(() => {
+            setAlert({ type: '',
+                message: '' });
+        }, 3000);
+
     }
 
     return (
         <>
+
             {viewMode === "show" ? (
 
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
@@ -72,7 +97,6 @@ export default function AddMinistry() {
                 </div>
 
                 <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-
 
                     <form name="add-ministry" onSubmit={addMinistry}>
                         <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -298,6 +322,34 @@ export default function AddMinistry() {
 
                         </div>
                     </form>
+
+                    {alert.type === 'success' && (
+                        <div className="absolute top-4 right-4">
+                            <Alert severity="success">
+                                <AlertTitle>Success</AlertTitle>
+                                {alert.message}
+                            </Alert>
+                        </div>
+                    )}
+
+                    {alert.type === 'error' && (
+                        <div className="absolute top-4 right-4">
+                            <Alert severity="error">
+                                <AlertTitle>Error</AlertTitle>
+                                {alert.message}
+                            </Alert>
+                        </div>
+                    )}
+
+                    {incompleteForm && (
+                        <div className="absolute top-4 right-4">
+                            <Alert severity="warning">
+                                <AlertTitle>Warning</AlertTitle>
+                                Please fill in all the required fields.
+                            </Alert>
+                        </div>
+                    )}
+
                 </div>
             </div>
                 ) : (

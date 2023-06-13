@@ -2,7 +2,7 @@ import React from "react";
 
 // components
 // layout for page
-import ApproverRequests from "../../layouts/ApproverRequests";
+import ApproverRequests from "../../layouts/ApproverLayouts/ApproverRequests";
 
 export default function Requests() {
     return (

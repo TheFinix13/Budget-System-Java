@@ -17,7 +17,13 @@ export default function DepartmentCard({
                 <div className="flex-auto p-4">
                     <div className="flex flex-wrap">
                         <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                            <h5 className="text-blueGray-400 uppercase font-bold text-xs">
+                            <h5 className="text-blueGray-400 uppercase font-bold text-xs overflow-hidden"
+                                style={{
+                                maxWidth: '13rem',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                            }}>
                                 {statTitle}
                             </h5>
                             <span className="text-blueGray-400 uppercase font-bold text-xs">
@@ -32,7 +38,7 @@ export default function DepartmentCard({
                                 {statDescription}
                             </span>
                         </div>
-                        <div className="relative w-auto pl-4 flex-initial">
+                        <div className="absolute top-0 right-0 mt-2 mr-2">
                             <div
                                 className={
                                     "text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full " +
@@ -44,7 +50,7 @@ export default function DepartmentCard({
                         </div>
                     </div>
 
-                    <p className="text-blueGray-400 uppercase font-bold text-xs  mt-4">
+                    <p className="text-blueGray-400 uppercase font-bold text-xs mt-4">
                         <span className="whitespace-nowrap">{statMinistry}</span>
                     </p>
 
@@ -53,14 +59,6 @@ export default function DepartmentCard({
         </>
     );
 }
-
-DepartmentCard.defaultProps = {
-    statTitle: "Department of Private Health",
-    statUnit: "Units: ",
-    statMinistry: "Ministry of Health",
-    statIconName: "fas fa-building",
-    statIconColor: "bg-orange-500"
-};
 
 DepartmentCard.propTypes = {
     statTitle: PropTypes.string,

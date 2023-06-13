@@ -70,16 +70,6 @@ export default function RequestCard({
     );
 }
 
-RequestCard.defaultProps = {
-    statDivision: "Division of Personnel Cost",
-    statNarration: "Handles all personnel staff",
-    statAmount: "1,000,000 ",
-    statAccept: "Accept",
-    statDecline: "Decline",
-    statIconName: "fas fa-usd-square",
-    statIconColor: "bg-green-500",
-};
-
 Request.propTypes = {
     statDivision: PropTypes.string,
     statNarration: PropTypes.string,

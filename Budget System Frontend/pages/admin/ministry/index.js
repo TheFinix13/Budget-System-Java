@@ -4,7 +4,7 @@ import React from "react";
 import AddMinistry from "./AddMinistry";
 
 // layout for page
-import AdminMinistry from "../../../layouts/AdminMinistry";
+import AdminMinistry from "../../../layouts/AdminLayouts/AdminMinistry";
 
 export default function Index() {
 
@@ -14,6 +14,7 @@ export default function Index() {
                 <div className="w-full lg:w-8/12 px-4">
                     <AddMinistry/>
                 </div>
+
             </div>
         </>
     );

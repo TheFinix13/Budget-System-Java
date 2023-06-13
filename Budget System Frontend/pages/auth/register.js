@@ -198,7 +198,7 @@ export default function Register() {
                         Select Role
                       </option>
                       <option value="admin">Admin</option>
-                      <option value="approve">Approve</option>
+                      <option value="approve">Approver</option>
                     </select>
                   </div>
 

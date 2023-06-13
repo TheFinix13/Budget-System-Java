@@ -12,11 +12,11 @@ export default function MinistryCard({
 
     return (
         <>
-            <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg cursor-pointer ministry__box hover:bg-[green]">
+            <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg cursor-pointer">
                 <div className="flex-auto p-4">
                     <div className="flex flex-wrap">
                         <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                            <h5 className="text-blueGray-400 uppercase font-bold text-xs">
+                            <h5 className="text-blueGray-400 uppercase font-bold text-xs whitespace-nowrap">
                                 {statTitle}
                             </h5>
                             <span className="text-blueGray-400  font-medium text-xs">
@@ -27,9 +27,9 @@ export default function MinistryCard({
                                 {statUnit}
                             </span>
                             <br />
-
                         </div>
-                        <div className="relative w-auto pl-4 flex-initial">
+
+                        <div className="absolute top-0 right-0 mt-2 mr-2">
                             <div
                                 className={
                                     "text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full " +
@@ -51,14 +51,6 @@ export default function MinistryCard({
     );
 }
 
-MinistryCard.defaultProps = {
-    statTitle: "Ministry of Health",
-    statDepartment: "Department: ",
-    statUnit: "Unit: ",
-    statDescription: "Everything about the ministry",
-    statIconName: "fas fa-house",
-    statIconColor: "bg-red-500",
-};
 
 MinistryCard.propTypes = {
     statTitle: PropTypes.string,

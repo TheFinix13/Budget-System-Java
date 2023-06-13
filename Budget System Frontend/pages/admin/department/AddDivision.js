@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
 
 //components
-import {Dialog, DialogContent} from "@mui/material";
+import {Alert, AlertTitle, Dialog, DialogContent} from "@mui/material";
 
 // services
 import {DepartmentService, DivisionService} from "../../../data/api";
 import {useRouter} from "next/router";
-import {alertService} from "../../../services/alert.services";
-import DepartmentDataNavbar from "../../../components/Navbars/DepartmentDataNavbar";
+import DepartmentDataNavbar from "../../../components/Navbars/AdminNavbars/DepartmentDataNavbar";
 
 export default function AddDivision() {
 
@@ -32,26 +31,49 @@ export default function AddDivision() {
     const router = useRouter();
     const {id: departmentId} = router.query;
 
+    const [alert, setAlert] = useState({
+        type: '',
+        message: ''
+    });
+
+    const [incompleteForm, setIncompleteForm] = useState(false);
+
     async function addDivision(e) {
         e.preventDefault();
+
+        const requiredFields = ['name', 'code', 'description'];
+        const hasEmptyField = requiredFields.some((field) => !DivisionData[field]);
+
+        if (hasEmptyField) {
+            setIncompleteForm(true);
+            return;
+        }
 
         await DivisionService.addDivision(departmentId, DivisionData)
             .then((response) => {
                 if (response.data){
-                    alertService.success(response.data.message, {keepAfterRouteChange: true});
+                    setAlert({ type: 'success',
+                        message: 'Division created successfully!' });
                 }
+
+                setDivisionData({
+                    name: "",
+                    code: "",
+                    description: "",
+                });
             })
+
             .catch((error) => {
                 if (error.response) {
-                    alertService.error(error.response.data.message, {keepAfterRouteChange: true});
+                    setAlert({ type: 'error',
+                        message: 'An error occurred while creating the division.' });
                 }
             });
 
-        setDivisionData({
-            name: "",
-            code: "",
-            description: "",
-        });
+        setTimeout(() => {
+            setAlert({ type: '',
+                message: '' });
+        }, 3000);
     }
 
     async function fetchDepartmentName() {
@@ -74,6 +96,10 @@ export default function AddDivision() {
 
     return (
         <>
+            <DepartmentDataNavbar
+                handleShowMode={handleShowMode}
+            />
+
             {viewMode ? (
                 <Dialog open={viewMode} onClose={handleHideMode}>
                     <DialogContent>
@@ -204,16 +230,39 @@ export default function AddDivision() {
                                         </div>
                                     </div>
                                 </form>
+
+                                {alert.type === 'success' && (
+                                    <div className="absolute top-4 right-4">
+                                        <Alert severity="success">
+                                            <AlertTitle>Success</AlertTitle>
+                                            {alert.message}
+                                        </Alert>
+                                    </div>
+                                )}
+
+                                {alert.type === 'error' && (
+                                    <div className="absolute top-4 right-4">
+                                        <Alert severity="error">
+                                            <AlertTitle>Error</AlertTitle>
+                                            {alert.message}
+                                        </Alert>
+                                    </div>
+                                )}
+
+                                {incompleteForm && (
+                                    <div className="absolute top-4 right-4">
+                                        <Alert severity="warning">
+                                            <AlertTitle>Warning</AlertTitle>
+                                            Please fill in all the required fields.
+                                        </Alert>
+                                    </div>
+                                )}
+
                             </div>
                         </div>
                     </DialogContent>
                 </Dialog>
-            ) : (
-                <DepartmentDataNavbar
-                    handleShowMode={handleShowMode}
-                />
-            )
-            }
+            ) : " " }
         </>
     );
 }
