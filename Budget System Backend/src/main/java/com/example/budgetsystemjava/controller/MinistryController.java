@@ -1,6 +1,7 @@
 package com.example.budgetsystemjava.controller;
 
 import com.example.budgetsystemjava.DAOmodel.Ministry;
+import com.example.budgetsystemjava.DTO.DivisionDTO;
 import com.example.budgetsystemjava.DTO.MinistryDTO;
 import com.example.budgetsystemjava.services.MinistryServices;
 import javassist.NotFoundException;
@@ -52,5 +53,17 @@ public class MinistryController {
     public ResponseEntity<MinistryDTO> showAMinistry(@PathVariable Long id) {
         MinistryDTO ministry = ministryServices.showAMinistry(id);
         return ResponseEntity.ok(ministry);
+    }
+
+    @GetMapping(path = "get_divisions_in_ministry/{id}")
+    public ResponseEntity<List<DivisionDTO>> getAllDivisionsInMinistry(@PathVariable Long id) {
+        List<DivisionDTO> divisions = ministryServices.getAllDivisionsInMinistry(id);
+
+        if (divisions == null) {
+            return ResponseEntity.noContent()
+                    .build();
+        }
+
+        return ResponseEntity.ok(divisions);
     }
 }

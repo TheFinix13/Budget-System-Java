@@ -59,11 +59,15 @@ public class DepartmentServices {
                                     .build())
                             .collect(Collectors.toList());
 
+                    int divisionCount = divisionRepo.countDivisionsByDepartmentId(department.getDepartment_id());
+
                     return DepartmentDTO.builder()
                             .id(String.valueOf(department.getDepartment_id()))
                             .name(department.getName())
                             .description(department.getDescription())
+                            .code(department.getCode())
                             .divisions(divisionDTOS)
+                            .divisionCount(divisionCount)
                             .build();
                 }).collect(Collectors.toList());
     }

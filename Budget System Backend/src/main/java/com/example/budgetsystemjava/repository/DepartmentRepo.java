@@ -1,6 +1,7 @@
 package com.example.budgetsystemjava.repository;
 
 import com.example.budgetsystemjava.DAOmodel.Department;
+import com.example.budgetsystemjava.DAOmodel.Ministry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +22,5 @@ public interface DepartmentRepo extends JpaRepository<Department, Long> {
     @Query("SELECT COUNT(d) FROM Department d JOIN d.ministry m WHERE m.ministry_id = :ministryId")
     int countDepartmentsByMinistryId(@Param("ministryId") Long ministryId);
 
-//    Optional<Department> findByIdAndMinistryId(Long departmentId, Long ministryId);
+    List<Department> findByMinistry(Ministry ministry);
 }

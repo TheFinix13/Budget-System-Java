@@ -1,8 +1,10 @@
 package com.example.budgetsystemjava.services;
 
 import com.example.budgetsystemjava.DAOmodel.Department;
+import com.example.budgetsystemjava.DAOmodel.Division;
 import com.example.budgetsystemjava.DAOmodel.Ministry;
 import com.example.budgetsystemjava.DAOmodel.Users;
+import com.example.budgetsystemjava.DTO.DivisionDTO;
 import com.example.budgetsystemjava.DTO.MinistryDTO;
 import com.example.budgetsystemjava.exceptions.MinistryNotFoundException;
 import com.example.budgetsystemjava.repository.DepartmentRepo;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MinistryServices {
@@ -81,11 +84,11 @@ public class MinistryServices {
 
         List<MinistryDTO> ministryDTOs = new ArrayList<>();
         for (Ministry min : ministry) {
-//            Users user = userRepo.findByMinistryID(min.getMinistry_id());
             int departmentCount = departmentRepo.countDepartmentsByMinistryId(min.getMinistry_id());
             int divisionCount = divisionRepo.countDivisionsByMinistryId(min.getMinistry_id());
 
-            MinistryDTO ministryDTO = new MinistryDTO().builder()
+            new MinistryDTO();
+            MinistryDTO ministryDTO = MinistryDTO.builder()
                     .ministry_id(min.getMinistry_id())
                     .name(min.getName())
                     .description(min.getDescription())
@@ -141,6 +144,7 @@ public class MinistryServices {
             }
 
             return MinistryDTO.builder()
+                    .ministry_id(ministry.getMinistry_id())
                     .name(ministry.getName())
                     .description(ministry.getDescription())
                     .location(ministry.getLocation())
@@ -152,6 +156,29 @@ public class MinistryServices {
         } else {
             throw new MinistryNotFoundException("Ministry not found");
         }
+    }
+
+    public List<DivisionDTO> getAllDivisionsInMinistry(long ministry_id) {
+        Ministry ministry = ministryRepo.findById(ministry_id)
+                .orElse(null);
+
+        if (ministry == null) {
+            throw new MinistryNotFoundException("Ministry not found with ID: " + ministry_id);
+        }
+
+        List<Division> divisions = ministryRepo.findDivisions(ministry_id);
+
+        return divisions.stream()
+                .map(division -> {
+                    DivisionDTO divisionDTO = new DivisionDTO();
+                    divisionDTO.setId(division.getDivision_id());
+                    divisionDTO.setName(division.getName());
+                    divisionDTO.setCode(division.getCode());
+                    divisionDTO.setDescription(division.getDescription());
+                    divisionDTO.setDepartmentName(division.getDepartment().getName());
+                    return divisionDTO;
+                })
+                .collect(Collectors.toList());
     }
 
 }

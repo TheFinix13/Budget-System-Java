@@ -32,7 +32,7 @@ public class JwtUtils {
         secretKey = new SecretKeySpec(keyBytes, SignatureAlgorithm.HS256.getJcaName());
     }
 
-    public String generateToken(long userId, String email, String role) {
+    public String generateToken(long userId, String email, String role, long ministryId) {
         //time before authentication expires
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs * 1000L);
@@ -41,6 +41,7 @@ public class JwtUtils {
                 .setSubject(String.valueOf(userId))
                 .claim("email", email)
                 .claim("role", role)
+                .claim("ministryId", ministryId)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(secretKey, SignatureAlgorithm.HS256)

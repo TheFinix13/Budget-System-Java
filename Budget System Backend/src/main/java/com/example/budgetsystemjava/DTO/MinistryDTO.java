@@ -25,6 +25,4 @@ public class MinistryDTO {
     private int totalDepartments;
     private int totalDivisions;
 
-//    private UserDTO user;
-
 }
