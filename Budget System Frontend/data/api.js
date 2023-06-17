@@ -122,6 +122,9 @@ export class BudgetRequestServices {
     static async denyRequest(requestId) {
         return axios.put(`${Backend}/api/division_budget/reject_requests/${requestId}`);
     }
+    static getHandledRequests() {
+        return axios.get(`${Backend}/api/division_budget/get_handled_requests`);
+    }
 
 }
 

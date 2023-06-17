@@ -87,7 +87,7 @@ export default function DashboardStats() {
                             {/*</div>*/}
 
                                 <div className="mt-4"/>
-                                    <Link href="/ministry/division/division">
+                                    <Link href={`/ministry/division/division?id=${id}`}>
                                         <a>
                                             <Card
                                                 statSubtitle="DIVISIONS"

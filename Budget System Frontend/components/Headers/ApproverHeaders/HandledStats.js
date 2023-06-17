@@ -1,30 +1,34 @@
 import React, {useEffect, useState} from "react";
+import {BudgetRequestServices as RequestService, BudgetRequestServices} from "../../../data/api";
+import PendingRequestsTable from "../../Cards/PendingRequestsTable";
+import RequestCard from "../../Cards/RequestCard";
+import {Alert, AlertTitle} from "@mui/material";
+import {amber} from "@mui/material/colors";
+import HandledRequestsTable from "../../Cards/HandledRequestsTable";
+import HandledRequestCard from "../../Cards/HandledRequestCard";
+import RequestStats from "./RequestStats";
 
-// components
-import DepartmentCard from "../../Cards/DepartmentCard";
-import AllDepartmentTable from "../../Cards/AllDepartmentTable";
+export default function HandledStats() {
 
-//services
-import {DepartmentService} from "../../../data/api";
-import Link from "next/link";
+    const [handledRequests, setHandledRequests] = useState([]);
 
-export default function DepartmentStats() {
-
-    const [showAllDepartments, setShowAllDepartments] = useState([]);
     const [orientation, setOrientation] = useState("grid");
 
-    const [sortBy, setSortBy] = useState("name");
+    const [sortBy, setSortBy] = useState("divisionName");
     const [sortOrder, setSortOrder] = useState("asc");
     const [sortIconType, setSortIconType] = useState("alpha");
 
-    async function fetchDepartments() {
-        await DepartmentService.getAllDepartments()
+    const [alert, setAlert] = useState({
+        type: '',
+        message: ''
+    });
+
+    async function fetchHandledRequests (){
+        await RequestService.getHandledRequests()
             .then((response) => {
                 const {data} = response;
                 if (data){
-                    setShowAllDepartments(data);
-                }else{
-                    console.error(data.message);
+                    setHandledRequests(data);
                 }
             })
             .catch((error) => {
@@ -33,52 +37,65 @@ export default function DepartmentStats() {
     }
 
     useEffect(() => {
-        fetchDepartments();
+        fetchHandledRequests();
     }, []);
 
-    useEffect(() => {
-        sortDepartments();
-    }, [sortBy, sortOrder]);
-
-    function handleSortByChange(e) {
+    const handleSortByChange = (e) => {
         setSortBy(e.target.value);
 
-        if (e.target.value === "code" || e.target.value === "divisionCount") {
+        if (e.target.value === "code" || e.target.value === "amount") {
             setSortIconType("number");
         } else {
             setSortIconType("alpha");
         }
-    }
+    };
+
     function handleSortOrderChange() {
         setSortOrder(prevSortOrder => (prevSortOrder === "asc" ? "desc" : "asc"));
     }
 
-    // Sort the divisions based on the selected sorting options
-    function sortDepartments() {
-        const sortedDepartments = [...showAllDepartments];
-        sortedDepartments.sort((a, b) => {
-            if (sortBy === "divisionCount") {
-                const aValue = a.divisionCount || 0;
-                const bValue = b.divisionCount || 0;
+    const sortHandledRequests = () => {
+        let sortedRequests = [...handledRequests];
 
-                if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
-                if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
-            } else {
-                const aValue = getSortValue(a[sortBy]);
-                const bValue = getSortValue(b[sortBy]);
+        if (sortBy === "divisionName") {
+            sortedRequests.sort((a, b) =>
+                sortOrder === "asc"
+                    ? a.divisionName.localeCompare(b.divisionName)
+                    : b.divisionName.localeCompare(a.divisionName)
+            );
+        } else if (sortBy === "divisionCode") {
+            sortedRequests.sort((a, b) =>
+                sortOrder === "asc"
+                    ? a.divisionCode.localeCompare(b.divisionCode)
+                    : b.divisionCode.localeCompare(a.divisionCode)
+            );
+        } else if (sortBy === "amount") {
+            sortedRequests.sort((a, b) =>
+                sortOrder === "asc"
+                    ? getSortValue(a.amount) - getSortValue(b.amount)
+                    : getSortValue(b.amount) - getSortValue(a.amount)
+            );
+        } else if (sortBy === "status") {
+            sortedRequests.sort((a, b) =>
+                sortOrder === "asc"
+                    ? a.status.localeCompare(b.status)
+                    : b.status.localeCompare(a.status)
+            );
+        } else if (sortBy === "narration") {
+            sortedRequests.sort((a, b) =>
+                sortOrder === "asc"
+                    ? (a.narration).localeCompare(b.narration)
+                    : (b.narration).localeCompare(a.narration)
+            );
+        }
 
-                if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
-                if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
-            }
-            return 0;
-        });
-        setShowAllDepartments(sortedDepartments);
-    }
+        return sortedRequests;
+    };
+
     function getSortValue(value) {
         if (typeof value !== "string") {
             return "";
         }
-
         const ignoredWords = ["for", "of"];
         const words = value.toLowerCase().split(" ");
         const filteredWords = words.filter((word) => !ignoredWords.includes(word));
@@ -94,16 +111,19 @@ export default function DepartmentStats() {
                     {/*<sort buttons*/}
                     <div className="flex items-center">
                         <select
-                            className="text-white bg-blueGray-700 px-8 py-1 pr-2 rounded-md outline-none text-xs appearance-none border border-blueGray-700 focus:border-blueGray-500"
+                            className="text-white bg-blueGray-700 px-8 py-1 rounded-md outline-none text-sm w-auto"
                             value={sortBy}
                             onChange={handleSortByChange}
                         >
-                            <option value="name">Name</option>
-                            <option value="code">Code</option>
-                            <option value="divisionCount">Division</option>
-                            <option value="ministryName">Ministry</option>
+                            <option value="narration">Name</option>
+                            <option value="amount">Amount</option>
+                            <option value="divisionName">Division</option>
+                            <option value="divisionCode">Code</option>
+                            <option value="status">Status</option>
+
 
                         </select>
+
                         <button
                             className="bg-white text-blueGray-800 active:bg-indigo-600 text-sm px-3 py-1 rounded outline-none focus:outline-none ml-2"
                             type="button"
@@ -125,7 +145,7 @@ export default function DepartmentStats() {
                         </button>
                     </div>
 
-                    {/*{view buttons}*/}
+                    {/* View buttons */}
                     <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                         <button
                             className="bg-white text-blueGray-800 active:bg-indigo-600 text-sm px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -143,49 +163,44 @@ export default function DepartmentStats() {
                             type="button"
                         >
                             <i className="fas fa-list-ul cursor-pointer mr-12"
-                                onClick={() => {
-                                    setOrientation("list");
-                                }}
+                               onClick={() => {
+                                   setOrientation("list");
+                               }}
                             ></i>
                         </button>
                     </div>
+
                 </div>
 
                 <div className="px-4 md:px-10 mx-auto w-full">
                     <div>
                         {/*Card stats*/}
-                        {showAllDepartments.length > 0 ? (
+                        {handledRequests.length > 0 ? (
                             <>
                                 {orientation === "grid" ? (
                                     <div className="flex flex-wrap">
-                                        {showAllDepartments.map((row, index) => (
+                                        {sortHandledRequests().map((row) => (
                                             <div className="w-full lg:w-6/12 xl:w-3/12 p-2">
-                                                <Link href={`/admin/department/${row.id}`}>
-                                                    <a>
-                                                        <DepartmentCard key={index}
-                                                           statTitle = {row.name}
-                                                            statCode={row.code}
-                                                           statUnit={"Divisions: " + row.divisionCount}
-                                                            statDescription={row.description}
-                                                           statMinistry={row.ministryName || "No ministry"}
-                                                           statIconName="fas fa-building"
-                                                           statIconColor="bg-orange-500"
-                                                        />
-                                                    </a>
-                                                </Link>
+                                                <HandledRequestCard
+                                                    key={row.budget_id}
+                                                    statDivision={row.divisionName}
+                                                    statCode={row.divisionCode}
+                                                    statNarration={row.narration}
+                                                    statAmount={`₦${row.amount.toLocaleString()}`}
+                                                    statStatus={row.status}
+                                                    statIconName={row.status === "Approved" ? "fas fa-check-circle" : "fas fa-times-circle"}
+                                                    statIconColor={row.status === "Approved" ? "bg-emerald-500" : "bg-red-500"}
+                                                />
                                             </div>
                                         ))}
                                     </div>
                                 ) : (
-                                    <AllDepartmentTable
-                                        showAllDepartments = {showAllDepartments}
-                                    />
+                                    <HandledRequestsTable/>
                                 )}
                             </>
                         ) : (
-                            "No department found"
+                            "No budget request pending"
                         )}
-
                     </div>
                 </div>
             </div>

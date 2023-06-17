@@ -3,7 +3,7 @@ import React from "react";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import {useRouter} from "next/router";
 
-export default function RequestNavbar() {
+export default function HandledNavbar() {
     const router = useRouter();
 
     return (
@@ -21,15 +21,15 @@ export default function RequestNavbar() {
                         }}
                     >
                         <i className="fas fa-arrow-left"/> {' '}
-                        PENDING BUDGET REQUEST
+                        HANDLED BUDGET REQUEST
                     </a>
 
                     {/* Form */}
                     <form name="search" className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
                         <div className="relative flex w-full flex-wrap items-stretch">
-              <span className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                <i className="fas fa-search"></i>
-              </span>
+                          <span className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                            <i className="fas fa-search"></i>
+                          </span>
                             <input
                                 id="search"
                                 type="text"

@@ -89,7 +89,6 @@ export default function ApproverSidebar() {
 
 
                         {/* Navigation */}
-
                         <ul className="md:flex-col md:min-w-full flex flex-col list-none">
                             <li className="items-center">
                                 <Link href="/approver/dashboard">
@@ -97,7 +96,7 @@ export default function ApproverSidebar() {
                                         href="#pablo"
                                         className={
                                             "text-xs uppercase py-3 font-bold block " +
-                                            (router.pathname.indexOf("/admin/dashboard") !== -1
+                                            (router.pathname.indexOf("/approver/dashboard") !== -1
                                                 ? "text-lightBlue-500 hover:text-lightBlue-600"
                                                 : "text-blueGray-700 hover:text-blueGray-500")
                                         }
@@ -105,7 +104,7 @@ export default function ApproverSidebar() {
                                         <i
                                             className={
                                                 "fas fa-tv mr-2 text-sm " +
-                                                (router.pathname.indexOf("/admin/dashboard") !== -1
+                                                (router.pathname.indexOf("/approver/dashboard") !== -1
                                                     ? "opacity-75"
                                                     : "text-blueGray-300")
                                             }
@@ -121,7 +120,7 @@ export default function ApproverSidebar() {
                                         href="#pablo"
                                         className={
                                             "text-xs uppercase py-3 font-bold block " +
-                                            (router.pathname.indexOf("/admin/division") !== -1
+                                            (router.pathname.indexOf("/approver/requests") !== -1
                                                 ? "text-lightBlue-500 hover:text-lightBlue-600"
                                                 : "text-blueGray-700 hover:text-blueGray-500")
                                         }
@@ -129,12 +128,36 @@ export default function ApproverSidebar() {
                                         <i
                                             className={
                                                 "fas fa-table mr-2 text-sm " +
-                                                (router.pathname.indexOf("/admin/division") !== -1
+                                                (router.pathname.indexOf("/approver/requests") !== -1
                                                     ? "opacity-75"
                                                     : "text-blueGray-300")
                                             }
                                         ></i>{" "}
-                                        Budget Requests
+                                        Pending Requests
+                                    </a>
+                                </Link>
+                            </li>
+
+                            <li className="items-center">
+                                <Link href="/approver/handled">
+                                    <a
+                                        href="#pablo"
+                                        className={
+                                            "text-xs uppercase py-3 font-bold block " +
+                                            (router.pathname.indexOf("/approver/handled") !== -1
+                                                ? "text-lightBlue-500 hover:text-lightBlue-600"
+                                                : "text-blueGray-700 hover:text-blueGray-500")
+                                        }
+                                    >
+                                        <i
+                                            className={
+                                                "fas fa-table mr-2 text-sm " +
+                                                (router.pathname.indexOf("/approver/handled") !== -1
+                                                    ? "opacity-75"
+                                                    : "text-blueGray-300")
+                                            }
+                                        ></i>{" "}
+                                        Handled Requests
                                     </a>
                                 </Link>
                             </li>
@@ -160,8 +183,8 @@ export default function ApproverSidebar() {
                         <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
                             Auth Layout Pages
                         </h6>
-                        {/* Navigation */}
 
+                        {/* Navigation */}
                         <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
                             <li className="items-center">
                                 <Link href="/auth/login">
@@ -187,8 +210,6 @@ export default function ApproverSidebar() {
                                 </Link>
                             </li>
                         </ul>
-
-
                     </div>
                 </div>
             </nav>
