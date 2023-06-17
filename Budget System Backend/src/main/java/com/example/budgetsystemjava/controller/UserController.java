@@ -37,7 +37,13 @@ public class UserController {
 
         return new ResponseEntity<>("Approve User Created Successfully", HttpStatus.CREATED);
     }
+    @PostMapping(path = "add_super_admin")
+    public ResponseEntity<String> createSuperAdmin(@RequestBody UserDTO user) {
 
+        userService.createSuperAdminUser(user);
+
+        return new ResponseEntity<>("SuperAdmin Created Successfully", HttpStatus.CREATED);
+    }
 //    @GetMapping(path = "/api/user/loggedInUser")
 //    public ResponseEntity<?> getLoggedInUser(@RequestHeader("Authorization") String token) {
 //        try {

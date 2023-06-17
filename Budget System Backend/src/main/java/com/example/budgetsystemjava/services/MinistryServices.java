@@ -7,10 +7,7 @@ import com.example.budgetsystemjava.DAOmodel.Users;
 import com.example.budgetsystemjava.DTO.DivisionDTO;
 import com.example.budgetsystemjava.DTO.MinistryDTO;
 import com.example.budgetsystemjava.exceptions.MinistryNotFoundException;
-import com.example.budgetsystemjava.repository.DepartmentRepo;
-import com.example.budgetsystemjava.repository.DivisionRepo;
-import com.example.budgetsystemjava.repository.MinistryRepo;
-import com.example.budgetsystemjava.repository.UserRepo;
+import com.example.budgetsystemjava.repository.*;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +28,21 @@ public class MinistryServices {
     private final ModelMapper mapper;
     private final BCryptPasswordEncoder passwordEncoder;
     private final DivisionRepo divisionRepo;
+    private final BudgetRepo budgetRepo;
 
     @Autowired
     public MinistryServices(MinistryRepo ministryRepo, DepartmentRepo departmentRepo, UserRepo userRepo, ModelMapper mapper, BCryptPasswordEncoder passwordEncoder,
-                            DivisionRepo divisionRepo) {
+                            DivisionRepo divisionRepo, BudgetRepo budgetRepo) {
         this.ministryRepo = ministryRepo;
         this.departmentRepo = departmentRepo;
         this.userRepo = userRepo;
         this.mapper = mapper;
         this.passwordEncoder = passwordEncoder;
         this.divisionRepo = divisionRepo;
+        this.budgetRepo = budgetRepo;
     }
 
-    public ResponseEntity<?> addMinistry(MinistryDTO ministryDTO) {
+    public ResponseEntity<?> addMinistry( MinistryDTO ministryDTO) {
 
         //check if a user with email already exists
         String userEmail = new Users().getEmail();
@@ -176,6 +175,11 @@ public class MinistryServices {
                     divisionDTO.setCode(division.getCode());
                     divisionDTO.setDescription(division.getDescription());
                     divisionDTO.setDepartmentName(division.getDepartment().getName());
+
+                    // Fetch the count of budget requests for the division
+                    int budgetRequestCount = budgetRepo.countBudgetRequestsByDivision(division);
+                    divisionDTO.setBudgetRequestCount(budgetRequestCount);
+
                     return divisionDTO;
                 })
                 .collect(Collectors.toList());

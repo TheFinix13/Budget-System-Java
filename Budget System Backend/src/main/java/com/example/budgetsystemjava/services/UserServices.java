@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -51,6 +52,30 @@ public class UserServices implements UserDetailsService {
                 .build();
 
         userRepo.save(user);
+    }
+    public void createSuperAdminUser(UserDTO superAdminDTO) {
+        // Create the superAdmin user
+        Users superAdmin = Users.builder()
+                .firstname(superAdminDTO.getFirstname())
+                .lastname(superAdminDTO.getLastname())
+                .email(superAdminDTO.getEmail())
+                .password(passwordEncoder.encode(superAdminDTO.getPassword()))
+                .role("superAdmin")
+                .status("active")
+                .build();
+
+        // Save the superAdmin user to the database
+        userRepo.save(superAdmin);
+    }
+    public void assignAdminToMinistry(long adminUserId, long ministryId) {
+        // Find the admin user by user_id
+        Optional<Users> adminUserOptional = userRepo.findById(adminUserId);
+
+        if (adminUserOptional.isPresent()) {
+            Users adminUser = adminUserOptional.get();
+            adminUser.setMinistryID(ministryId);
+            userRepo.save(adminUser);
+        }
     }
 
     @Override
