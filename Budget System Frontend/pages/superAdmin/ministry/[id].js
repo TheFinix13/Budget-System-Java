@@ -4,8 +4,8 @@ import React from "react";
 import AddDepartment from "./AddDepartment";
 
 // layout for page
-import AdminMinistryData from "../../../layouts/AdminLayouts/AdminMinistryData";
 import DepartmentTable from "../../../components/Cards/DepartmentTable";
+import SuperAdminMinistryData from "../../../layouts/SuperAdminLayout/SuperAdminMinistryData";
 
 export default function MinistryData() {
 
@@ -16,11 +16,11 @@ export default function MinistryData() {
                     <AddDepartment/>
                 </div>
                 <div className="w-full mb-12 px-4">
-                    <DepartmentTable />
+                    <DepartmentTable/>
                 </div>
             </div>
         </>
     );
 }
 
-MinistryData.layout = AdminMinistryData;
+MinistryData.layout = SuperAdminMinistryData;

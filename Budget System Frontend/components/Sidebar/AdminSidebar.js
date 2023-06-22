@@ -6,27 +6,32 @@ import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
 export default function AdminSidebar() {
-  const [collapseShow, setCollapseShow] = React.useState("hidden");
-  const router = useRouter();
-  return (
-    <>
-      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
-        <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
-          {/* Toggler */}
-          <button
-            className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-            type="button"
-            onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
-          >
-            <i className="fas fa-bars"></i>
-          </button>
+    const [collapseShow, setCollapseShow] = React.useState("hidden");
 
-          {/* Brand */}
-          <Link href="/">
-            <a
-              href="#pablo"
-              className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-            >
+    const router = useRouter();
+    const {id} = router.query; // Retrieve the Admin ID from the router
+
+    return (
+        <>
+            <nav
+                className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+                <div
+                    className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
+                    {/* Toggler */}
+                    <button
+                        className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+                        type="button"
+                        onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
+                    >
+                        <i className="fas fa-bars"></i>
+                    </button>
+
+                    {/* Brand */}
+                    <Link href="/">
+                        <a
+                            href="#pablo"
+                            className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+                        >
               BUDGET SYSTEM
             </a>
           </Link>
@@ -91,100 +96,100 @@ export default function AdminSidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center">
-                <Link href="/admin/dashboard">
-                  <a
-                    href="#pablo"
-                    className={
-                      "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/dashboard") !== -1
-                        ? "text-lightBlue-500 hover:text-lightBlue-600"
-                        : "text-blueGray-700 hover:text-blueGray-500")
-                    }
-                  >
-                    <i
-                      className={
-                        "fas fa-tv mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/dashboard") !== -1
-                          ? "opacity-75"
-                          : "text-blueGray-300")
-                      }
-                    ></i>{" "}
-                    Dashboard
-                  </a>
-                </Link>
+                <li className="items-center">
+                    <Link href={`/admin/${id}`}>
+                        <a
+                            href="#pablo"
+                            className={
+                                "text-xs uppercase py-3 font-bold block " +
+                                (router.pathname.indexOf("/admin/[id]") !== -1
+                                    ? "text-lightBlue-500 hover:text-lightBlue-600"
+                                    : "text-blueGray-700 hover:text-blueGray-500")
+                            }
+                        >
+                            <i
+                                className={
+                                    "fas fa-tv mr-2 text-sm " +
+                                    (router.pathname.indexOf("/admin/[id]") !== -1
+                                        ? "opacity-75"
+                                        : "text-blueGray-300")
+                                }
+                            ></i>{" "}
+                            Dashboard
+                        </a>
+                    </Link>
               </li>
 
-              <li className="items-center">
-                <Link href="/admin/ministry">
-                  <a
-                      href="#pablo"
-                      className={
-                          "text-xs uppercase py-3 font-bold block " +
-                          (router.pathname.indexOf("/admin/ministry") !== -1
-                              ? "text-lightBlue-500 hover:text-lightBlue-600"
-                              : "text-blueGray-700 hover:text-blueGray-500")
-                      }
-                  >
-                    <i
-                        className={
-                            "fas fa-table mr-2 text-sm " +
-                            (router.pathname.indexOf("/admin/ministry") !== -1
-                                ? "opacity-75"
-                                : "text-blueGray-300")
-                        }
-                    ></i>{" "}
-                    Ministry
-                  </a>
-                </Link>
+                <li className="items-center">
+                    <Link href={`/admin/ministry?id=${id}`}>
+                        <a
+                            href="#pablo"
+                            className={
+                                "text-xs uppercase py-3 font-bold block " +
+                                (router.pathname.indexOf("/admin/ministry") !== -1
+                                    ? "text-lightBlue-500 hover:text-lightBlue-600"
+                                    : "text-blueGray-700 hover:text-blueGray-500")
+                            }
+                        >
+                            <i
+                                className={
+                                    "fas fa-table mr-2 text-sm " +
+                                    (router.pathname.indexOf("/admin/ministry") !== -1
+                                        ? "opacity-75"
+                                        : "text-blueGray-300")
+                                }
+                            ></i>{" "}
+                            Ministry
+                        </a>
+                    </Link>
               </li>
 
-              <li className="items-center">
-                <Link href="/admin/department">
-                  <a
-                      href="#pablo"
-                      className={
-                          "text-xs uppercase py-3 font-bold block " +
-                          (router.pathname.indexOf("/admin/department") !== -1
-                              ? "text-lightBlue-500 hover:text-lightBlue-600"
-                              : "text-blueGray-700 hover:text-blueGray-500")
-                      }
-                  >
-                    <i
-                        className={
-                            "fas fa-table mr-2 text-sm " +
-                            (router.pathname.indexOf("/admin/department") !== -1
-                                ? "opacity-75"
-                                : "text-blueGray-300")
-                        }
-                    ></i>{" "}
-                    Department
-                  </a>
-                </Link>
+                <li className="items-center">
+                    <Link href={`/admin/department?id=${id}`}>
+                        <a
+                            href="#pablo"
+                            className={
+                                "text-xs uppercase py-3 font-bold block " +
+                                (router.pathname.indexOf("/admin/department") !== -1
+                                    ? "text-lightBlue-500 hover:text-lightBlue-600"
+                                    : "text-blueGray-700 hover:text-blueGray-500")
+                            }
+                        >
+                            <i
+                                className={
+                                    "fas fa-table mr-2 text-sm " +
+                                    (router.pathname.indexOf("/admin/department") !== -1
+                                        ? "opacity-75"
+                                        : "text-blueGray-300")
+                                }
+                            ></i>{" "}
+                            Department
+                        </a>
+                    </Link>
               </li>
 
-              <li className="items-center">
-                <Link href="/admin/division">
-                  <a
-                      href="#pablo"
-                      className={
-                          "text-xs uppercase py-3 font-bold block " +
-                          (router.pathname.indexOf("/admin/division") !== -1
-                              ? "text-lightBlue-500 hover:text-lightBlue-600"
-                              : "text-blueGray-700 hover:text-blueGray-500")
-                      }
-                  >
-                    <i
-                        className={
-                            "fas fa-table mr-2 text-sm " +
-                            (router.pathname.indexOf("/admin/division") !== -1
-                                ? "opacity-75"
-                                : "text-blueGray-300")
-                        }
-                    ></i>{" "}
-                    Division
-                  </a>
-                </Link>
+                <li className="items-center">
+                    <Link href={`/admin/division?id=${id}`}>
+                        <a
+                            href="#pablo"
+                            className={
+                                "text-xs uppercase py-3 font-bold block " +
+                                (router.pathname.indexOf("/admin/division") !== -1
+                                    ? "text-lightBlue-500 hover:text-lightBlue-600"
+                                    : "text-blueGray-700 hover:text-blueGray-500")
+                            }
+                        >
+                            <i
+                                className={
+                                    "fas fa-table mr-2 text-sm " +
+                                    (router.pathname.indexOf("/admin/division") !== -1
+                                        ? "opacity-75"
+                                        : "text-blueGray-300")
+                                }
+                            ></i>{" "}
+                            Division
+                        </a>
+                    </Link>
               </li>
 
               {/*<li className="items-center">*/}

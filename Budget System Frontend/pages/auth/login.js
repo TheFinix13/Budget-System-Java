@@ -44,19 +44,21 @@ export default function Login() {
           const decodedToken = jwtDecode(token);
           const userRole = decodedToken.role;
           const ministryId = decodedToken.ministryId;
+          const sub = decodedToken.sub
 
-            //redirect to dashboard
-            if (userRole === "admin"){
-              router.push("/admin/dashboard");
-            }
-            else if (userRole === "ministry"){
-              router.push(`/ministry/[id]?id=${encodeURIComponent(ministryId)}`);
-            }else if (userRole === "approve"){
-              router.push("/approver/dashboard");
-            } else {
-              console.log("User role not found")
-                // router.push("/auth/login");
-            }
+          //redirect to dashboard
+          if (userRole === "superAdmin") {
+            router.push("/superAdmin");
+          } else if (userRole === "admin") {
+            router.replace(`/admin/[id]?id=${encodeURIComponent(sub)}`);
+          } else if (userRole === "ministry") {
+            router.replace(`/ministry/[id]?id=${encodeURIComponent(ministryId)}`);
+          } else if (userRole === "approve") {
+            router.push("/approver/dashboard");
+          } else {
+            console.log("User role not found")
+            // router.push("/auth/login");
+          }
         })
         .catch(error => {
           setError("Invalid email or password. Please try again.");

@@ -1,9 +1,10 @@
 import React from "react";
 
 // components
-// layout for page
-import AdminMinistry from "../../../layouts/AdminLayouts/AdminMinistry";
+import AddMinistry from "./AddMinistry";
 
+// layout for page
+import SuperAdminMinistry from "../../../layouts/SuperAdminLayout/SuperAdminMinistry";
 
 export default function Index() {
 
@@ -11,7 +12,7 @@ export default function Index() {
         <>
             <div className="flex flex-wrap">
                 <div className="w-full lg:w-8/12 px-4">
-                    {/*<AddMinistry/>*/}
+                    <AddMinistry/>
                 </div>
 
             </div>
@@ -19,4 +20,4 @@ export default function Index() {
     );
 }
 
-Index.layout = AdminMinistry;
+Index.layout = SuperAdminMinistry;

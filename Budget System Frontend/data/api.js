@@ -1,10 +1,14 @@
 import axios from "axios";
 
-const Backend = process.env.NEXT_PUBLIC_BackEndLocalHost;
+const Backend = process.env.NEXT_PUBLIC_BACKEND_PRODUCTION;
 
 // console.log(Backend);
 export class UserService {
-     static addAdmin(user) {
+    static addSuperAdmin(user) {
+        return axios.post(`${Backend}/api/user/add_super_admin`, user);
+    }
+
+    static addAdmin(user) {
         return axios.post(`${Backend}/api/user/add_admin`, user);
     }
 
@@ -12,6 +16,9 @@ export class UserService {
         return axios.post(`${Backend}/api/user/add_approve`, user);
     }
 
+    static assignMinistryToAdmin(id, ministryId) {
+        return axios.post(`${Backend}/api/user/assign_ministry_to_admin/${id}?ministryId=${ministryId}`);
+    }
 }
 
 export class AuthService {
@@ -41,8 +48,12 @@ export class MinistryService {
         return axios.get(`${Backend}/api/ministry/get_one_ministry/${id}`);
     }
 
-    static getDivisionsinMinistry(id){
+    static getDivisionsinMinistry(id) {
         return axios.get(`${Backend}/api/ministry/get_divisions_in_ministry/${id}`);
+    }
+
+    static getMinistryFromAdmin(id) {
+        return axios.get(`${Backend}/api/ministry/get_ministry_from_admin/${id}`);
     }
 
     // static updateMinistry(id, param2) {
@@ -125,7 +136,6 @@ export class BudgetRequestServices {
     static getHandledRequests() {
         return axios.get(`${Backend}/api/division_budget/get_handled_requests`);
     }
-
 }
 
 

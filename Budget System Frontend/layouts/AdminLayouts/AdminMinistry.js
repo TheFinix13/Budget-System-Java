@@ -10,7 +10,7 @@ export default function AdminMinistry({ children }) {
     return (
         <>
             <AdminSidebar />
-            {/* AddMinistry */}
+
             <div className="relative md:ml-64 bg-blueGray-100">
                 <MinistryNavbar/>
 

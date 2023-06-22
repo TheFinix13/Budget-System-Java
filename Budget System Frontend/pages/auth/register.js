@@ -15,8 +15,6 @@ export default function Register() {
     lastname: '',
     email: '',
     password: '',
-    role: '',
-
   });
 
   const route = useRouter();
@@ -33,30 +31,25 @@ export default function Register() {
 
     const userPayload = {
       ...userData,
-      role: userData.role,
+      role: 'admin',
     };
 
-    if (userData.role === 'admin') {
-      UserService.addAdmin(userPayload)
-          .then((res) => {
-            console.log(res.data);
-            route.push('/auth/login');
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-    }
-    else if (userData.role === 'approve') {
-      UserService.addApprovers(userPayload)
-          .then((res) => {
-            console.log(res.data);
-            route.push('/auth/login'); // Redirect to the approval dashboard
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-    }
-}
+    UserService.addAdmin(userPayload)
+        .then((res) => {
+          console.log(res.data);
+          route.push('/auth/login');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+    setUserData({
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+    })
+  }
 
   return (
     <>
@@ -184,22 +177,13 @@ export default function Register() {
                     >
                       Role
                     </label>
-                    <select
-                        className="border-0 px-3 py-3 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        name="role"
-                        defaultValue=""
-                        // value={userData.role}
-                        onChange={(e) => setUserData({
-                          ...userData,
-                          role: e.target.value })
-                    }
-                    >
-                      <option value="" disabled selected >
-                        Select Role
-                      </option>
-                      <option value="admin">Admin</option>
-                      <option value="approve">Approver</option>
-                    </select>
+                    <input
+                        type="role"
+                        name={"role"}
+                        className="border-0 px-3 py-3 text-white bg-blueGray-600 rounded text-sm font-semibold shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        value={"ADMINISTRATOR"}
+                        readOnly={true}
+                    />
                   </div>
 
                   <div>

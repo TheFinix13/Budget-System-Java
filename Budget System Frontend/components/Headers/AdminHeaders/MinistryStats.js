@@ -2,184 +2,112 @@ import React, {useEffect, useState} from "react";
 
 // components
 import MinistryCard from "../../Cards/MinistryCard";
-import MinistryDataStats from "./MinistryDataStats";
-import MinistryDataNavbar from "../../Navbars/AdminNavbars/MinistryDataNavbar";
-
+import {RingLoader} from "react-spinners";
 //service
 import {MinistryService} from "../../../data/api";
 import Link from "next/link";
+import {useRouter} from "next/router";
+import AddMinistry from "../../../pages/admin/ministry/AddMinistry";
 
 
-export default function MinistryStats() {
+export default function MinistryStats({handleShowMode}) {
 
-    const [ministry, setMinistry] = useState([]);
-    const [ministryMode, setMinistryMode] = useState("all");
-    const [sortBy, setSortBy] = useState("name");
-    const [sortOrder, setSortOrder] = useState("asc");
-    const [sortIconType, setSortIconType] = useState("alpha");
+    const [ministry, setMinistry] = useState({});
 
-    async function fetchMinistries() {
-        await MinistryService.getMinistry()
-            .then((res) => {
-                const {data} = res;
-                if (data){
-                    setMinistry(data);
-                }else {
-                    console.error(data.message);
-                }
-            })
-            .catch((error) => {
-                console.error("Failed to fetch ministries", error);
-            })
+    const [showAddMinistry, setShowAddMinistry] = useState(false);
+
+    const [alert, setAlert] = useState({
+        type: '',
+        message: ''
+    });
+
+    const [isLoading, setIsLoading] = useState(true); // Loading state
+
+    const router = useRouter();
+    const {id} = router.query
+
+    async function fetchTheMinistry() {
+        setIsLoading(true) // Set loading state to true
+
+        try {
+            const res = await MinistryService.getMinistryFromAdmin(id);
+            const {data} = res;
+            if (data) {
+                setMinistry(data);
+            } else {
+                setAlert({
+                    type: 'error',
+                    message: 'An error occurred while getting your ministry.'
+                });
+            }
+        } catch (error) {
+            setAlert({
+                type: 'error',
+                message: 'An error occurred.', error
+            });
+        } finally {
+            setIsLoading(false); // Set loading state to false after fetching data
+        }
     }
 
     useEffect(() => {
-        fetchMinistries();
-    }, []);
-
-    const handleClick = () => {
-        setMinistryMode("current");
-    }
-
-    function handleSortByChange(e) {
-        setSortBy(e.target.value);
-
-        if (e.target.value === "totalDepartments" || e.target.value === "totalDivisions") {
-            setSortIconType("number");
-        } else {
-            setSortIconType("alpha");
-        }
-    }
-    function handleSortOrderChange() {
-        setSortOrder(prevSortOrder => (prevSortOrder === "asc" ? "desc" : "asc"));
-    }
-
-    // Sort the divisions based on the selected sorting options
-    function sortMinistry() {
-        const sortedMinistry = [...ministry];
-        sortedMinistry.sort((a, b) => {
-            const aValue = getSortValue(a[sortBy]);
-            const bValue = getSortValue(b[sortBy]);
-
-            if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
-            if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
-
-            if (sortBy === "totalDepartments") {
-                const aDepartmentCount = a.totalDepartments || 0;
-                const bDepartmentCount = b.totalDepartments || 0;
-
-                if (aDepartmentCount < bDepartmentCount)
-                    return sortOrder === "asc" ? -1 : 1;
-                if (aDepartmentCount > bDepartmentCount)
-                    return sortOrder === "asc" ? 1 : -1;
-            }
-
-            if (sortBy === "totalDivisions") {
-                const aDivisionCount = a.totalDivisions || 0;
-                const bDivisionCount = b.totalDivisions || 0;
-
-                if (aDivisionCount < bDivisionCount)
-                    return sortOrder === "asc" ? -1 : 1;
-                if (aDivisionCount > bDivisionCount)
-                    return sortOrder === "asc" ? 1 : -1;
-            }
-
-            return 0;
-        });
-        return sortedMinistry;
-    }
-
-    function getSortValue(value) {
-        if (typeof value !== "string") {
-            return "";
-        }
-
-        const ignoredWords = ["for", "of"];
-        const words = value.toLowerCase().split(" ");
-        const filteredWords = words.filter((word) => !ignoredWords.includes(word));
-        return filteredWords.join(" ");
-    }
+        fetchTheMinistry();
+    }, [id]);
+    const handleAddMinistry = () => {
+        setShowAddMinistry(true);
+    };
 
     return (
-        <>
-            {/*Header */}
-            {ministryMode === "all" ? (
-                <div className="relative bg-blueGray-800 md:pt-32 pb-32 pt-12">
-
-                    {/*<sort buttons*/}
-                    <div className="flex px-4 md:px-10 mx-auto mb-4 w-full">
-                        <select
-                            className="text-white bg-blueGray-700 px-4 py-1 rounded-md outline-none text-sm"
-                            value={sortBy}
-                            onChange={handleSortByChange}
-                        >
-                            <option value="name">Name</option>
-                            <option value="totalDepartments">Department</option>
-                            <option value="totalDivisions">Division</option>
-                        </select>
-                        <button
-                            className="bg-white text-blueGray-800 active:bg-indigo-600 text-sm px-3 py-1 rounded outline-none focus:outline-none ml-2"
-                            type="button"
-                            onClick={handleSortOrderChange}
-                        >
-                            {sortIconType === "alpha" ? (
-                                <i
-                                    className={`fas fa-sort-alpha-${
-                                        sortOrder === "asc" ? "down" : "up"
-                                    } cursor-pointer`}
-                                ></i>
-                            ) : (
-                                <i
-                                    className={`fas fa-sort-numeric-${
-                                        sortOrder === "asc" ? "down" : "up"
-                                    } cursor-pointer`}
-                                ></i>
-                            )}
-                        </button>
-                    </div>
-
-                    <div className="px-4 md:px-10 mx-auto w-full">
-                        <div>
-                            {/*Card stats*/}
-                            {ministry.length > 0 ? (
-                                <div className="flex flex-wrap">
-                                    {sortMinistry().map((row, index) => (
-                                        <div className="w-full lg:w-6/12 xl:w-3/12 px-2 pb-4">
-                                            <div className="duration-200; ease-in-out transform:transition hover:scale-110">
-                                                <Link href={`/admin/ministry/${row.ministry_id}`}>
-                                                    <a>
-                                                        <MinistryCard onClick={() => handleClick()}
-                                                              key={index}
-                                                              statTitle = {row.name}
-                                                              statDepartment={"Departments: " + row.totalDepartments}
-                                                              statUnit={"Divisions: " + row.totalDivisions}
-                                                              statDescription={row.description}
-                                                              statIconName="fas fa-house"
-                                                              statIconColor="bg-red-500"
-                                                        />
-                                                    </a>
-                                                </Link>
-                                             </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                "No Ministries Found"
-                                )}
-                        </div>
-                    </div>
-                </div>
-            ) : null }
-
-            {ministryMode === "current"? (
+        <div className="flex justify-center items-center h-screen bg-blueGray-800">
+            {showAddMinistry ? (
+                <AddMinistry
+                    handleHideMode={() => setShowAddMinistry(false)}
+                    handleShowMode={handleShowMode}
+                />
+            ) : (
                 <>
-                    <MinistryDataNavbar/>
-
-                    <MinistryDataStats
-                        ministry={ministry}
-                    />
+                    {isLoading ? ( // Display loading animation while fetching data
+                        <div className="flex justify-center items-center">
+                            <RingLoader color="#ffffff" loading={isLoading} size={150} className="display-block m-0"/>
+                        </div>
+                    ) : Object.keys(ministry).length > 0 ? (
+                        <div className="px-4 md:px-10 mx-auto w-6/12">
+                            <Link href={`/admin/ministry/MinistryData`}>
+                                <a>
+                                    <MinistryCard
+                                        key={ministry.ministry_id}
+                                        statTitle={ministry.name}
+                                        statDepartment={"Departments: " + ministry.totalDepartments}
+                                        statUnit={"Divisions: " + ministry.totalDivisions}
+                                        statDescription={ministry.description}
+                                        statIconName="fas fa-house"
+                                        statIconColor="bg-red-500"
+                                    />
+                                </a>
+                            </Link>
+                        </div>
+                    ) : (
+                        <div className="bg-white p-8 rounded shadow-lg text-center">
+                            <p className="text-lg font-semibold mb-4 break-words">
+                                No ministry has been created yet.
+                            </p>
+                            <p className="text-sm text-gray-500 mb-8 break-words">
+                                As an administrator, it is crucial for you to create a ministry and handle its account.
+                            </p>
+                            <button
+                                className="bg-blueGray-700 text-white font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mx-auto block transform transition duration-500 ease-in-out hover:scale-110"
+                                type="button"
+                                onClick={() => handleAddMinistry()}
+                            >
+                                <div className="text-center">
+                                    <i className="fas fa-user-plus mr-2"></i> Add a ministry
+                                </div>
+                            </button>
+                        </div>
+                    )}
                 </>
-            ) : null}
-        </>
+            )}
+        </div>
     );
 }
+

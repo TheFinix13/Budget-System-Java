@@ -4,13 +4,17 @@
 
 ![Notus NextJS](https://github.com/creativetimofficial/public-assets/blob/master/notus-nextjs/notus-nextjs.jpg?raw=true)
 
-### A beautiful UI Kit and AdminDashboard for Tailwind CSS and NextJS.
+### A beautiful UI Kit and SuperAdminDashboard for Tailwind CSS and NextJS.
 
-Start your development with a Free Tailwind CSS and NextJS UI Kit and AdminDashboard. Let Notus NextJS amaze you with its cool features and build tools and get your project to a whole new level.
+Start your development with a Free Tailwind CSS and NextJS UI Kit and SuperAdminDashboard. Let Notus NextJS amaze you
+with its cool features and build tools and get your project to a whole new level.
 
-Notus NextJS is Free and Open Source. It features multiple HTML and NextJS elements and it comes with dynamic components for NextJS.
+Notus NextJS is Free and Open Source. It features multiple HTML and NextJS elements and it comes with dynamic components
+for NextJS.
 
-It is based on [Tailwind Starter Kit](https://www.creative-tim.com/learning-lab/tailwind-starter-kit/presentation?ref=nnjs-github-readme) by Creative Tim, and it is build with both presentation pages, and pages for an admin dashboard.
+It is based
+on [Tailwind Starter Kit](https://www.creative-tim.com/learning-lab/tailwind-starter-kit/presentation?ref=nnjs-github-readme)
+by Creative Tim, and it is build with both presentation pages, and pages for an admin dashboard.
 
 Speed up your web development with a beautiful product made by <a href="https://creative-tim.com/" target="_blank">Creative Tim </a>.
 If you like bright and fresh colors, you will love this Free Tailwind CSS Template! It features a huge number of components that can help you create amazing websites.
@@ -36,8 +40,9 @@ you can jump start your development with our pre-built example pages. You will b
 to quickly set up the basic structure for your web project.
 
 Here are all the page from the project:
+
 - [Presentation](https://demos.creative-tim.com/notus-nextjs/?ref=nnjs-github-readme)
-- AdminDashboard Samples
+- SuperAdminDashboard Samples
   - [Id](https://demos.creative-tim.com/notus-nextjs/admin/dashboard?ref=nnjs-github-readme)
   - [Settings](https://demos.creative-tim.com/notus-nextjs/admin/settings?ref=nnjs-github-readme)
   - [Tables](https://demos.creative-tim.com/notus-nextjs/admin/tables?ref=nnjs-github-readme)
@@ -148,11 +153,11 @@ notus-nextjs
 │   │   ├── FooterAdmin.js
 │   │   └── FooterSmall.js
 │   ├── Headers
-│   │   └── DashboardStats.js
+│   │   └── SuperDashboardStats.js
 │   ├── Maps
 │   │   └── MapExample.js
 │   ├── Navbars
-│   │   ├── DashboardNavbar.js
+│   │   ├── SuperDashboardNavbar.js
 │   │   ├── AuthNavbar.js
 │   │   └── IndexNavbar.js
 │   ├── PageChange
@@ -160,7 +165,7 @@ notus-nextjs
 │   └── AdminSidebar
 │       └── AdminSidebar.js
 ├── layouts
-│   ├── AdminDashboard.js
+│   ├── SuperAdminDashboard.js
 │   └── Auth.js
 ├── next.config.js
 ├── package.json
@@ -170,7 +175,7 @@ notus-nextjs
 │   ├── _document.js
 │   ├── _error.js
 │   ├── admin
-│   │   ├── [id].js
+│   │   ├── MinistryData.js
 │   │   ├── maps.js
 │   │   ├── settings.js
 │   │   └── tables.js
