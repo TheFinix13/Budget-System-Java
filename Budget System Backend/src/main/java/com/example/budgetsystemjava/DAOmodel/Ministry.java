@@ -19,7 +19,7 @@ import java.util.List;
 public class Ministry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long ministry_id;
+    private long ministryId;
 
     private String name;
     private String description;

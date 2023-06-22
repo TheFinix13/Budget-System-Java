@@ -17,22 +17,22 @@ import java.time.LocalDateTime;
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long budget_id;
+    private long budgetId;
     private String narration;
     private double amount;
     private String status;
     private LocalDateTime created_at;
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "departmentId")
     private Department department;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "division_id")
+    @JoinColumn(name = "divisionId")
     private Division division;
 
     @ManyToOne
-    @JoinColumn(name = "term_id")
+    @JoinColumn(name = "termId")
     private Term term;
 
 }

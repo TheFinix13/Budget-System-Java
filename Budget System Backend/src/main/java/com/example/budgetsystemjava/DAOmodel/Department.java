@@ -13,7 +13,7 @@ import java.util.List;
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long department_id;
+    private long departmentId;
     @Column(unique = true)
     private String name;
     @NotNull
@@ -24,7 +24,7 @@ public class Department {
     private LocalDateTime created_at;
 
     @ManyToOne
-    @JoinColumn(name = "ministry_id", referencedColumnName = "ministry_id")
+    @JoinColumn(name = "ministryId", referencedColumnName = "ministryId")
     private Ministry ministry;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

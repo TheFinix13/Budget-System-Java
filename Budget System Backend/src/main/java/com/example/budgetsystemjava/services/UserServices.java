@@ -1,7 +1,11 @@
 package com.example.budgetsystemjava.services;
 
+import com.example.budgetsystemjava.DAOmodel.Ministry;
 import com.example.budgetsystemjava.DAOmodel.Users;
 import com.example.budgetsystemjava.DTO.UserDTO;
+import com.example.budgetsystemjava.exceptions.MinistryNotFoundException;
+import com.example.budgetsystemjava.exceptions.UserNotFoundException;
+import com.example.budgetsystemjava.repository.MinistryRepo;
 import com.example.budgetsystemjava.repository.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +15,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 
 @Service
 public class UserServices implements UserDetailsService {
     private final UserRepo userRepo;
+    private final MinistryRepo ministryRepo;
+
     private final BCryptPasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
     //Constructor
     @Autowired
-    public UserServices(UserRepo userRepo, BCryptPasswordEncoder passwordEncoder, ModelMapper modelMapper) {
+    public UserServices(UserRepo userRepo, MinistryRepo ministryRepo, BCryptPasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.userRepo = userRepo;
+        this.ministryRepo = ministryRepo;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = modelMapper;
     }
@@ -53,6 +59,7 @@ public class UserServices implements UserDetailsService {
 
         userRepo.save(user);
     }
+
     public void createSuperAdminUser(UserDTO superAdminDTO) {
         // Create the superAdmin user
         Users superAdmin = Users.builder()
@@ -67,6 +74,7 @@ public class UserServices implements UserDetailsService {
         // Save the superAdmin user to the database
         userRepo.save(superAdmin);
     }
+
     public void assignAdminToMinistry(long adminUserId, long ministryId) {
         // Find the admin user by user_id
         Optional<Users> adminUserOptional = userRepo.findById(adminUserId);
@@ -94,6 +102,21 @@ public class UserServices implements UserDetailsService {
                 .password(user.getPassword())
                 .roles(user.getRole())
                 .build();
+    }
+
+    public void assignMinistryToUser(Long userId, Long ministryId) {
+        Users admin = userRepo.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
+
+        Ministry assignMinistry = ministryRepo.findById(ministryId)
+                .orElseThrow(() -> new MinistryNotFoundException("User not found."));
+
+        if (assignMinistry == null) {
+            throw new MinistryNotFoundException("Ministry not found.");
+        }
+
+        admin.setMinistryID(ministryId);
+        userRepo.save(admin);
     }
 
 

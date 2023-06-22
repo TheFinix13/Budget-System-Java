@@ -54,15 +54,15 @@ public class DepartmentServices {
                     List<Division> divisions = department.getDivisions();
                     List<DivisionDTO> divisionDTOS = divisions.stream()
                             .map(division -> DivisionDTO.builder()
-                                    .id(division.getDivision_id())
+                                    .id(division.getDivisionId())
                                     .name(division.getName())
                                     .build())
                             .collect(Collectors.toList());
 
-                    int divisionCount = divisionRepo.countDivisionsByDepartmentId(department.getDepartment_id());
+                    int divisionCount = divisionRepo.countDivisionsByDepartmentId(department.getDepartmentId());
 
                     return DepartmentDTO.builder()
-                            .id(String.valueOf(department.getDepartment_id()))
+                            .id(String.valueOf(department.getDepartmentId()))
                             .name(department.getName())
                             .description(department.getDescription())
                             .code(department.getCode())
@@ -106,7 +106,7 @@ public class DepartmentServices {
 
         List<DivisionDTO> divisionDTOS = division.stream()
                 .map(division1 -> DivisionDTO.builder()
-                        .id(division1.getDivision_id())
+                        .id(division1.getDivisionId())
                         .name(division1.getName())
                         .code(division1.getCode())
                         .build())
@@ -117,7 +117,7 @@ public class DepartmentServices {
                 .code(department.getCode())
                 .description(department.getDescription())
                 .created_at(department.getCreated_at())
-                .ministryId(ministry.getMinistry_id())
+                .ministryId(ministry.getMinistryId())
                 .ministryName(ministry.getName())
                 .divisions(divisionDTOS)
                 .build();

@@ -3,6 +3,7 @@ package com.example.budgetsystemjava.controller;
 import com.example.budgetsystemjava.DAOmodel.Ministry;
 import com.example.budgetsystemjava.DTO.DivisionDTO;
 import com.example.budgetsystemjava.DTO.MinistryDTO;
+import com.example.budgetsystemjava.responses.AddMinistryResponse;
 import com.example.budgetsystemjava.services.MinistryServices;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(path = "api/ministry")
 public class MinistryController {
@@ -29,7 +30,7 @@ public class MinistryController {
     }
 
     @PostMapping(path = "add_ministry")
-    public ResponseEntity<?> addMinistry(@RequestBody MinistryDTO ministry) {
+    public ResponseEntity<AddMinistryResponse> addMinistry(@RequestBody MinistryDTO ministry) {
         return ministryServices.addMinistry(ministry);
     }
 
@@ -66,4 +67,12 @@ public class MinistryController {
 
         return ResponseEntity.ok(divisions);
     }
+
+    @GetMapping(path = "/get_ministry_from_admin/{adminId}")
+    public ResponseEntity<MinistryDTO> getMinistryForAdmin(@PathVariable Long adminId) {
+        MinistryDTO ministry = ministryServices.getMinistryForAdmin(adminId);
+        return ResponseEntity.ok(ministry);
+    }
+
+
 }

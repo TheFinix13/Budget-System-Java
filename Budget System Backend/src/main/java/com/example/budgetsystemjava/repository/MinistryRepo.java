@@ -13,9 +13,12 @@ import java.util.Optional;
 public interface MinistryRepo extends JpaRepository<Ministry, Long> {
     Optional<Object> findByName(String ministryName);
 
+    Optional<Ministry> findByMinistryId(long ministryId);
+
     @Query("SELECT m FROM Ministry m")
     List<Ministry> getMinistryData();
 
-    @Query("SELECT dv FROM Division dv JOIN dv.department d JOIN d.ministry m WHERE m.ministry_id = :ministryId")
+    @Query("SELECT dv FROM Division dv JOIN dv.department d JOIN d.ministry m WHERE m.ministryId = :ministryId")
     List<Division> findDivisions(long ministryId);
+
 }

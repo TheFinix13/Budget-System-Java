@@ -12,7 +12,7 @@ import java.util.List;
 public class Term {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long term_id;
+    private long termId;
     @NotNull
     private String name;
     @NotNull

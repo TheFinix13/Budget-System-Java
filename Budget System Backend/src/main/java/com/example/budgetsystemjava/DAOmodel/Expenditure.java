@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class Expenditure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long expenditure_id;
+    private long expenditureId;
     @NotNull
     private float amount;
     @NotNull
@@ -23,15 +23,15 @@ public class Expenditure {
     private LocalDateTime created_at;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "departmentId")
     private Department department;
 
     @ManyToOne
-    @JoinColumn(name = "division_id", referencedColumnName = "division_id")
+    @JoinColumn(name = "divisionId", referencedColumnName = "divisionId")
     private Division division;
 
     @ManyToOne
-    @JoinColumn(name = "term_id", referencedColumnName = "term_id")
+    @JoinColumn(name = "termId", referencedColumnName = "termId")
     private Term term;
 
 //    @ManyToOne
