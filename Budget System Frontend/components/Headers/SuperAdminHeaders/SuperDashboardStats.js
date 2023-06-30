@@ -114,15 +114,6 @@ export default function SuperDashboardStats() {
                                 </Link>
                             </div>
 
-                            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                                <Card
-                                    statSubtitle="BUDGET"
-                                    statTitle=""
-                                    statDescription="All budget in Accounted for"
-                                    statIconName="fas fa-percent"
-                                    statIconColor="bg-lightBlue-500"
-                                />
-                            </div>
                         </div>
                     </div>
                 </div>

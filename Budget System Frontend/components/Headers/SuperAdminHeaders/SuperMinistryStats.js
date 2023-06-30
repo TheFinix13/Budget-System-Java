@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 // components
 import MinistryCard from "../../Cards/MinistryCard";
 import SuperMinistryDataStats from "./SuperMinistryDataStats";
-import MinistryDataNavbar from "../../Navbars/AdminNavbars/MinistryDataNavbar";
+import SuperMinistryDataNavbar from "../../Navbars/SuperAdminNavbars/SuperMinistryDataNavbar";
 
 //service
 import {MinistryService} from "../../../data/api";
@@ -148,16 +148,16 @@ export default function SuperMinistryStats() {
                                         <div className="w-full lg:w-6/12 xl:w-3/12 px-2 pb-4">
                                             <div
                                                 className="duration-200; ease-in-out transform:transition hover:scale-110">
-                                                <Link href={`/admin/ministry/${row.ministry_id}`}>
+                                                <Link href={`/superAdmin/ministry/${row.ministry_id}`}>
                                                     <a>
                                                         <MinistryCard onClick={() => handleClick()}
-                                                                      key={index}
-                                                                      statTitle={row.name}
-                                                                      statDepartment={"Departments: " + row.totalDepartments}
-                                                                      statUnit={"Divisions: " + row.totalDivisions}
-                                                                      statDescription={row.description}
-                                                                      statIconName="fas fa-house"
-                                                                      statIconColor="bg-red-500"
+                                                              key={index}
+                                                              statTitle={row.name}
+                                                              statDepartment={"Departments: " + row.totalDepartments}
+                                                              statUnit={"Divisions: " + row.totalDivisions}
+                                                              statDescription={row.description}
+                                                              statIconName="fas fa-house"
+                                                              statIconColor="bg-red-500"
                                                         />
                                                     </a>
                                                 </Link>
@@ -175,7 +175,7 @@ export default function SuperMinistryStats() {
 
             {ministryMode === "current" ? (
                 <>
-                    <MinistryDataNavbar/>
+                    <SuperMinistryDataNavbar/>
 
                     <SuperMinistryDataStats
                         ministry={ministry}

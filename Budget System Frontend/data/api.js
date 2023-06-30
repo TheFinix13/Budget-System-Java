@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Backend = process.env.NEXT_PUBLIC_BACKEND_PRODUCTION;
+const Backend = process.env.NEXT_PUBLIC_BACKEND_DEVELOPMENT;
 
 // console.log(Backend);
 export class UserService {

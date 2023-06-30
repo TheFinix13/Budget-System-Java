@@ -48,7 +48,7 @@ export default function Login() {
 
           //redirect to dashboard
           if (userRole === "superAdmin") {
-            router.push("/superAdmin");
+            router.push("/superAdmin/dashboard");
           } else if (userRole === "admin") {
             router.replace(`/admin/[id]?id=${encodeURIComponent(sub)}`);
           } else if (userRole === "ministry") {

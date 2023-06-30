@@ -175,7 +175,7 @@ notus-nextjs
 │   ├── _document.js
 │   ├── _error.js
 │   ├── admin
-│   │   ├── MinistryData.js
+│   │   ├── [id].js
 │   │   ├── maps.js
 │   │   ├── settings.js
 │   │   └── tables.js

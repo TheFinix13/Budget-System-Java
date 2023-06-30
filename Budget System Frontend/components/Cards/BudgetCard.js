@@ -47,7 +47,7 @@ export default function BudgetCard({
                         </div>
                     </div>
 
-                    <p className="text-blueGray-400 capitalize font-extralight text-xs mb-4 pl-4">
+                    <p className="text-blueGray-400 capitalize font-extralight text-xs mb-2 px-4 ">
                         {statDescription}
                     </p>
 

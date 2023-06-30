@@ -3,6 +3,7 @@ import React from "react";
 // components
 import SuperAdminSidebar from "../../components/Sidebar/SuperAdminSidebar";
 import SuperMinistryDataStats from "../../components/Headers/SuperAdminHeaders/SuperMinistryDataStats";
+import SuperMinistryDataNavbar from "../../components/Navbars/SuperAdminNavbars/SuperMinistryDataNavbar";
 
 export default function SuperAdminMinistryData({children}) {
 
@@ -12,6 +13,7 @@ export default function SuperAdminMinistryData({children}) {
 
             <div className="relative md:ml-64 bg-blueGray-100">
 
+                <SuperMinistryDataNavbar/>
                 {/* Header */}
                 <SuperMinistryDataStats/>
 

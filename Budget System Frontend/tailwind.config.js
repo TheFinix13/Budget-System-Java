@@ -9,7 +9,6 @@ module.exports = {
       safelist: [],
     },
   },
-  darkMode: 'class',
   theme: {
     colors: {
       ...colors,
@@ -55,58 +54,58 @@ module.exports = {
       maxHeight: {
         "860-px": "860px",
       },
-      maxWidth: {
-        "100-px": "100px",
-        "120-px": "120px",
-        "150-px": "150px",
-        "180-px": "180px",
-        "200-px": "200px",
-        "210-px": "210px",
-        "580-px": "580px",
-      },
-      minWidth: {
-        "140-px": "140px",
-        48: "12rem",
-      },
-      backgroundSize: {
-        full: "100%",
-      },
+        maxWidth: {
+            "100-px": "100px",
+            "120-px": "120px",
+            "150-px": "150px",
+            "180-px": "180px",
+            "200-px": "200px",
+            "210-px": "210px",
+            "580-px": "580px",
+        },
+        minWidth: {
+            "140-px": "140px",
+            48: "12rem",
+        },
+        backgroundSize: {
+            full: "100%",
+        },
     },
   },
-  // variants: [
-  //   "responsive",
-  //   "group-hover",
-  //   "focus-within",
-  //   "first",
-  //   "last",
-  //   "odd",
-  //   "even",
-  //   "hover",
-  //   "focus",
-  //   "active",
-  //   "visited",
-  //   "disabled",
-  // ],
-  plugins: [
-    require("@tailwindcss/forms"),
-    plugin(function ({ addComponents, theme }) {
-      const screens = theme("screens", {});
-      addComponents([
-        {
-          ".container": { width: "100%" },
-        },
-        {
-          [`@media (min-width: ${screens.sm})`]: {
-            ".container": {
-              "max-width": "640px",
-            },
-          },
-        },
-        {
-          [`@media (min-width: ${screens.md})`]: {
-            ".container": {
-              "max-width": "768px",
-            },
+    variants: [
+        "responsive",
+        "group-hover",
+        "focus-within",
+        "first",
+        "last",
+        "odd",
+        "even",
+        "hover",
+        "focus",
+        "active",
+        "visited",
+        "disabled",
+    ],
+    plugins: [
+        require("@tailwindcss/forms"),
+        plugin(function ({addComponents, theme}) {
+            const screens = theme("screens", {});
+            addComponents([
+                {
+                    ".container": {width: "100%"},
+                },
+                {
+                    [`@media (min-width: ${screens.sm})`]: {
+                        ".container": {
+                            "max-width": "640px",
+                        },
+                    },
+                },
+                {
+                    [`@media (min-width: ${screens.md})`]: {
+                        ".container": {
+                            "max-width": "768px",
+                        },
           },
         },
         {

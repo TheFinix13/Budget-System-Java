@@ -74,21 +74,6 @@ export default function SuperMinistryDataNavbar({handleShowMode}) {
                         <UserDropdown/>
                     </ul>
 
-                    {/* Add Department */}
-                    <div className="rounded-t px-6">
-
-                        <button
-                            className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                            type="button"
-                            onClick={() => handleShowMode()}
-                        >
-                            <i className="fas fa-user-plus">
-
-                            </i>{" "}
-                            ADD DEPARTMENT
-                        </button>
-                    </div>
-
                 </div>
             </nav>
             {/* End Navbar */}

@@ -7,7 +7,7 @@ import AddDepartment from "./AddDepartment";
 import AdminMinistryData from "../../../layouts/AdminLayouts/AdminMinistryData";
 import DepartmentTable from "../../../components/Cards/DepartmentTable";
 
-export default function MinistryData() {
+export default function Id() {
 
     return (
         <>
@@ -23,4 +23,4 @@ export default function MinistryData() {
     );
 }
 
-MinistryData.layout = AdminMinistryData;
+Id.layout = AdminMinistryData;
