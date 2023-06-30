@@ -71,7 +71,7 @@ export default function MinistryStats({handleShowMode}) {
                             <RingLoader color="#ffffff" loading={isLoading} size={150} className="display-block m-0"/>
                         </div>
                     ) : Object.keys(ministry).length > 0 ? (
-                        <div className="py-4 md:px-10 my-auto w-1/2">
+                        <div className="py-4 md:px-10 mx-auto w-full">
                             <Link href={`/admin/ministry/${ministry.ministry_id}`}>
                                 <a>
                                     <MinistryCard
