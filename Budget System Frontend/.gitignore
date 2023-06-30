@@ -26,3 +26,7 @@ yarn-error.log*
 out/
 
 commit.sh
+
+next.config.js
+postcss.config.js
+tailwind.config.js
