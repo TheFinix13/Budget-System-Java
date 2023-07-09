@@ -27,4 +27,4 @@ out/
 
 commit.sh
 
-postcss.config.js
+.vercel
