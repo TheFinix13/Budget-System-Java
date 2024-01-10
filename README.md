@@ -1,2 +1,6 @@
 # Budget-System-V2
- Second Version of the Budget System using java and next
+ The second version of the Budget System
+ 
+ - Frontend Technologies: NextJS
+ - Backend Technologies: Java, Java SpringBoot Framework,
+ - PostgreSQL for the database.
