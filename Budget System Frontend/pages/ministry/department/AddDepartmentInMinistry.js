@@ -6,7 +6,7 @@ import {Alert, AlertTitle, Dialog, DialogContent} from "@mui/material";
 // services
 import {DepartmentService} from "../../../data/api";
 import {useRouter} from "next/router";
-import DepartmentNavbar from "../../../components/navbars/MinistryNavbars/DepartmentNavbar";
+import DepartmentNavbar from "../../../components/navbars/ministryNavbars/departmentNavbar";
 
 export default function AddDepartmentInMinistry() {
 

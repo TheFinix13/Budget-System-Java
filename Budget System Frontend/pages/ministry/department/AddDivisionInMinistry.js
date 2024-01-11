@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 //components
 import {Alert, AlertTitle, Dialog, DialogContent} from "@mui/material";
-import DepartmentDataNavbar from "../../../components/navbars/MinistryNavbars/DepartmentDataNavbar";
+import DepartmentDataNavbar from "../../../components/navbars/ministryNavbars/departmentDataNavbar";
 
 // services
 import {DivisionService} from "../../../data/api";
