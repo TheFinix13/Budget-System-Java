@@ -46,22 +46,22 @@ export default function ProfileMinistry() {
         setShowConfirmation(!showConfirmation);
     };
 
-    const handleDropdownSelection = (eventKey) => {
-        // Handle the dropdown item selection
-        switch (eventKey) {
-            case "changePhoto":
-                handleProfilePhotoChange();
-                break;
-            case "changeName":
-                handleNameChange();
-                break;
-            case "changeEmail":
-                handleEmailChange();
-                break;
-            default:
-                break;
-        }
-    };
+    // const handleDropdownSelection = (eventKey) => {
+    //     // Handle the dropdown item selection
+    //     switch (eventKey) {
+    //         case "changePhoto":
+    //             handleProfilePhotoChange();
+    //             break;
+    //         case "changeName":
+    //             handleNameChange();
+    //             break;
+    //         case "changeEmail":
+    //             handleEmailChange();
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // };
 
 
     const handleProfilePhotoChange = (e) => {

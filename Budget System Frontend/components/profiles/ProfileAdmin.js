@@ -21,9 +21,9 @@ export default function ProfileAdmin() {
 
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const [editingName, setEditingName] = useState(false);
-  const [newFirstName, setNewFirstName] = useState(adminDetails.firstname);
-  const [newLastName, setNewLastName] = useState(adminDetails.lastname);
+  // const [editingName, setEditingName] = useState(false);
+  // const [newFirstName, setNewFirstName] = useState(adminDetails.firstname);
+  // const [newLastName, setNewLastName] = useState(adminDetails.lastname);
 
   const [isEmailEditing, setIsEmailEditing] = useState(false);
   const [editedEmail, setEditedEmail] = useState(adminDetails.email);
@@ -61,75 +61,75 @@ export default function ProfileAdmin() {
     setShowConfirmation(!showConfirmation);
   };
 
-  const handleDropdownSelection = (eventKey) => {
-    // Handle the dropdown item selection
-    switch (eventKey) {
-      case "changePhoto":
-        handleProfilePhotoChange();
-        break;
-      case "changeName":
-        handleNameChange();
-        break;
-      case "changeEmail":
-        handleEmailChange();
-        break;
-      default:
-        break;
-    }
-  };
+  // const handleDropdownSelection = (eventKey) => {
+  //   // Handle the dropdown item selection
+  //   switch (eventKey) {
+  //     case "changePhoto":
+  //       handleProfilePhotoChange();
+  //       break;
+  //     case "changeName":
+  //       handleNameChange();
+  //       break;
+  //     case "changeEmail":
+  //       handleEmailChange();
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
-  async function handleNameChange() {
-    const nameDetails = {
-      firstname: adminDetails.firstname, // assuming this state holds the updated first name
-      lastname: adminDetails.lastname,   // assuming this state holds the updated last name
-    };
-
-    try {
-      const response = await UserService.updateName(id, nameDetails);
-      if (response.data.success) {
-        setAdminDetails({...adminDetails, ...nameDetails});
-        setAlert({
-          type: 'success',
-          message: 'Name updated successfully!'
-        });
-      } else {
-        setAlert({
-          type: 'error',
-          message: 'Failed to update name. Please try again.'
-        });
-      }
-    } catch (error) {
-      setAlert({
-        type: 'error',
-        message: `Error occurred: ${error.message}`
-      });
-    }
-  }
-
-
-  const handleEmailChange = async () => {
-    try {
-      const newEmail = prompt("Enter the new email:");
-      if (newEmail !== null) {
-        const emailDetails = { newEmail };
-        const response = await UserService.updateEmail(id, emailDetails);
-
-        setAlert({
-          type: "success",
-          message: "Email updated successfully.",
-        });
-
-        // Fetch the updated admin details after a successful update
-        await fetchTheAdmin();
-      }
-    } catch (error) {
-      console.error("Error updating email:", error);
-      setAlert({
-        type: "error",
-        message: "An error occurred while updating the email.",
-      });
-    }
-  };
+  // async function handleNameChange() {
+  //   const nameDetails = {
+  //     firstname: adminDetails.firstname, // assuming this state holds the updated first name
+  //     lastname: adminDetails.lastname,   // assuming this state holds the updated last name
+  //   };
+  //
+  //   try {
+  //     const response = await UserService.updateName(id, nameDetails);
+  //     if (response.data.success) {
+  //       setAdminDetails({...adminDetails, ...nameDetails});
+  //       setAlert({
+  //         type: 'success',
+  //         message: 'Name updated successfully!'
+  //       });
+  //     } else {
+  //       setAlert({
+  //         type: 'error',
+  //         message: 'Failed to update name. Please try again.'
+  //       });
+  //     }
+  //   } catch (error) {
+  //     setAlert({
+  //       type: 'error',
+  //       message: `Error occurred: ${error.message}`
+  //     });
+  //   }
+  // }
+  //
+  //
+  // const handleEmailChange = async () => {
+  //   try {
+  //     const newEmail = prompt("Enter the new email:");
+  //     if (newEmail !== null) {
+  //       const emailDetails = { newEmail };
+  //       const response = await UserService.updateEmail(id, emailDetails);
+  //
+  //       setAlert({
+  //         type: "success",
+  //         message: "Email updated successfully.",
+  //       });
+  //
+  //       // Fetch the updated admin details after a successful update
+  //       await fetchTheAdmin();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating email:", error);
+  //     setAlert({
+  //       type: "error",
+  //       message: "An error occurred while updating the email.",
+  //     });
+  //   }
+  // };
 
   const handleProfilePhotoChange = (e) => {
     const selectedFile = e.target.files && e.target.files.length > 0 ? e.target.files[0] : null; // Get the selected file from the input
@@ -416,19 +416,8 @@ export default function ProfileAdmin() {
                         </h3>
                         
                         <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                          {isEmailEditing ? (
-                              <input
-                                  type="text"
-                                  value={editedEmail}
-                                  onChange={(e) => setEditedEmail(e.target.value)}
-                                  onBlur={() => setIsEmailEditing(false)}
-                              />
-                          ) : (
-                              <>
                                 <i className="fas fa-envelope mr-2 text-lg text-blue-800"></i>{" "}
                                 {adminDetails.email}
-                              </>
-                          )}
                         </div>
 
                         <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
