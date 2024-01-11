@@ -156,7 +156,7 @@ notus-nextjs
 │   │   ├── authNavbar.js
 │   │   └── indexNavbar.js
 │   ├── PageChange
-│   │   └── PageChange.js
+│   │   └── pageChange.js
 │   └── Sidebar
 │       └── Sidebar.js
 ├── layouts

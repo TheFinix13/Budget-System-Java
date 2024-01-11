@@ -2,7 +2,7 @@ import React from "react";
 
 // components
 import MinistrySidebar from "../../components/sidebar/MinistrySidebar";
-import ProfileMinistry from "../../components/profiles/ProfileMinistry";
+import ProfileMinistry from "../../components/profiles/profileMinistry";
 
 export default function MinistryProfile({ children }) {
 
